@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { SiteHeader, SiteFooter } from "@/components/site-chrome";
+import { StickyContact } from "@/components/sticky-contact";
 
 function NotFoundComponent() {
   return (
@@ -111,7 +113,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <SiteHeader />
+      <main className="pb-16 md:pb-0">
+        <Outlet />
+      </main>
+      <SiteFooter />
+      <StickyContact />
     </QueryClientProvider>
   );
 }
