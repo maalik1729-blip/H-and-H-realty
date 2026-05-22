@@ -27,7 +27,7 @@ export const Route = createFileRoute("/listings/$id")({
 });
 
 function Detail() {
-  const l = Route.useLoaderData();
+  const l = Route.useLoaderData() as Listing;
   const [sent, setSent] = useState(false);
   const whatsapp = `https://wa.me/919876543210?text=${encodeURIComponent(`Hi, I'm interested in ${l.title} (${l.id})`)}`;
 
