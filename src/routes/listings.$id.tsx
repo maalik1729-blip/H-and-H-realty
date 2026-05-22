@@ -1,10 +1,10 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { MapPin, BadgeCheck, FileCheck2, Phone, MessageCircle, Calendar, Download, Maximize2, Route as RouteIcon, Building2, Play } from "lucide-react";
-import { listings } from "@/lib/listings";
+import { listings, type Listing } from "@/lib/listings";
 
 export const Route = createFileRoute("/listings/$id")({
-  loader: ({ params }) => {
+  loader: ({ params }): Listing => {
     const l = listings.find((x) => x.id === params.id);
     if (!l) throw notFound();
     return l;
