@@ -154,7 +154,7 @@ function Home() {
 
       {/* TRUST STRIP */}
       <section className="border-y border-border bg-card">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-8 text-sm md:grid-cols-4 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-8 text-sm sm:grid-cols-4 sm:px-6 lg:px-8">
           {[
             { i: ShieldCheck, t: t("trust.registered") },
             { i: FileCheck2, t: t("trust.verified") },
@@ -650,7 +650,7 @@ function Home() {
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-3xl bg-secondary p-10 md:p-16">
+        <div className="overflow-hidden rounded-3xl bg-secondary p-6 sm:p-10 md:p-16">
           <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
             <div>
               <h2 className="font-display text-3xl font-semibold sm:text-4xl">
@@ -781,7 +781,7 @@ function HeroSection() {
           </div>
 
           {/* Right Column: Slide detail context & Manual Nav arrows */}
-          <div className="w-full lg:w-[48%] flex flex-col items-center lg:items-end justify-between self-stretch z-20 text-center lg:text-right py-4 lg:py-0 relative">
+          <div className="w-full lg:w-[48%] flex flex-col items-center lg:items-end justify-between self-stretch z-20 text-center lg:text-right py-2 lg:py-0 relative">
             
             {/* Dynamic Slide Info overlay */}
             <div className="hidden lg:flex flex-col items-end gap-2 bg-slate-950/40 backdrop-blur-sm p-8 rounded-3xl border border-white/5 max-w-sm transition-all duration-500 animate-fade-in self-end my-auto">
@@ -797,7 +797,7 @@ function HeroSection() {
             </div>
 
             {/* Slider Manual Controls & Dot Indicators */}
-            <div className="flex items-center gap-4 mt-8 lg:mt-0 select-none self-center lg:self-end">
+            <div className="flex items-center gap-4 mt-4 lg:mt-0 select-none self-center lg:self-end">
               {/* Arrow Left */}
               <button
                 onClick={() => setCurrentImageIndex((prev) => (prev - 1 + SLIDER_IMAGES.length) % SLIDER_IMAGES.length)}

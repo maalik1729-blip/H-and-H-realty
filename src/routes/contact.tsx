@@ -40,7 +40,7 @@ function Contact() {
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_1fr]">
+      <div className="mt-10 grid gap-8 md:grid-cols-[1.1fr_1fr]">
         {/* Form */}
         <form
           onSubmit={(e) => {

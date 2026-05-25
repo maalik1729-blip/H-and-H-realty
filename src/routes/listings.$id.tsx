@@ -217,6 +217,26 @@ function Detail() {
         </div>
       </div>
 
+      {/* ── Mobile Quick CTA Bar (hidden on lg where sidebar is visible) ── */}
+      <div className="lg:hidden mx-auto max-w-7xl px-4 pt-5 sm:px-6">
+        <div className="grid grid-cols-2 gap-3">
+          <a
+            href="tel:+919876543210"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground hover:opacity-90 transition shadow-sm"
+          >
+            <Phone className="h-4 w-4" /> Call Agent
+          </a>
+          <a
+            href={whatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-whatsapp px-4 py-3 text-sm font-bold text-whatsapp-foreground hover:opacity-90 transition shadow-sm"
+          >
+            <MessageCircle className="h-4 w-4" /> WhatsApp
+          </a>
+        </div>
+      </div>
+
       {/* ── Main Content Grid ── */}
       <div className="mx-auto max-w-7xl px-4 pt-8 pb-20 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1fr_380px]">

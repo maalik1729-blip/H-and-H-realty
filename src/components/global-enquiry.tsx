@@ -99,7 +99,7 @@ export default function GlobalEnquiry() {
           {/* Overlay */}
           <div className="absolute inset-0" onClick={handleClose} />
           
-          <div className="relative w-full max-w-[500px] bg-card rounded-3xl border border-border/80 shadow-elevated p-6 md:p-8 animate-scale-up z-10 text-xs font-sans text-foreground">
+          <div className="relative w-full max-w-[500px] max-h-[90vh] overflow-y-auto bg-card rounded-3xl border border-border/80 shadow-elevated p-6 md:p-8 animate-scale-up z-10 text-xs font-sans text-foreground">
             {/* Close Button */}
             <button
               onClick={handleClose}

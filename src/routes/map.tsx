@@ -22,11 +22,12 @@ function MapView() {
     <div className="mx-auto max-w-7xl px-4 pt-24 md:pt-28 pb-8 sm:px-6 lg:px-8">
       <h1 className="font-display text-3xl font-semibold">Map view</h1>
       <p className="mt-1 text-muted-foreground">
-        Hover a card to highlight the plot — click to view details.
+        Select a property to see it on the map — click to view details.
       </p>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_380px]">
-        <div className="sticky top-[68px] lg:relative lg:top-0 z-20 self-start">
+        {/* Map — below listings on mobile, left column on lg */}
+        <div className="order-2 lg:order-1 lg:sticky lg:top-24 lg:self-start">
           <LocationConnectivityMap
             id={sel.id}
             lat={sel.lat}
@@ -39,7 +40,8 @@ function MapView() {
             showHeading={false}
           />
         </div>
-        <div className="grid gap-3 lg:max-h-[640px] lg:overflow-y-auto lg:pr-2">
+        {/* Listings — shown first on mobile */}
+        <div className="order-1 lg:order-2 grid gap-3 lg:max-h-[640px] lg:overflow-y-auto lg:pr-2">
           {listings.map((l) => (
             <button
               key={l.id}
@@ -51,7 +53,7 @@ function MapView() {
                   : "border-border hover:border-primary/50"
               }`}
             >
-              <img src={l.image} alt="" className="h-20 w-24 shrink-0 rounded-lg object-cover" />
+              <img src={l.image} alt="" className="h-20 w-20 sm:w-24 shrink-0 rounded-lg object-cover" />
               <div className="min-w-0 flex-1">
                 <p className="truncate font-display text-base font-semibold">{l.title}</p>
                 <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">

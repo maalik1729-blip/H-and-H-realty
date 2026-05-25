@@ -103,7 +103,7 @@ export default function LocationConnectivityMap({
       )}
 
       {/* Map Card Wrapper */}
-      <div className="relative aspect-[16/9] w-full min-h-[380px] md:min-h-[480px] overflow-hidden rounded-2xl border border-border bg-muted shadow-card select-none group">
+      <div className="relative aspect-[16/9] w-full min-h-[260px] sm:min-h-[320px] md:min-h-[420px] overflow-hidden rounded-2xl border border-border bg-muted shadow-card select-none group">
         {/* Core Interactive Map Frame */}
         <iframe
           title={`Map showing location of ${title}`}

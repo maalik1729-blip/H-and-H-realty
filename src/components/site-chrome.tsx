@@ -200,7 +200,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-border bg-secondary/35">
       {/* Upper Main Footer Grid */}
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-4 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
         {/* Brand Info */}
         <div className="space-y-3">
           <Link to="/" className="flex items-center group select-none hover:opacity-90 transition duration-200">
@@ -212,8 +212,6 @@ export function SiteFooter() {
                 height: "240px",
                 marginTop: "-100px",
                 marginBottom: "-100px",
-                marginLeft: "-30px",
-                marginRight: "-30px",
                 mixBlendMode: "multiply",
                 maxHeight: "none",
               }}
