@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowRight, Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { useLanguage } from "@/context/language-context";
 
 const NAV_LINKS = [
   { to: "/", label: "Home", exact: true },
@@ -13,6 +14,7 @@ const NAV_LINKS = [
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, toggleLanguage, t } = useLanguage();
   
   const location = useLocation();
   const path = location.pathname;
@@ -77,18 +79,37 @@ export function SiteHeader() {
                 activeProps={{ className: "text-accent font-bold" }}
                 className={`transition-all duration-300 font-sans tracking-wide hover:-translate-y-0.5 inline-block transform ${linkColorClass}`}
               >
-                {link.label}
+                {link.label === "Home" ? t("nav.home") : 
+                 link.label === "Our Story" ? t("nav.ourStory") : 
+                 link.label === "Properties" ? t("nav.properties") : 
+                 link.label === "Communities" ? t("nav.communities") : 
+                 link.label}
               </Link>
             ))}
           </nav>
 
           {/* Desktop CTA Capsule + Mobile Hamburger */}
           <div className="flex items-center gap-3">
+            {/* Language Switcher Button */}
+            <button
+              onClick={toggleLanguage}
+              type="button"
+              title={language === "en" ? "Switch to Tamil / தமிழுக்கு மாற்றவும்" : "Switch to English / ஆங்கிலத்திற்கு மாற்றவும்"}
+              className={`hidden md:flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all duration-300 shadow-sm cursor-pointer select-none active:scale-95 ${
+                isDarkBackground
+                  ? "bg-white/15 text-white border-white/25 hover:bg-white/30 hover:border-white/35"
+                  : "bg-slate-100 hover:bg-slate-200/80 border-slate-200/80 text-slate-800"
+              }`}
+            >
+              <span className={`w-1.5 h-1.5 rounded-full bg-accent ${language === "ta" ? "animate-pulse" : ""}`} />
+              <span>{language === "en" ? "தமிழ்" : "English"}</span>
+            </button>
+
             <Link
               to="/contact"
               className="hidden md:inline-flex btn-notched-filled text-[10px] py-2 shadow-md hover:scale-[1.02]"
             >
-              <span>Contact Us &nbsp;↗</span>
+              <span>{t("nav.contactUs")} &nbsp;↗</span>
             </Link>
 
             {/* Hamburger — mobile only with dynamic theme colors */}
@@ -119,6 +140,19 @@ export function SiteHeader() {
               className="w-full bg-background border border-border/80 shadow-elevated rounded-3xl px-6 py-6 flex flex-col gap-4 animate-scale-up"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Mobile Language Toggle */}
+              <div className="flex items-center justify-between py-2 border-b border-border/50">
+                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Language / மொழி</span>
+                <button
+                  type="button"
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-1.5 rounded-full border border-accent/25 bg-accent/5 px-4 py-1.5 text-xs font-bold text-accent shadow-sm"
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full bg-accent ${language === "ta" ? "animate-pulse" : ""}`} />
+                  <span>{language === "en" ? "தமிழ்" : "English"}</span>
+                </button>
+              </div>
+
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.to}
@@ -128,7 +162,11 @@ export function SiteHeader() {
                   className="text-base font-bold uppercase tracking-widest text-foreground hover:text-accent transition-colors pl-1 py-1.5"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {link.label}
+                  {link.label === "Home" ? t("nav.home") : 
+                   link.label === "Our Story" ? t("nav.ourStory") : 
+                   link.label === "Properties" ? t("nav.properties") : 
+                   link.label === "Communities" ? t("nav.communities") : 
+                   link.label}
                 </Link>
               ))}
               <Link
@@ -136,18 +174,18 @@ export function SiteHeader() {
                 onClick={() => setMobileOpen(false)}
                 className="text-base font-bold uppercase tracking-widest text-slate-500 hover:text-accent pl-1 py-1.5"
               >
-                Admin Panel
+                {t("nav.adminPanel")}
               </Link>
               <Link
                 to="/contact"
                 onClick={() => setMobileOpen(false)}
                 className="mt-2 inline-flex btn-notched-filled text-[10px] py-2.5 justify-center"
               >
-                <span>Contact Us &nbsp;↗</span>
+                <span>{t("nav.contactUs")} &nbsp;↗</span>
               </Link>
               {/* Tagline in drawer */}
               <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-accent text-center pt-3 border-t border-border/50">
-                Trust &nbsp;|&nbsp; Value &nbsp;|&nbsp; Future
+                {language === "en" ? "Trust | Value | Future" : "நம்பிக்கை | மதிப்பு | எதிர்காலம்"}
               </p>
             </nav>
           </div>
@@ -158,6 +196,7 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const { t } = useLanguage();
   return (
     <footer className="mt-24 border-t border-border bg-secondary/35">
       {/* Upper Main Footer Grid */}
@@ -182,10 +221,10 @@ export function SiteFooter() {
           </Link>
           {/* Tagline */}
           <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">
-            Trust &nbsp;|&nbsp; Value &nbsp;|&nbsp; Future
+            {t("footer.tagline")}
           </p>
           <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-            Chennai's premier real estate search platform. Every plot, villa, apartment, and farmhouse listed on our platform undergoes 30-year lawyer vetting, title-checks, and drone audits.
+            {t("footer.desc")}
           </p>
           {/* Premium Circular Social Icons */}
           <div className="flex items-center gap-3 pt-1">
@@ -211,26 +250,26 @@ export function SiteFooter() {
 
         {/* Column 2: Discover Categories */}
         <div>
-          <h4 className="text-xs font-bold tracking-widest uppercase text-foreground mb-4">Properties</h4>
+          <h4 className="text-xs font-bold tracking-widest uppercase text-foreground mb-4">{t("bento.properties")}</h4>
           <ul className="space-y-2.5 text-sm">
             <li>
               <Link to="/listings" search={{ category: "Plots / Land" }} className="text-muted-foreground hover:text-accent transition">
-                Plots &amp; Lands for Sale
+                {t("bento.plots")}
               </Link>
             </li>
             <li>
               <Link to="/listings" search={{ category: "Villas & Homes" }} className="text-muted-foreground hover:text-accent transition">
-                Premium Luxury Villas
+                {t("bento.villas")}
               </Link>
             </li>
             <li>
               <Link to="/listings" search={{ category: "Apartments" }} className="text-muted-foreground hover:text-accent transition">
-                Modern Apartments &amp; Flats
+                {t("bento.apartments")}
               </Link>
             </li>
             <li>
               <Link to="/listings" search={{ category: "Farmhouses" }} className="text-muted-foreground hover:text-accent transition">
-                Scenic Weekend Farmhouses
+                {t("bento.farmhouses")}
               </Link>
             </li>
           </ul>
@@ -265,11 +304,11 @@ export function SiteFooter() {
 
         {/* Column 4: Contact & Newsletter */}
         <div className="space-y-4">
-          <h4 className="text-xs font-bold tracking-widest uppercase text-foreground">Get In Touch</h4>
+          <h4 className="text-xs font-bold tracking-widest uppercase text-foreground">{t("footer.getInTouch")}</h4>
           <ul className="space-y-2.5 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <MapPin className="h-4 w-4 mt-0.5 text-accent shrink-0" />
-              <span>No. 45, OMR Road, Sholinganallur, Chennai, Tamil Nadu 600119</span>
+              <span>{t("footer.address")}</span>
             </li>
             <li className="flex items-center gap-2">
               <Phone className="h-4 w-4 text-accent shrink-0" />
@@ -283,11 +322,11 @@ export function SiteFooter() {
 
           {/* Join The Club */}
           <div className="pt-2">
-            <h5 className="text-[10px] font-bold tracking-widest uppercase text-foreground mb-2">Join The Club</h5>
+            <h5 className="text-[10px] font-bold tracking-widest uppercase text-foreground mb-2">{t("footer.joinClub")}</h5>
             <form onSubmit={(e) => e.preventDefault()} className="flex items-center border-b border-border/80 py-1">
               <input
                 type="email"
-                placeholder="Enter your email address"
+                placeholder={t("footer.emailPlaceholder")}
                 required
                 className="w-full bg-transparent text-xs text-foreground placeholder:text-muted-foreground/60 focus:outline-none"
               />
@@ -295,7 +334,7 @@ export function SiteFooter() {
                 <ArrowRight className="h-4 w-4" />
               </button>
             </form>
-            <p className="text-[9px] text-muted-foreground/75 mt-1">Get the latest property logs weekly.</p>
+            <p className="text-[9px] text-muted-foreground/75 mt-1">{t("footer.joinDesc")}</p>
           </div>
         </div>
       </div>
@@ -321,7 +360,7 @@ export function SiteFooter() {
             <Link to="/terms" className="hover:text-accent transition">Terms &amp; Conditions</Link>
           </div>
           <div>
-            © {new Date().getFullYear()} H and H Realty Chennai. All rights reserved. Vetted Real Estate.
+            © {new Date().getFullYear()} {t("footer.rights")}
           </div>
         </div>
       </div>

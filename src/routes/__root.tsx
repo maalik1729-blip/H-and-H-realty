@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { StickyContact } from "@/components/sticky-contact";
 import GlobalEnquiry from "@/components/global-enquiry";
+import { LanguageProvider } from "@/context/language-context";
 
 function NotFoundComponent() {
   return (
@@ -129,13 +130,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SiteHeader />
-      <main className="pb-16 md:pb-0">
-        <Outlet />
-      </main>
-      {!isListingsPage && <SiteFooter />}
-      <StickyContact />
-      <GlobalEnquiry />
+      <LanguageProvider>
+        <SiteHeader />
+        <main className="pb-16 md:pb-0">
+          <Outlet />
+        </main>
+        {!isListingsPage && <SiteFooter />}
+        <StickyContact />
+        <GlobalEnquiry />
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }
