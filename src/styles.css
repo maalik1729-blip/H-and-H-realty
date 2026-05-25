@@ -117,18 +117,7 @@
   }
 }
 
-.sticky-stack-card {
-  position: sticky;
-  top: calc(4rem + var(--index) * 16px);
-  z-index: calc(10 + var(--index));
-}
-
-@media (min-width: 768px) {
-  .sticky-stack-card {
-    top: calc(6rem + var(--index) * 24px);
-  }
-}
-
+/* Keyframe declarations stay at top level (outside layers) */
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -136,16 +125,6 @@
   100% {
     transform: translateX(-50%);
   }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 75s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
 }
 
 @keyframes spin-slow {
@@ -157,10 +136,6 @@
   }
 }
 
-.animate-spin-slow {
-  animation: spin-slow 12s linear infinite;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -168,10 +143,6 @@
   to {
     opacity: 1;
   }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out forwards;
 }
 
 @keyframes scale-up {
@@ -185,71 +156,109 @@
   }
 }
 
-.animate-scale-up {
-  animation: scale-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
+/*
+  All custom component classes live in @layer components.
+  This ensures Tailwind utility classes (@layer utilities) — including
+  `hidden`, `md:inline-flex`, `flex`, `block`, etc. — can properly
+  override display and other properties set here.
+*/
+@layer components {
+  .sticky-stack-card {
+    position: sticky;
+    top: calc(4rem + var(--index) * 16px);
+    z-index: calc(10 + var(--index));
+  }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.scrollbar-none::-webkit-scrollbar {
-  display: none;
-}
+  @media (min-width: 768px) {
+    .sticky-stack-card {
+      top: calc(6rem + var(--index) * 24px);
+    }
+  }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.scrollbar-none {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 75s linear infinite;
+  }
 
-/* Premium, clean rounded capsule buttons (updates all pages instantly) */
-.btn-notched {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 24px;
-  color: var(--color-accent);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: transparent;
-  border: 2px solid var(--color-accent);
-  border-radius: 9999px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: pointer;
-  outline: none;
-}
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
 
-.btn-notched:hover, .btn-notched:focus-visible {
-  background: var(--color-accent);
-  color: var(--color-accent-foreground);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px oklch(0.60 0.16 240 / 0.25);
-  ring: 2px;
-  ring-color: var(--color-accent);
-}
+  .animate-spin-slow {
+    animation: spin-slow 12s linear infinite;
+  }
 
-/* Filled version of the clean premium button */
-.btn-notched-filled {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 11px 26px;
-  color: var(--color-accent-foreground);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--color-accent);
-  border: none;
-  border-radius: 9999px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: pointer;
-  outline: none;
-}
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+  }
 
-.btn-notched-filled:hover, .btn-notched-filled:focus-visible {
-  background: var(--color-primary);
-  color: var(--color-primary-foreground);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px oklch(0.23 0.065 250 / 0.2);
+  .animate-scale-up {
+    animation: scale-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Premium, clean rounded capsule buttons */
+  .btn-notched {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    color: var(--color-accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    border-radius: 9999px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .btn-notched:hover,
+  .btn-notched:focus-visible {
+    background: var(--color-accent);
+    color: var(--color-accent-foreground);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px oklch(0.60 0.16 240 / 0.25);
+  }
+
+  /* Filled version */
+  .btn-notched-filled {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 26px;
+    color: var(--color-accent-foreground);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--color-accent);
+    border: none;
+    border-radius: 9999px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .btn-notched-filled:hover,
+  .btn-notched-filled:focus-visible {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px oklch(0.23 0.065 250 / 0.2);
+  }
 }
 
 
