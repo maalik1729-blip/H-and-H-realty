@@ -82,8 +82,7 @@ export function SiteHeader() {
                 {link.label === "Home" ? t("nav.home") : 
                  link.label === "Our Story" ? t("nav.ourStory") : 
                  link.label === "Properties" ? t("nav.properties") : 
-                 link.label === "Communities" ? t("nav.communities") : 
-                 link.label}
+                 t("nav.communities")}
               </Link>
             ))}
           </nav>
@@ -165,8 +164,7 @@ export function SiteHeader() {
                   {link.label === "Home" ? t("nav.home") : 
                    link.label === "Our Story" ? t("nav.ourStory") : 
                    link.label === "Properties" ? t("nav.properties") : 
-                   link.label === "Communities" ? t("nav.communities") : 
-                   link.label}
+                   t("nav.communities")}
                 </Link>
               ))}
               <Link
