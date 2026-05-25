@@ -34,45 +34,51 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-foreground: var(--whatsapp-foreground);
+  --color-royal-blue: var(--royal-blue);
+  --color-royal-blue-hover: var(--royal-blue-hover);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  /* H&H Realty Brand Aliases */
+  --color-navy: var(--primary);
+  --color-accent-brand: var(--accent);
+  --color-tagline: var(--accent);
   --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.04), 0 8px 24px -12px oklch(0.25 0.04 150 / 0.12);
-  --shadow-elevated: 0 2px 4px oklch(0 0 0 / 0.05), 0 24px 48px -16px oklch(0.25 0.04 150 / 0.18);
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.04), 0 8px 24px -12px oklch(0.25 0.03 245 / 0.12);
+  --shadow-elevated: 0 2px 4px oklch(0 0 0 / 0.05), 0 24px 48px -16px oklch(0.25 0.03 245 / 0.18);
 }
 
 :root {
   --radius: 0.75rem;
-  /* Background = warm off-white sand */
-  --background: oklch(0.985 0.008 80);
-  --foreground: oklch(0.20 0.02 150);
+  /* Background = clean, cool slate-tinted off-white */
+  --background: oklch(0.99 0.003 240);
+  --foreground: oklch(0.22 0.02 240);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.02 150);
+  --card-foreground: oklch(0.22 0.02 240);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.02 150);
+  --popover-foreground: oklch(0.22 0.02 240);
 
-  /* Primary = deep forest green (trust + land) */
-  --primary: oklch(0.34 0.06 155);
-  --primary-foreground: oklch(0.985 0.008 80);
+  /* Primary = Modern Deep Slate Obsidian Black (clean corporate & architectural ground) */
+  --primary: oklch(0.18 0.015 240);
+  --primary-foreground: oklch(0.99 0.002 240);
 
-  /* Secondary = warm sand */
-  --secondary: oklch(0.95 0.018 80);
-  --secondary-foreground: oklch(0.25 0.03 150);
+  /* Secondary = Cool light slate */
+  --secondary: oklch(0.965 0.005 240);
+  --secondary-foreground: oklch(0.28 0.02 240);
 
-  --muted: oklch(0.955 0.012 80);
-  --muted-foreground: oklch(0.48 0.02 150);
+  --muted: oklch(0.97 0.003 240);
+  --muted-foreground: oklch(0.48 0.02 240);
 
-  /* Accent = burnt terracotta */
-  --accent: oklch(0.62 0.14 45);
-  --accent-foreground: oklch(0.99 0.005 80);
+  /* Accent = Clean Digital Indigo (representing high-fidelity interactive UI/UX highlights) */
+  --accent: oklch(0.52 0.22 262);
+  --accent-foreground: oklch(0.99 0.002 240);
 
-  --destructive: oklch(0.55 0.20 25);
+  --destructive: oklch(0.55 0.2 25);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --success: oklch(0.55 0.13 155);
+  --success: oklch(0.60 0.15 150);
   --success-foreground: oklch(0.99 0 0);
 
   --warning: oklch(0.75 0.15 75);
@@ -81,19 +87,169 @@
   --whatsapp: oklch(0.62 0.16 150);
   --whatsapp-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.90 0.012 80);
-  --input: oklch(0.92 0.012 80);
-  --ring: oklch(0.34 0.06 155);
+  --royal-blue: oklch(0.48 0.18 245);
+  --royal-blue-hover: oklch(0.42 0.16 245);
+
+  --border: oklch(0.92 0.005 240);
+  --input: oklch(0.94 0.005 240);
+  --ring: oklch(0.52 0.22 262);
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
 }
+
+.sticky-stack-card {
+  position: sticky;
+  top: calc(4rem + var(--index) * 16px);
+  z-index: calc(10 + var(--index));
+}
+
+@media (min-width: 768px) {
+  .sticky-stack-card {
+    top: calc(6rem + var(--index) * 24px);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 75s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+@keyframes scale-up {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-up {
+  animation: scale-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Premium, clean rounded capsule buttons (updates all pages instantly) */
+.btn-notched {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  color: var(--color-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: transparent;
+  border: 2px solid var(--color-accent);
+  border-radius: 9999px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-notched:hover, .btn-notched:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px oklch(0.60 0.16 240 / 0.25);
+  ring: 2px;
+  ring-color: var(--color-accent);
+}
+
+/* Filled version of the clean premium button */
+.btn-notched-filled {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 26px;
+  color: var(--color-accent-foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-accent);
+  border: none;
+  border-radius: 9999px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-notched-filled:hover, .btn-notched-filled:focus-visible {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px oklch(0.23 0.065 250 / 0.2);
+}
+
+

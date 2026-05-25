@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -11,6 +12,7 @@ import {
 import appCss from "../styles.css?url";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { StickyContact } from "@/components/sticky-contact";
+import GlobalEnquiry from "@/components/global-enquiry";
 
 function NotFoundComponent() {
   return (
@@ -74,18 +76,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Terraline — Verified Land for Sale: Plots, Farmland & Commercial" },
-      { name: "description", content: "Buy verified residential plots, commercial land, farmland and investment parcels with clear titles and transparent pricing." },
-      { property: "og:title", content: "Terraline — Verified Land for Sale" },
-      { property: "og:description", content: "Title-checked land listings, drone tours, and end-to-end registration support." },
+      { title: "H and H Realty Chennai — Verified Plots, Villas & Apartments" },
+      {
+        name: "description",
+        content:
+          "Browse verified residential plots, premium villas, apartments, and land near Chennai. Featuring ECR, OMR, Tambaram and GST Road. Verified titles & registration support.",
+      },
+      { property: "og:title", content: "H and H Realty Chennai — Verified Properties & Lands" },
+      {
+        property: "og:description",
+        content:
+          "Title-checked Chennai plots and homes, drone tours, and end-to-end registration support.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -110,6 +124,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+  const isListingsPage = location.pathname === "/listings" || location.pathname === "/listings/";
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -117,8 +133,9 @@ function RootComponent() {
       <main className="pb-16 md:pb-0">
         <Outlet />
       </main>
-      <SiteFooter />
+      {!isListingsPage && <SiteFooter />}
       <StickyContact />
+      <GlobalEnquiry />
     </QueryClientProvider>
   );
 }
