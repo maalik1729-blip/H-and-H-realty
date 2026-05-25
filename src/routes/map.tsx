@@ -26,17 +26,19 @@ function MapView() {
       </p>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_380px]">
-        <LocationConnectivityMap
-          id={sel.id}
-          lat={sel.lat}
-          lng={sel.lng}
-          title={sel.title}
-          location={sel.location}
-          city={sel.city}
-          image={sel.image}
-          category={sel.category}
-          showHeading={false}
-        />
+        <div className="sticky top-[68px] lg:relative lg:top-0 z-20 self-start">
+          <LocationConnectivityMap
+            id={sel.id}
+            lat={sel.lat}
+            lng={sel.lng}
+            title={sel.title}
+            location={sel.location}
+            city={sel.city}
+            image={sel.image}
+            category={sel.category}
+            showHeading={false}
+          />
+        </div>
         <div className="grid gap-3 lg:max-h-[640px] lg:overflow-y-auto lg:pr-2">
           {listings.map((l) => (
             <button

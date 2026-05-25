@@ -144,12 +144,12 @@ export function FinancialRoiCalculator() {
                     <label className="text-sm font-medium text-foreground block mb-3">
                       Select Location Corridor
                     </label>
-                    <div className="grid grid-cols-2 gap-2.5">
+                    <div className="grid grid-cols-1 min-[390px]:grid-cols-2 gap-2.5">
                       {(Object.keys(CORRIDOR_RATES) as Corridor[]).map((key) => (
                         <button
                           key={key}
                           onClick={() => setSelectedCorridor(key)}
-                          className={`p-3.5 rounded-xl border text-left transition cursor-pointer ${
+                          className={`p-3 min-[390px]:p-3.5 rounded-xl border text-left transition cursor-pointer ${
                             selectedCorridor === key
                               ? "border-primary bg-primary/5 text-primary shadow-sm"
                               : "border-border bg-card hover:bg-secondary text-foreground"

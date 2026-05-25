@@ -106,12 +106,12 @@ export function ScrollVideoReveal() {
         {/* Video Overlay Info */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex flex-col justify-between p-6 md:p-12">
           {/* Top Row: Coordinates & Status */}
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-2 rounded-full bg-slate-900/80 backdrop-blur px-4 py-1.5 border border-slate-700 text-xs font-medium">
+          <div className="flex flex-col sm:flex-row sm:items-center items-start justify-between gap-3">
+            <div className="flex items-center gap-2 rounded-full bg-slate-900/80 backdrop-blur px-4 py-1.5 border border-slate-700 text-xs font-medium shrink-0">
               <Compass className="h-4 w-4 text-accent animate-spin-slow" />
               <span className="font-mono text-slate-300">12°53'14" N · 80°14'31" E · ECR</span>
             </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 backdrop-blur px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-accent border border-accent/40">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 backdrop-blur px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-accent border border-accent/40 shrink-0">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
               Live Site Drone Feed
             </span>

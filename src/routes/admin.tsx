@@ -30,7 +30,7 @@ function Admin() {
         </button>
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-4">
+      <div className="mt-8 grid gap-4 grid-cols-2 sm:grid-cols-4">
         {[
           { k: "Total properties", v: rows.length },
           { k: "Available", v: rows.filter((r) => r.status === "Available").length },

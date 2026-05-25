@@ -319,7 +319,7 @@ export function PlotLayoutVisualizer() {
           <div
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative rounded-3xl border border-border bg-slate-50/50 p-4 md:p-6 overflow-hidden flex items-center justify-center min-h-[300px] md:min-h-[460px] shadow-sm select-none"
+            className="relative rounded-3xl border border-border bg-slate-50/50 p-4 md:p-6 overflow-x-auto overflow-y-hidden flex items-center justify-start md:justify-center min-h-[300px] md:min-h-[460px] shadow-sm select-none scrollbar-none"
           >
             {/* Tooltip */}
             {hoveredPlot && (
@@ -365,7 +365,7 @@ export function PlotLayoutVisualizer() {
             {/* SVG Visual Layout */}
             <svg
               viewBox="0 0 800 450"
-              className="w-full h-auto max-h-[420px]"
+              className="w-full h-auto max-h-[420px] min-w-[680px] md:min-w-0 shrink-0"
               xmlns="http://www.w3.org/2000/svg"
             >
               {/* Grid Background Lines for Techy Aesthetic */}
