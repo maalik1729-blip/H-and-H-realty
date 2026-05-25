@@ -155,7 +155,7 @@ function Home() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % SLIDER_IMAGES.length);
-    }, 5000);
+    }, 2500);
     return () => clearInterval(timer);
   }, []);
 
