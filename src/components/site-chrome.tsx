@@ -86,19 +86,32 @@ export function SiteHeader() {
 
           {/* Desktop CTA Capsule + Mobile Hamburger */}
           <div className="flex items-center gap-3">
-            {/* Language Switcher Button */}
+            {/* Language Toggle Button "TA | EN" */}
             <button
               onClick={toggleLanguage}
               type="button"
               title={language === "en" ? "Switch to Tamil / தமிழுக்கு மாற்றவும்" : "Switch to English / ஆங்கிலத்திற்கு மாற்றவும்"}
-              className={`hidden md:flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all duration-300 shadow-sm cursor-pointer select-none active:scale-95 ${
+              className={`hidden md:flex items-center rounded-xl border px-3 py-1.5 text-xs font-bold tracking-wide transition-all duration-300 shadow-sm cursor-pointer select-none active:scale-95 ${
                 isDarkBackground
-                  ? "bg-white/15 text-white border-white/25 hover:bg-white/30 hover:border-white/35"
-                  : "bg-slate-100 hover:bg-slate-200/80 border-slate-200/80 text-slate-800"
+                  ? "bg-white/5 border-white/20 hover:bg-white/10"
+                  : "bg-white border-slate-200/80 hover:bg-slate-50"
               }`}
             >
-              <span className={`w-1.5 h-1.5 rounded-full bg-accent ${language === "ta" ? "animate-pulse" : ""}`} />
-              <span>{language === "en" ? "தமிழ்" : "English"}</span>
+              <span className={language === "ta" 
+                ? (isDarkBackground ? "text-white font-extrabold" : "text-primary font-extrabold") 
+                : (isDarkBackground ? "text-white/40 font-medium" : "text-slate-400 font-medium")
+              }>
+                TA
+              </span>
+              <span className={`mx-2 h-3.5 w-px ${
+                isDarkBackground ? "bg-white/20" : "bg-slate-200"
+              }`} />
+              <span className={language === "en" 
+                ? (isDarkBackground ? "text-white font-extrabold" : "text-primary font-extrabold") 
+                : (isDarkBackground ? "text-white/40 font-medium" : "text-slate-400 font-medium")
+              }>
+                EN
+              </span>
             </button>
 
             <Link
@@ -142,10 +155,15 @@ export function SiteHeader() {
                 <button
                   type="button"
                   onClick={toggleLanguage}
-                  className="flex items-center gap-1.5 rounded-full border border-accent/25 bg-accent/5 px-4 py-1.5 text-xs font-bold text-accent shadow-sm"
+                  className="flex items-center rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold tracking-wide shadow-sm"
                 >
-                  <span className={`w-1.5 h-1.5 rounded-full bg-accent ${language === "ta" ? "animate-pulse" : ""}`} />
-                  <span>{language === "en" ? "தமிழ்" : "English"}</span>
+                  <span className={language === "ta" ? "text-primary font-extrabold" : "text-slate-400 font-medium"}>
+                    TA
+                  </span>
+                  <span className="mx-2 h-3.5 w-px bg-slate-200" />
+                  <span className={language === "en" ? "text-primary font-extrabold" : "text-slate-400 font-medium"}>
+                    EN
+                  </span>
                 </button>
               </div>
 
