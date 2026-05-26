@@ -191,7 +191,7 @@ function ListingsPage() {
   // Update search URL parameters
   const updateSearch = (updates: Partial<z.infer<typeof listingsSearchSchema>>) => {
     navigate({
-      search: (prev) => {
+      search: (prev: any) => {
         const next = { ...prev, ...updates };
         if (next.q === "") delete next.q;
         if (next.type === "All") delete next.type;
