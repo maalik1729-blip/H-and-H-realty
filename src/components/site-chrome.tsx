@@ -56,13 +56,10 @@ export function SiteHeader() {
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className={`w-auto transition-all duration-300 ${
+              className={`w-auto h-[120px] md:h-[220px] -my-[40px] md:-my-[90px] transition-all duration-300 ${
                 isDarkBackground ? "brightness-0 invert" : ""
               }`}
               style={{
-                height: "220px",
-                marginTop: "-90px",
-                marginBottom: "-90px",
                 mixBlendMode: isDarkBackground ? "normal" : "multiply",
                 maxHeight: "none",
               }}
@@ -205,11 +202,8 @@ export function SiteFooter() {
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className="w-auto"
+              className="w-auto h-[130px] md:h-[240px] -my-[45px] md:-my-[100px]"
               style={{
-                height: "240px",
-                marginTop: "-100px",
-                marginBottom: "-100px",
                 mixBlendMode: "multiply",
                 maxHeight: "none",
               }}
