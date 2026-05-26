@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { MapPin, Phone, Mail, MessageCircle, Calendar } from "lucide-react";
 import LocationConnectivityMap from "@/components/location-connectivity-map";
+import { useLanguage } from "@/context/language-context";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/contact")({
 
 function Contact() {
   const [sent, setSent] = useState(false);
+  const { language, t } = useLanguage();
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Banner Section */}
@@ -27,13 +29,13 @@ function Contact() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-left space-y-3">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 border border-accent/30 px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-accent">
             <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-            Get In Touch
+            {t("contact.badge")}
           </span>
           <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-white leading-none">
-            Talk to a Land Advisor
+            {t("contact.title")}
           </h1>
           <p className="text-sm text-white/70 max-w-xl leading-relaxed font-sans">
-            Book a free site visit or ask any legal/property question. Typical response in under 30 minutes during business hours.
+            {t("contact.desc")}
           </p>
         </div>
       </div>
@@ -49,56 +51,56 @@ function Contact() {
           }}
           className="rounded-2xl border border-border bg-card p-6 shadow-card md:p-8"
         >
-          <h2 className="font-display text-xl font-semibold">Book a site visit</h2>
+          <h2 className="font-display text-xl font-semibold">{t("contact.formTitle")}</h2>
           {sent ? (
             <div className="mt-4 rounded-xl bg-success/10 p-6 text-center">
-              <p className="font-display text-lg text-success">Site visit requested</p>
+              <p className="font-display text-lg text-success">{t("contact.successTitle")}</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Our advisor will WhatsApp you the meeting point and time.
+                {t("contact.successDesc")}
               </p>
             </div>
           ) : (
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              <Field label="Full name">
-                <input required className="field" placeholder="e.g. Ananya Rao" />
+              <Field label={t("contact.fullName")}>
+                <input required className="field" placeholder={language === "en" ? "e.g. Ananya Rao" : "எ.கா. அனன்யா ராவ்"} />
               </Field>
-              <Field label="Phone">
+              <Field label={t("contact.phone")}>
                 <input required type="tel" className="field" placeholder="+91 9xxxxxxxxx" />
               </Field>
-              <Field label="Email">
+              <Field label={t("contact.email")}>
                 <input type="email" className="field" placeholder="you@email.com" />
               </Field>
-              <Field label="Interested in">
+              <Field label={t("contact.interestedIn")}>
                 <select className="field">
-                  <option>Residential Plot</option>
-                  <option>Commercial Land</option>
-                  <option>Villa / Bungalow</option>
-                  <option>Apartment / Flat</option>
-                  <option>Farmhouse / Cottage</option>
-                  <option>Investment Parcel</option>
+                  <option>{language === "en" ? "Residential Plot" : "குடியிருப்பு மனை"}</option>
+                  <option>{language === "en" ? "Commercial Land" : "வணிக நிலம்"}</option>
+                  <option>{language === "en" ? "Villa / Bungalow" : "வில்லா / பங்களா"}</option>
+                  <option>{language === "en" ? "Apartment / Flat" : "அடுக்குமாடி குடியிருப்பு"}</option>
+                  <option>{language === "en" ? "Farmhouse / Cottage" : "பண்ணை வீடு / சிறிய இல்லம்"}</option>
+                  <option>{language === "en" ? "Investment Parcel" : "முதலீட்டு நிலம்"}</option>
                 </select>
               </Field>
-              <Field label="Preferred date">
+              <Field label={t("contact.preferredDate")}>
                 <input type="date" className="field" />
               </Field>
-              <Field label="Time slot">
+              <Field label={t("contact.timeSlot")}>
                 <select className="field">
-                  <option>Morning (9 – 12)</option>
-                  <option>Afternoon (12 – 4)</option>
-                  <option>Evening (4 – 7)</option>
+                  <option>{language === "en" ? "Morning (9 – 12)" : "காலை (9 - 12)"}</option>
+                  <option>{language === "en" ? "Afternoon (12 – 4)" : "மதியம் (12 - 4)"}</option>
+                  <option>{language === "en" ? "Evening (4 – 7)" : "மாலை (4 - 7)"}</option>
                 </select>
               </Field>
               <div className="sm:col-span-2">
-                <Field label="Message">
+                <Field label={t("contact.message")}>
                   <textarea
                     rows={4}
                     className="field"
-                    placeholder="Any specific plot or area in mind?"
+                    placeholder={language === "en" ? "Any specific plot or area in mind?" : "குறிப்பிட்ட மனை அல்லது பகுதி ஏதேனும் உள்ளதா?"}
                   />
                 </Field>
               </div>
               <button className="sm:col-span-2 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary text-sm font-medium text-primary-foreground hover:opacity-90">
-                <Calendar className="h-4 w-4" /> Confirm site visit
+                <Calendar className="h-4 w-4" /> {t("contact.confirm")}
               </button>
             </div>
           )}
@@ -107,7 +109,7 @@ function Contact() {
         {/* Side info */}
         <div className="space-y-4">
           <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
-            <h3 className="font-display text-lg font-semibold">Reach us directly</h3>
+            <h3 className="font-display text-lg font-semibold">{t("contact.reachUs")}</h3>
             <ul className="mt-4 space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary" />
@@ -131,7 +133,7 @@ function Contact() {
               <li className="flex items-center gap-3">
                 <MessageCircle className="h-5 w-5 text-whatsapp" />
                 <a href="https://wa.me/919876543210" className="hover:underline">
-                  WhatsApp chat
+                  {language === "en" ? "WhatsApp chat" : "வாட்ஸ்அப் அரட்டை"}
                 </a>
               </li>
             </ul>
@@ -150,11 +152,11 @@ function Contact() {
           />
 
           <div className="rounded-2xl border border-border bg-secondary/60 p-6">
-            <h3 className="font-display text-lg font-semibold">Office hours</h3>
+            <h3 className="font-display text-lg font-semibold">{language === "en" ? "Office hours" : "அலுவலக நேரம்"}</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Mon – Sat · 9:30 AM to 7:00 PM
+              {language === "en" ? "Mon – Sat · 9:30 AM to 7:00 PM" : "திங்கள் - சனி · காலை 9:30 முதல் மாலை 7:00 வரை"}
               <br />
-              Sunday by appointment
+              {language === "en" ? "Sunday by appointment" : "ஞாயிறு - முன்பதிவு மூலம் மட்டும்"}
             </p>
           </div>
         </div>

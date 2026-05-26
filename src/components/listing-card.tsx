@@ -1,17 +1,18 @@
 import { Link } from "@tanstack/react-router";
 import { MapPin, Maximize2, BadgeCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import { type Listing, formatPrice, isBuiltProperty } from "@/lib/listings";
+import { useLanguage } from "@/context/language-context";
 
 // Realistic Chennai monthly rental estimation based on purchase price (approx 3% yield)
-export function getMonthlyRent(priceLakh: number): string {
+export function getMonthlyRent(priceLakh: number, isTamil = false): string {
   const annualRent = priceLakh * 100000 * 0.03;
   const monthly = Math.round(annualRent / 12);
   
   if (monthly >= 100000) {
     const lakhVal = (monthly / 100000).toFixed(1).replace(/\.0$/, "");
-    return `₹${lakhVal} Lakh / mo`;
+    return isTamil ? `₹${lakhVal} லட்சம் / மாதம்` : `₹${lakhVal} Lakh / mo`;
   }
-  return `₹${monthly.toLocaleString()} / mo`;
+  return isTamil ? `₹${monthly.toLocaleString()} / மாதம்` : `₹${monthly.toLocaleString()} / mo`;
 }
 
 interface ListingCardProps {
@@ -21,6 +22,7 @@ interface ListingCardProps {
 }
 
 export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardProps) {
+  const { language, t } = useLanguage();
   const sold = l.status === "Sold";
   
   return (
@@ -69,11 +71,13 @@ export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardPr
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5 z-10">
           {/* New Listing Tag / Status Tag */}
           <span className="rounded bg-background/95 border border-border/40 px-2 py-0.5 text-[9px] font-bold tracking-wider uppercase text-foreground shadow-sm">
-            {rentMode ? "For Rent" : "New Listing"}
+            {rentMode 
+              ? (language === "en" ? "For Rent" : "வாடகைக்கு") 
+              : (language === "en" ? "New Listing" : "புதிய சொத்து")}
           </span>
           {l.verified && (
             <span className="inline-flex items-center gap-0.5 rounded bg-accent/95 px-2 py-0.5 text-[9px] font-bold tracking-wider uppercase text-accent-foreground shadow-sm">
-              <BadgeCheck className="h-3 w-3" /> Lawyer Vetted
+              <BadgeCheck className="h-3 w-3" /> {language === "en" ? "Lawyer Vetted" : "வழக்கறிஞர் சரிபார்க்கப்பட்டது"}
             </span>
           )}
         </div>
@@ -81,13 +85,13 @@ export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardPr
         {sold && (
           <div className="absolute inset-0 grid place-items-center bg-foreground/20 z-10">
             <span className="rounded bg-destructive px-3 py-1 text-xs font-bold tracking-widest text-destructive-foreground uppercase shadow-md">
-              SOLD
+              {language === "en" ? "SOLD" : "விற்கப்பட்டது"}
             </span>
           </div>
         )}
         {l.status === "Reserved" && (
           <span className="absolute right-3 top-3 rounded bg-amber-500 border border-amber-600/20 px-2 py-0.5 text-[9px] font-bold tracking-wider uppercase text-white shadow-sm z-10">
-            Reserved
+            {language === "en" ? "Reserved" : "முன்பதிவு"}
           </span>
         )}
       </div>
@@ -97,7 +101,7 @@ export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardPr
         <div>
           {/* Price Tag in Bold (Large, High Contrast) */}
           <p className="font-display text-2xl font-bold text-foreground tracking-tight">
-            {rentMode ? getMonthlyRent(l.priceLakh) : formatPrice(l.priceLakh, true)}
+            {rentMode ? getMonthlyRent(l.priceLakh, language === "ta") : formatPrice(l.priceLakh, true)}
           </p>
           
           {/* Address Title in Gray */}
@@ -119,11 +123,11 @@ export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardPr
           <div className="text-right font-semibold text-foreground/90">
             {isBuiltProperty(l.category) && l.bedrooms ? (
               <span>
-                {l.bedrooms} BHK · {l.bathrooms} Bath · Active
+                {l.bedrooms} BHK · {l.bathrooms} {language === "en" ? "Bath" : "குளியலறை"} · {language === "en" ? "Active" : "செயலில்"}
               </span>
             ) : (
               <span>
-                {l.roadAccess.split(" road")[0]} · Active
+                {l.roadAccess.split(" road")[0]} · {language === "en" ? "Active" : "செயலில்"}
               </span>
             )}
           </div>
@@ -133,7 +137,7 @@ export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardPr
         {!sold && (
           <div className="pt-1 select-none">
             <span className="w-full inline-flex items-center justify-center btn-notched-filled text-[10px] py-2">
-              <span>View Details &rarr;</span>
+              <span>{language === "en" ? "View Details" : "விவரங்களைக் காண்க"} &rarr;</span>
             </span>
           </div>
         )}

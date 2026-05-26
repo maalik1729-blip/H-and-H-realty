@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { MapPin } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
 import { listings, formatPrice } from "@/lib/listings";
 import LocationConnectivityMap from "@/components/location-connectivity-map";
 
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/map")({
 });
 
 function MapView() {
+  const { language, t } = useLanguage();
   const [active, setActive] = useState(listings[0].id);
   const sel = listings.find((l) => l.id === active)!;
 
@@ -20,9 +22,9 @@ function MapView() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 pt-24 md:pt-28 pb-8 sm:px-6 lg:px-8">
-      <h1 className="font-display text-3xl font-semibold">Map view</h1>
+      <h1 className="font-display text-3xl font-semibold">{t("map.title")}</h1>
       <p className="mt-1 text-muted-foreground">
-        Select a property to see it on the map — click to view details.
+        {t("map.desc")}
       </p>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_380px]">
@@ -66,7 +68,7 @@ function MapView() {
                     params={{ id: l.id }}
                     className="text-xs font-medium text-primary hover:underline"
                   >
-                    View
+                    {language === "en" ? "View" : "காண்க"}
                   </Link>
                 </div>
               </div>

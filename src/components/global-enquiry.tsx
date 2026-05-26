@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { X, Check, Loader2, ChevronDown } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
 
 export default function GlobalEnquiry() {
+  const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [captchaChecked, setCaptchaChecked] = useState(false);
   const [captchaLoading, setCaptchaLoading] = useState(false);
@@ -47,7 +49,7 @@ export default function GlobalEnquiry() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!captchaChecked) {
-      alert("Please verify that you are not a robot.");
+      alert(language === "en" ? "Please verify that you are not a robot." : "நீங்கள் ரோபோ அல்ல என்பதை சரிபார்க்கவும்.");
       return;
     }
     setSubmitted(true);
@@ -89,7 +91,7 @@ export default function GlobalEnquiry() {
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
         <span className="text-[11px] font-bold tracking-wider uppercase">
-          Enquire now
+          {language === "en" ? "Enquire now" : "விசாரிக்க"}
         </span>
       </button>
 
@@ -114,15 +116,19 @@ export default function GlobalEnquiry() {
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-success/10 border border-success/20 text-success">
                   <Check className="h-6 w-6" />
                 </div>
-                <h3 className="font-display text-xl font-bold tracking-tight text-foreground">Inquiry Submitted</h3>
+                <h3 className="font-display text-xl font-bold tracking-tight text-foreground">
+                  {language === "en" ? "Inquiry Submitted" : "விசாரணை சமர்ப்பிக்கப்பட்டது"}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed max-w-xs mx-auto text-xs font-medium">
-                  A senior legal property advisor from H and H Realty Chennai will call you within 15 minutes to assist with details.
+                  {language === "en"
+                    ? "A senior legal property advisor from H and H Realty Chennai will call you within 15 minutes to assist with details."
+                    : "H and H Realty சென்னையின் மூத்த சட்ட சொத்து ஆலோசகர் 15 நிமிடங்களுக்குள் உங்களை அழைத்து உதவுவார்."}
                 </p>
                 <button
                   onClick={handleClose}
                   className="mt-4 btn-notched-filled text-xs py-2.5 px-8"
                 >
-                  <span>Return to Page</span>
+                  <span>{language === "en" ? "Return to Page" : "திரும்பச் செல்க"}</span>
                 </button>
               </div>
             ) : (
@@ -130,10 +136,12 @@ export default function GlobalEnquiry() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="text-center pb-2">
                   <h3 className="font-display text-2xl font-bold text-foreground">
-                    Get in Touch
+                    {language === "en" ? "Get in Touch" : "தொடர்பு கொள்ள"}
                   </h3>
                   <p className="text-muted-foreground/80 font-medium text-[11px] mt-1">
-                    Send an inquiry to receive full legal paperwork & tour guide logs.
+                    {language === "en"
+                      ? "Send an inquiry to receive full legal paperwork & tour guide logs."
+                      : "முழுமையான சட்ட ஆவணங்கள் மற்றும் வழிகாட்டுதல்களைப் பெற விசாரணையைச் சமர்ப்பிக்கவும்."}
                   </p>
                 </div>
 
@@ -143,7 +151,7 @@ export default function GlobalEnquiry() {
                     <input
                       required
                       type="text"
-                      placeholder="Your Name"
+                      placeholder={language === "en" ? "Your Name" : "உங்கள் பெயர்"}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-xs text-foreground placeholder:text-muted-foreground/60"
@@ -160,7 +168,7 @@ export default function GlobalEnquiry() {
                       <input
                         required
                         type="tel"
-                        placeholder="Phone Number"
+                        placeholder={language === "en" ? "Phone Number" : "தொலைபேசி எண்"}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-xs text-foreground placeholder:text-muted-foreground/60"
@@ -173,7 +181,7 @@ export default function GlobalEnquiry() {
                     <input
                       required
                       type="email"
-                      placeholder="Email Address"
+                      placeholder={language === "en" ? "Email Address" : "மின்னஞ்சல் முகவரி"}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-xs text-foreground placeholder:text-muted-foreground/60"
@@ -187,11 +195,11 @@ export default function GlobalEnquiry() {
                       onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
                       className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-xs text-foreground/90 appearance-none cursor-pointer"
                     >
-                      <option disabled value="Type">Select Property Category</option>
-                      <option>Plots / Land</option>
-                      <option>Villas & Homes</option>
-                      <option>Apartments</option>
-                      <option>Farmhouses</option>
+                      <option disabled value="Type">{language === "en" ? "Select Property Category" : "சொத்து வகையைத் தேர்ந்தெடுக்கவும்"}</option>
+                      <option>{language === "en" ? "Plots / Land" : "நிலங்கள் / மனைகள்"}</option>
+                      <option>{language === "en" ? "Villas & Homes" : "வில்லாக்கள் & வீடுகள்"}</option>
+                      <option>{language === "en" ? "Apartments" : "அடுக்குமாடி குடியிருப்புகள்"}</option>
+                      <option>{language === "en" ? "Farmhouses" : "பண்ணை வீடுகள்"}</option>
                     </select>
                     <ChevronDown className="absolute right-4 top-4.5 h-3.5 w-3.5 text-muted-foreground/50 pointer-events-none" />
                   </div>
@@ -207,7 +215,9 @@ export default function GlobalEnquiry() {
                     className="mt-0.5 h-4 w-4 rounded border-border bg-background focus:ring-accent shrink-0 accent-accent"
                   />
                   <span className="text-[9px] leading-relaxed text-muted-foreground/80 font-medium">
-                    I authorize H and H Realty representatives to contact me via email, SMS, WhatsApp, and calls. This consent overrides any DND/NDNC registration.*
+                    {language === "en"
+                      ? "I authorize H and H Realty representatives to contact me via email, SMS, WhatsApp, and calls. This consent overrides any DND/NDNC registration.*"
+                      : "மின்னஞ்சல், குறுஞ்செய்தி, வாட்ஸ்அப் மற்றும் தொலைபேசி அழைப்புகள் மூலம் என்னைத் தொடர்பு கொள்ள H and H Realty பிரதிநிதிகளுக்கு நான் அங்கீகாரம் வழங்குகிறேன்.*"}
                   </span>
                 </label>
 
@@ -230,7 +240,9 @@ export default function GlobalEnquiry() {
                           <Check className="h-3.5 w-3.5 stroke-[3px] text-white" />
                         ) : null}
                       </button>
-                      <span className="font-sans font-medium text-foreground/80 text-[11px]">I'm not a robot</span>
+                      <span className="font-sans font-medium text-foreground/80 text-[11px]">
+                        {language === "en" ? "I'm not a robot" : "நான் ரோபோ அல்ல"}
+                      </span>
                     </div>
                     
                     <div className="flex flex-col items-center shrink-0">
@@ -250,7 +262,7 @@ export default function GlobalEnquiry() {
                     type="submit"
                     className="w-full inline-flex h-11 items-center justify-center btn-notched-filled text-xs font-bold tracking-widest uppercase transition-all duration-200 cursor-pointer"
                   >
-                    <span>Submit Inquiry</span>
+                    <span>{language === "en" ? "Submit Inquiry" : "விசாரணையை சமர்ப்பிக்கவும்"}</span>
                   </button>
                 </div>
               </form>

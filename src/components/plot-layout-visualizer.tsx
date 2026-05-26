@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { ShieldCheck, MessageCircle, Info, Sparkles, MapPin, X, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
 
 interface Plot {
   id: string;
@@ -213,11 +214,25 @@ const PLOTS_DATA: Plot[] = [
 ];
 
 export function PlotLayoutVisualizer() {
+  const { language } = useLanguage();
   const [selectedPlot, setSelectedPlot] = useState<Plot | null>(PLOTS_DATA[0]);
   const [hoveredPlot, setHoveredPlot] = useState<Plot | null>(null);
   const [statusFilter, setStatusFilter] = useState<"All" | "Available" | "Reserved">("All");
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const statusTamil: Record<string, string> = {
+    Available: "கிடைக்கக்கூடியது",
+    Reserved: "முன்பதிவு செய்யப்பட்டுள்ளது",
+    Sold: "விற்கப்பட்டது",
+  };
+
+  const facingTamil: Record<string, string> = {
+    North: "வடக்கு",
+    South: "தெற்கு",
+    East: "கிழக்கு",
+    West: "மேற்கு",
+  };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (containerRef.current) {
@@ -268,14 +283,15 @@ export function PlotLayoutVisualizer() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-3.5 py-1 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
-              <Sparkles className="h-3.5 w-3.5" /> Interactive Experience
+              <Sparkles className="h-3.5 w-3.5" /> {language === "en" ? "Interactive Experience" : "இலவச செயல் வரைபடம்"}
             </span>
             <h2 className="font-display text-3xl font-bold sm:text-4xl">
-              Ocean Breeze Enclave, ECR
+              {language === "en" ? "Ocean Breeze Enclave, ECR" : "ஓஷன் பிரீஸ் என்கிளேவ், ஈசிஆர்"}
             </h2>
             <p className="mt-3 text-muted-foreground text-sm leading-relaxed">
-              Explore our master layout map below. Hover over any plot to view live availability,
-              pricing, and dimensions. Click to select and request legal documentation.
+              {language === "en"
+                ? "Explore our master layout map below. Hover over any plot to view live availability, pricing, and dimensions. Click to select and request legal documentation."
+                : "கீழே உள்ள வரைபடத்தை ஆராயுங்கள். மனைகளின் விலை, அளவு மற்றும் கிடைக்கும் தன்மையைக் காண அதன் மேல் கர்சரைக் கொண்டு செல்லவும். சட்ட ஆவணங்களைக் கோர மனையைத் தேர்ந்தெடுக்கவும்."}
             </p>
           </div>
           {/* Legend and Filters */}
@@ -288,7 +304,7 @@ export function PlotLayoutVisualizer() {
                   : "bg-secondary text-foreground border-border hover:bg-muted"
               }`}
             >
-              All Plots
+              {language === "en" ? "All Plots" : "அனைத்து மனைகள்"}
             </button>
             <button
               onClick={() => setStatusFilter("Available")}
@@ -298,7 +314,7 @@ export function PlotLayoutVisualizer() {
                   : "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
               }`}
             >
-              Available Plots
+              {language === "en" ? "Available Plots" : "கிடைக்கக்கூடியவை"}
             </button>
             <button
               onClick={() => setStatusFilter("Reserved")}
@@ -308,7 +324,7 @@ export function PlotLayoutVisualizer() {
                   : "bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100"
               }`}
             >
-              Reserved
+              {language === "en" ? "Reserved" : "முன்பதிவு"}
             </button>
           </div>
         </div>
@@ -328,7 +344,7 @@ export function PlotLayoutVisualizer() {
                 style={{ left: `${tooltipPos.x}px`, top: `${tooltipPos.y}px` }}
               >
                 <div className="flex items-center justify-between font-bold border-b border-slate-800 pb-1.5 mb-1.5">
-                  <span>Plot #{hoveredPlot.number}</span>
+                  <span>{language === "en" ? `Plot #${hoveredPlot.number}` : `மனை #${hoveredPlot.number}`}</span>
                   <span
                     className={`px-1.5 py-0.5 rounded-[4px] text-[10px] uppercase font-extrabold ${
                       hoveredPlot.status === "Available"
@@ -338,25 +354,27 @@ export function PlotLayoutVisualizer() {
                           : "bg-slate-500/20 text-slate-400"
                     }`}
                   >
-                    {hoveredPlot.status}
+                    {language === "en" ? hoveredPlot.status : statusTamil[hoveredPlot.status]}
                   </span>
                 </div>
                 <div className="space-y-1 text-slate-300 font-medium">
                   <p className="flex justify-between">
-                    <span>Size:</span>
+                    <span>{language === "en" ? "Size:" : "அளவு:"}</span>
                     <span className="font-semibold text-slate-100">
-                      {hoveredPlot.sizeSqft} sqft
+                      {language === "en" ? `${hoveredPlot.sizeSqft} sqft` : `${hoveredPlot.sizeSqft} சதுர அடி`}
                     </span>
                   </p>
                   <p className="flex justify-between">
-                    <span>Price:</span>
+                    <span>{language === "en" ? "Price:" : "விலை:"}</span>
                     <span className="font-semibold text-slate-100">
-                      ₹{hoveredPlot.priceLakh} Lakh
+                      {language === "en" ? `₹${hoveredPlot.priceLakh} Lakh` : `₹${hoveredPlot.priceLakh} லட்சம்`}
                     </span>
                   </p>
                   <p className="flex justify-between">
-                    <span>Facing:</span>
-                    <span className="font-semibold text-slate-100">{hoveredPlot.facing}</span>
+                    <span>{language === "en" ? "Facing:" : "திசை:"}</span>
+                    <span className="font-semibold text-slate-100">
+                      {language === "en" ? hoveredPlot.facing : facingTamil[hoveredPlot.facing]}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -396,7 +414,7 @@ export function PlotLayoutVisualizer() {
                   className="font-display font-bold text-xs fill-emerald-600/60 uppercase tracking-widest text-center"
                   textAnchor="middle"
                 >
-                  Central Green Park
+                  {language === "en" ? "Central Green Park" : "மத்திய பசுமைப் பூங்கா"}
                 </text>
               </g>
 
@@ -421,10 +439,10 @@ export function PlotLayoutVisualizer() {
                   textAnchor="middle"
                   y="20"
                 >
-                  Clubhouse
+                  {language === "en" ? "Clubhouse" : "கிளப்ஹவுஸ்"}
                 </text>
                 <text className="font-sans text-[10px] fill-slate-500" textAnchor="middle" y="34">
-                  & Indoor Arena
+                  {language === "en" ? "& Indoor Arena" : "மற்றும் உட்புற விளையாட்டு அரங்கம்"}
                 </text>
               </g>
 
@@ -452,7 +470,7 @@ export function PlotLayoutVisualizer() {
                 className="font-sans font-bold text-[9px] fill-slate-500 uppercase tracking-widest"
                 textAnchor="middle"
               >
-                East Coast Boulevard (30 Ft. Road)
+                {language === "en" ? "East Coast Boulevard (30 Ft. Road)" : "கிழக்கு கடற்கரை சாலை (30 அடி சாலை)"}
               </text>
 
               {/* Entrance Gate */}
@@ -463,7 +481,7 @@ export function PlotLayoutVisualizer() {
                 className="font-sans font-semibold text-[8px] fill-slate-400 uppercase tracking-wider rotate-90"
                 transform="translate(0, 0)"
               >
-                Main Entry
+                {language === "en" ? "Main Entry" : "முக்கிய நுழைவாயில்"}
               </text>
 
               {/* Plots Group */}
@@ -523,7 +541,7 @@ export function PlotLayoutVisualizer() {
 
             {/* Mobile Touch Zoom Tip */}
             <div className="absolute bottom-3 left-3 bg-white/80 backdrop-blur px-2.5 py-1 rounded-lg border border-border text-[10px] text-muted-foreground flex items-center gap-1">
-              <Info className="h-3 w-3" /> Select a plot for details
+              <Info className="h-3 w-3" /> {language === "en" ? "Select a plot for details" : "விவரங்களைக் காண மனையைத் தேர்ந்தெடுக்கவும்"}
             </div>
           </div>
 
@@ -534,7 +552,7 @@ export function PlotLayoutVisualizer() {
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Plot Specifications
+                      {language === "en" ? "Plot Specifications" : "மனை விவரக்குறிப்புகள்"}
                     </span>
                     <span
                       className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${
@@ -546,29 +564,29 @@ export function PlotLayoutVisualizer() {
                       <span
                         className={`h-1.5 w-1.5 rounded-full ${selectedPlot.status === "Available" ? "bg-emerald-500" : "bg-amber-500"}`}
                       />
-                      {selectedPlot.status}
+                      {language === "en" ? selectedPlot.status : statusTamil[selectedPlot.status]}
                     </span>
                   </div>
 
                   <h3 className="font-display text-3xl font-bold text-foreground">
-                    Plot #{selectedPlot.number}
+                    {language === "en" ? `Plot #${selectedPlot.number}` : `மனை #${selectedPlot.number}`}
                   </h3>
                   <p className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
-                    <MapPin className="h-3 w-3" /> Ocean Breeze Enclave, Sector A
+                    <MapPin className="h-3 w-3" /> {language === "en" ? "Ocean Breeze Enclave, Sector A" : "ஓஷன் பிரீஸ் என்கிளேவ், செக்டர் A"}
                   </p>
 
                   <div className="mt-6 grid grid-cols-2 gap-4 border-y border-border/60 py-5 my-6">
                     <div>
                       <p className="text-[11px] text-muted-foreground uppercase font-medium">
-                        Area Size
+                        {language === "en" ? "Area Size" : "பரப்பளவு"}
                       </p>
                       <p className="text-lg font-bold text-foreground mt-0.5">
-                        {selectedPlot.sizeSqft} sqft
+                        {language === "en" ? `${selectedPlot.sizeSqft} sqft` : `${selectedPlot.sizeSqft} சதுர அடி`}
                       </p>
                     </div>
                     <div>
                       <p className="text-[11px] text-muted-foreground uppercase font-medium">
-                        Dimensions
+                        {language === "en" ? "Dimensions" : "அளவுகள்"}
                       </p>
                       <p className="text-lg font-bold text-foreground mt-0.5">
                         {selectedPlot.dimensions}
@@ -576,39 +594,41 @@ export function PlotLayoutVisualizer() {
                     </div>
                     <div>
                       <p className="text-[11px] text-muted-foreground uppercase font-medium">
-                        Road Facing
+                        {language === "en" ? "Road Facing" : "திசை"}
                       </p>
                       <p className="text-lg font-bold text-foreground mt-0.5">
-                        {selectedPlot.facing} Facing
+                        {language === "en" ? `${selectedPlot.facing} Facing` : `${facingTamil[selectedPlot.facing]} திசை`}
                       </p>
                     </div>
                     <div>
                       <p className="text-[11px] text-muted-foreground uppercase font-medium">
-                        Clear Title
+                        {language === "en" ? "Clear Title" : "சுத்தமான பத்திரம்"}
                       </p>
                       <p className="text-lg font-bold text-foreground mt-0.5 flex items-center gap-1.5 text-primary">
-                        <ShieldCheck className="h-4.5 w-4.5 text-primary" /> Yes
+                        <ShieldCheck className="h-4.5 w-4.5 text-primary" /> {language === "en" ? "Yes" : "ஆம்"}
                       </p>
                     </div>
                   </div>
 
                   <div className="space-y-3">
                     <p className="text-xs text-muted-foreground">
-                      * DTCP & TNRERA approved layout with 30-year mother deed records checked by
-                      legal advisors. Gated boundary walls and concrete roads are fully installed.
+                      {language === "en"
+                        ? "* DTCP & TNRERA approved layout with 30-year mother deed records checked by legal advisors. Gated boundary walls and concrete roads are fully installed."
+                        : "* DTCP & TNRERA அங்கீகரிக்கப்பட்ட மனை. 30 ஆண்டுகால தாய் பத்திரம் சட்டப்பூர்வமாக சரிபார்க்கப்பட்டது. எல்லை சுவர்கள் மற்றும் சாலைகள் அமைக்கப்பட்டுள்ளன."}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      * Water lines connection laid directly to the plot corner. Bank loans
-                      pre-approved through SBI, HDFC, and LIC.
+                      {language === "en"
+                        ? "* Water lines connection laid directly to the plot corner. Bank loans pre-approved through SBI, HDFC, and LIC."
+                        : "* குடிநீர் இணைப்பு நேரடியாக மனைக்கு வழங்கப்பட்டுள்ளது. SBI, HDFC மற்றும் LIC வங்கிகள் மூலம் கடன் உதவி பெறலாம்."}
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-border/60">
                   <div className="flex items-baseline justify-between mb-4">
-                    <span className="text-sm text-muted-foreground">Launch Price:</span>
+                    <span className="text-sm text-muted-foreground">{language === "en" ? "Launch Price:" : "விலை:"}</span>
                     <span className="font-display text-2xl font-bold text-foreground">
-                      ₹{selectedPlot.priceLakh} Lakhs
+                      {language === "en" ? `₹${selectedPlot.priceLakh} Lakhs` : `₹${selectedPlot.priceLakh} லட்சம்`}
                     </span>
                   </div>
 
@@ -619,13 +639,13 @@ export function PlotLayoutVisualizer() {
                       rel="noreferrer"
                       className="inline-flex items-center justify-center gap-2 rounded-xl bg-whatsapp px-4 py-3 text-sm font-semibold text-whatsapp-foreground hover:opacity-90 transition-opacity"
                     >
-                      <MessageCircle className="h-4 w-4" /> Book Reservation (WhatsApp)
+                      <MessageCircle className="h-4 w-4" /> {language === "en" ? "Book Reservation (WhatsApp)" : "முன்பதிவு செய்ய (வாட்ஸ்அப்)"}
                     </a>
                     <a
                       href="/contact"
                       className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 transition-opacity"
                     >
-                      Request Legal Papers <ArrowRight className="h-4 w-4" />
+                      {language === "en" ? "Request Legal Papers" : "சட்ட ஆவணங்களைக் கோருக"} <ArrowRight className="h-4 w-4" />
                     </a>
                   </div>
                 </div>
@@ -633,10 +653,11 @@ export function PlotLayoutVisualizer() {
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center text-center py-12">
                 <Info className="h-10 w-10 text-muted-foreground/60 mb-3" />
-                <h4 className="font-display text-lg font-bold">No Plot Selected</h4>
+                <h4 className="font-display text-lg font-bold">{language === "en" ? "No Plot Selected" : "மனை எதுவும் தேர்ந்தெடுக்கப்படவில்லை"}</h4>
                 <p className="text-xs text-muted-foreground mt-2 max-w-xs">
-                  Hover over or click any available (green) or reserved (amber) plot on the map to
-                  inspect sizes, layouts, pricing, and launch details.
+                  {language === "en"
+                    ? "Hover over or click any available (green) or reserved (amber) plot on the map to inspect sizes, layouts, pricing, and launch details."
+                    : "வரைபடத்தில் பச்சை (கிடைப்பவை) அல்லது மஞ்சள் (முன்பதிவு) மனையைத் தேர்ந்தெடுத்து அதன் அளவு, விலை மற்றும் பிற விவரங்களை அறியலாம்."}
                 </p>
               </div>
             )}

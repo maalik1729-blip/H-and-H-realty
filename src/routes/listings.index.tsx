@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useLanguage } from "@/context/language-context";
 import { useMemo, useState, useEffect } from "react";
 import { SlidersHorizontal, Map as MapIcon, Grid as GridIcon, Search, BadgeCheck, CheckCircle2, ChevronRight, UploadCloud, X, Home, Building2, TreePine, LayoutGrid, ChevronDown } from "lucide-react";
 import {
@@ -84,6 +85,7 @@ export const Route = createFileRoute("/listings/")({
 function ListingsPage() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
+  const { language, t } = useLanguage();
 
   // Scroll tracking to synchronize layout offsets with the main header's visibility
   const [headerVisible, setHeaderVisible] = useState(true);
@@ -271,7 +273,7 @@ function ListingsPage() {
     <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 items-end text-xs font-sans">
       {/* 1. Keyword search */}
       <div className="flex flex-col gap-2">
-        <label className="font-bold tracking-wider uppercase text-foreground/75 text-[10px]">Keywords</label>
+        <label className="font-bold tracking-wider uppercase text-foreground/75 text-[10px]">{t("catalog.keywords")}</label>
         <div className="relative">
           <input
             type="text"
@@ -280,7 +282,7 @@ function ListingsPage() {
               setSearchQuery(e.target.value);
               updateSearch({ q: e.target.value });
             }}
-            placeholder="e.g. ECR Beach, Villa..."
+            placeholder={language === "en" ? "e.g. ECR Beach, Villa..." : "எ.கா. ஈசிஆர் கடற்கரை, வில்லா..."}
             className="h-11 w-full rounded-xl border border-border bg-background/50 pl-10 pr-4 text-xs focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/60"
           />
           <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground/50" />
@@ -289,14 +291,14 @@ function ListingsPage() {
 
       {/* 2. Type select dropdown */}
       <div className="flex flex-col gap-2">
-        <label className="font-bold tracking-wider uppercase text-foreground/75 text-[10px]">Property Type</label>
+        <label className="font-bold tracking-wider uppercase text-foreground/75 text-[10px]">{t("catalog.propertyType")}</label>
         <div className="relative">
           <button
             type="button"
             onClick={() => setIsTypeDropdownOpen(!isTypeDropdownOpen)}
             className="h-11 w-full flex items-center justify-between rounded-xl border border-border bg-background/50 px-4 text-xs font-medium text-foreground focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition cursor-pointer"
           >
-            <span>Type ({selectedTypes.length})</span>
+            <span>{language === "en" ? "Type" : "வகை"} ({selectedTypes.length})</span>
             <ChevronDown className="h-4 w-4 text-muted-foreground/50 shrink-0 ml-1" />
           </button>
 
@@ -310,11 +312,11 @@ function ListingsPage() {
               {/* Dropdown container */}
               <div className="absolute left-0 mt-2 w-64 bg-card border border-border rounded-xl shadow-elevated p-4 z-50 animate-scale-up space-y-4 max-h-[400px] overflow-y-auto">
                 <div className="space-y-2.5">
-                  {PROPERTY_TYPES_12.map((t) => {
-                    const isChecked = selectedTypes.includes(t);
+                  {PROPERTY_TYPES_12.map((tItem) => {
+                    const isChecked = selectedTypes.includes(tItem);
                     return (
                       <label
-                        key={t}
+                        key={tItem}
                         className="flex items-center gap-3 cursor-pointer select-none group py-0.5 text-foreground hover:text-primary transition-colors"
                       >
                         <input
@@ -322,9 +324,9 @@ function ListingsPage() {
                           checked={isChecked}
                           onChange={() => {
                             if (isChecked) {
-                              setSelectedTypes(selectedTypes.filter((x) => x !== t));
+                              setSelectedTypes(selectedTypes.filter((x) => x !== tItem));
                             } else {
-                              setSelectedTypes([...selectedTypes, t]);
+                              setSelectedTypes([...selectedTypes, tItem]);
                             }
                           }}
                           className="hidden"
@@ -346,7 +348,7 @@ function ListingsPage() {
                           )}
                         </div>
                         <span className="text-xs font-sans text-foreground/90 font-medium">
-                          {t}
+                          {tItem}
                         </span>
                       </label>
                     );
@@ -359,7 +361,7 @@ function ListingsPage() {
                     onClick={() => setIsTypeDropdownOpen(false)}
                     className="bg-accent hover:bg-accent/90 text-accent-foreground px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors duration-200 cursor-pointer"
                   >
-                    DONE
+                    {language === "en" ? "DONE" : "முடிந்தது"}
                   </button>
                 </div>
               </div>
@@ -370,7 +372,7 @@ function ListingsPage() {
 
       {/* 3. Locality select */}
       <div className="flex flex-col gap-2">
-        <label className="font-bold tracking-wider uppercase text-foreground/75 text-[10px]">Locality</label>
+        <label className="font-bold tracking-wider uppercase text-foreground/75 text-[10px]">{t("catalog.locality")}</label>
         <div className="relative">
           <select
             value={location}
@@ -379,7 +381,7 @@ function ListingsPage() {
           >
             {locations.map((loc) => (
               <option key={loc} value={loc} className="bg-card text-foreground">
-                {loc === "All" ? "All Areas" : loc}
+                {loc === "All" ? t("catalog.allAreas") : loc}
               </option>
             ))}
           </select>
@@ -389,16 +391,16 @@ function ListingsPage() {
 
       {/* 4. Ownership select */}
       <div className="flex flex-col gap-2">
-        <label className="font-bold tracking-wider uppercase text-foreground/75 text-[10px]">Ownership</label>
+        <label className="font-bold tracking-wider uppercase text-foreground/75 text-[10px]">{t("catalog.ownership")}</label>
         <div className="relative">
           <select
             value={ownership}
             onChange={(e) => updateSearch({ ownership: e.target.value as any })}
             className="h-11 w-full appearance-none rounded-xl border border-border bg-background/50 pl-4 pr-10 text-xs font-medium text-foreground focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition cursor-pointer"
           >
-            <option value="All" className="bg-card text-foreground">All Ownerships</option>
-            <option value="Freehold" className="bg-card text-foreground">Freehold</option>
-            <option value="Leasehold" className="bg-card text-foreground">Leasehold</option>
+            <option value="All" className="bg-card text-foreground">{t("catalog.allOwnerships")}</option>
+            <option value="Freehold" className="bg-card text-foreground">{language === "en" ? "Freehold" : "முழு உரிமை"}</option>
+            <option value="Leasehold" className="bg-card text-foreground">{language === "en" ? "Leasehold" : "குத்தகை"}</option>
           </select>
           <ChevronDown className="absolute right-3.5 top-3.5 h-4 w-4 text-muted-foreground/50 pointer-events-none" />
         </div>
@@ -407,7 +409,7 @@ function ListingsPage() {
       {/* 5. Price range slider */}
       <div className="flex flex-col gap-2 md:col-span-2 lg:col-span-1">
         <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-foreground/75">
-          <span>Max Budget</span>
+          <span>{t("catalog.budget")}</span>
           <span className="text-accent font-bold bg-accent/10 px-2.5 py-0.5 rounded border border-accent/20">{formatPrice(maxPrice, true)}</span>
         </div>
         <div className="flex items-center h-11">
@@ -441,18 +443,18 @@ function ListingsPage() {
           }}
           className="h-11 w-full rounded-xl text-[10px] font-bold tracking-widest uppercase text-muted-foreground hover:text-accent hover:bg-accent/15 border border-border hover:border-accent/30 bg-background/50 transition duration-200 cursor-pointer flex items-center justify-center gap-1.5"
         >
-          Clear Filters
+          {t("catalog.clear")}
         </button>
       </div>
     </div>
   );
 
   const categoriesList = [
-    { value: "All", label: "All Types", icon: <LayoutGrid className="h-4 w-4" /> },
-    { value: "Plots / Land", label: "Plots & Lands", icon: <MapIcon className="h-4 w-4" /> },
-    { value: "Villas & Homes", label: "Villas & Homes", icon: <Home className="h-4 w-4" /> },
-    { value: "Apartments", label: "Apartments", icon: <Building2 className="h-4 w-4" /> },
-    { value: "Farmhouses", label: "Farmhouses", icon: <TreePine className="h-4 w-4" /> },
+    { value: "All", label: language === "en" ? "All Types" : "அனைத்து வகைகள்", icon: <LayoutGrid className="h-4 w-4" /> },
+    { value: "Plots / Land", label: t("bento.plots"), icon: <MapIcon className="h-4 w-4" /> },
+    { value: "Villas & Homes", label: t("bento.villas"), icon: <Home className="h-4 w-4" /> },
+    { value: "Apartments", label: t("bento.apartments"), icon: <Building2 className="h-4 w-4" /> },
+    { value: "Farmhouses", label: t("bento.farmhouses"), icon: <TreePine className="h-4 w-4" /> },
   ] as const;
 
   return (
@@ -465,30 +467,32 @@ function ListingsPage() {
           <div className="space-y-3 text-left">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 border border-accent/30 px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-accent">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-              Verified Catalog
+              {language === "en" ? "Verified Catalog" : "சரிபார்க்கப்பட்ட சொத்துக்கள்"}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-white leading-none">
-              Explore Premium Properties
+              {language === "en" ? "Explore Premium Properties" : "பிரீமியம் சொத்துக்களை ஆராய்க"}
             </h1>
             <p className="text-sm text-white/70 max-w-xl leading-relaxed font-sans">
-              Discover title-vetted land parcels, luxury villas, modern apartments, and green farmhouses in the most sought-after locations.
+              {language === "en" 
+                ? "Discover title-vetted land parcels, luxury villas, modern apartments, and green farmhouses in the most sought-after locations."
+                : "மிகவும் பிரபலமான இடங்களில் உள்ள பட்டா-சரிபார்க்கப்பட்ட நிலங்கள், ஆடம்பர வில்லாக்கள், நவீன அடுக்குமாடி குடியிருப்புகள் மற்றும் பண்ணை வீடுகளைக் கண்டறியுங்கள்."}
             </p>
           </div>
           
           {/* Purpose Tabs (Buy / Rent / Sell) */}
           <div className="flex rounded-full bg-white/5 backdrop-blur-md p-1 border border-white/10 shrink-0 self-center md:self-end">
             {[
-              { value: "buy", label: "Buy" },
-              { value: "rent", label: "Rent" },
-              { value: "sell", label: "Sell" },
-            ].map((t) => {
-              const isActive = purpose === t.value;
+              { value: "buy", label: language === "en" ? "Buy" : "வாங்க" },
+              { value: "rent", label: language === "en" ? "Rent" : "வாடகைக்கு" },
+              { value: "sell", label: language === "en" ? "Sell" : "விற்க" },
+            ].map((tItem) => {
+              const isActive = purpose === tItem.value;
               return (
                 <button
-                  key={t.value}
+                  key={tItem.value}
                   onClick={() => {
-                    setPurpose(t.value as "buy" | "rent" | "sell");
-                    updateSearch({ purpose: t.value as any });
+                    setPurpose(tItem.value as "buy" | "rent" | "sell");
+                    updateSearch({ purpose: tItem.value as any });
                   }}
                   className={`rounded-full px-6 py-2.5 text-[11px] font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
                     isActive
@@ -496,7 +500,7 @@ function ListingsPage() {
                       : "text-white/70 hover:text-white"
                   }`}
                 >
-                  {t.label}
+                  {tItem.label}
                 </button>
               );
             })}
@@ -512,7 +516,9 @@ function ListingsPage() {
             
             {/* Category visual badge selectors */}
             <div className="flex flex-col gap-2 pb-4 border-b border-border/50">
-              <span className="font-bold tracking-wider uppercase text-foreground/60 text-[10px] select-none">Property Category</span>
+              <span className="font-bold tracking-wider uppercase text-foreground/60 text-[10px] select-none">
+                {language === "en" ? "Property Category" : "சொத்து வகை"}
+              </span>
               <div className="flex flex-nowrap md:flex-wrap gap-2.5 overflow-x-auto scrollbar-none pb-1">
                 {categoriesList.map((cat) => {
                   const isActive = category === cat.value;
@@ -547,13 +553,13 @@ function ListingsPage() {
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 border border-accent/25 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-accent">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              Sell with H and H Realty
+              {t("sell.badge")}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-              List Your Property With Experts
+              {t("sell.title")}
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed font-sans">
-              Connect with our elite team of real estate attorneys and land advisors. We offer full legal verification, aerial drone photography, and direct connections to high-intent buyers.
+              {t("sell.desc")}
             </p>
           </div>
 
@@ -562,9 +568,9 @@ function ListingsPage() {
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-success/15 border border-success/30 text-success">
                 <CheckCircle2 className="h-7 w-7" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-foreground">Listing Request Received</h3>
+              <h3 className="font-display text-2xl font-bold text-foreground">{t("sell.successTitle")}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
-                Thank you! Our Land Attorney and Lead Advisor will review your submission and contact you within 30 minutes to schedule a site inspection and legal verification.
+                {t("sell.successDesc")}
               </p>
               <button
                 onClick={() => {
@@ -583,7 +589,7 @@ function ListingsPage() {
                 }}
                 className="rounded-xl bg-accent px-8 py-3 text-xs font-bold uppercase tracking-widest text-accent-foreground hover:bg-accent/90 transition shadow-md cursor-pointer"
               >
-                Submit Another Property
+                {t("sell.submitAnother")}
               </button>
             </div>
           ) : (
@@ -593,35 +599,35 @@ function ListingsPage() {
             >
               <div>
                 <h3 className="font-display text-xl font-bold text-foreground">
-                  Listing Information Form
+                  {t("sell.formTitle")}
                 </h3>
-                <p className="text-[11px] text-muted-foreground mt-1">Please provide accurate owner and property details to initiate legal checks.</p>
+                <p className="text-[11px] text-muted-foreground mt-1">{t("sell.formSubtitle")}</p>
               </div>
               
               <div className="space-y-6">
                 {/* Section 1: Owner Contact */}
                 <div className="space-y-4">
                   <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-accent border-b border-border pb-1.5">
-                    1. Contact Information
+                    {t("sell.contactTitle")}
                   </h4>
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">First Name</label>
+                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("sell.firstName")}</label>
                       <input
                         required
                         type="text"
-                        placeholder="Rajiv"
+                        placeholder={language === "en" ? "Rajiv" : "ராஜீவ்"}
                         value={sellFormData.firstName}
                         onChange={(e) => setSellFormData({ ...sellFormData, firstName: e.target.value })}
                         className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">Last Name</label>
+                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("sell.lastName")}</label>
                       <input
                         required
                         type="text"
-                        placeholder="Krishnan"
+                        placeholder={language === "en" ? "Krishnan" : "கிருஷ்ணன்"}
                         value={sellFormData.lastName}
                         onChange={(e) => setSellFormData({ ...sellFormData, lastName: e.target.value })}
                         className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
@@ -631,7 +637,7 @@ function ListingsPage() {
 
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">Email Address</label>
+                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("sell.email")}</label>
                       <input
                         required
                         type="email"
@@ -642,7 +648,7 @@ function ListingsPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">Phone Number</label>
+                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("sell.phone")}</label>
                       <input
                         required
                         type="tel"
@@ -658,31 +664,31 @@ function ListingsPage() {
                 {/* Section 2: Property details */}
                 <div className="space-y-4 pt-4">
                   <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-accent border-b border-border pb-1.5">
-                    2. Property Details
+                    {t("sell.detailsTitle")}
                   </h4>
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">Property Type</label>
+                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("catalog.propertyType")}</label>
                       <div className="relative">
                         <select
                           value={sellFormData.propertyType}
                           onChange={(e) => setSellFormData({ ...sellFormData, propertyType: e.target.value })}
                           className="h-11 w-full appearance-none rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground cursor-pointer text-xs"
                         >
-                          <option>Plot / Land</option>
-                          <option>Villa / House</option>
-                          <option>Apartment / Flat</option>
-                          <option>Farmhouse / Cottage</option>
+                          <option value="Plot / Land">{language === "en" ? "Plot / Land" : "நிலம் / பிளாட்"}</option>
+                          <option value="Villa / House">{language === "en" ? "Villa / House" : "வில்லா / தனி வீடு"}</option>
+                          <option value="Apartment / Flat">{language === "en" ? "Apartment / Flat" : "அடுக்குமாடி குடியிருப்பு"}</option>
+                          <option value="Farmhouse / Cottage">{language === "en" ? "Farmhouse / Cottage" : "பண்ணை வீடு"}</option>
                         </select>
                         <ChevronDown className="absolute right-3.5 top-3.5 h-4.5 w-4.5 text-muted-foreground/60 pointer-events-none" />
                       </div>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">Area / Size</label>
+                      <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("sell.areaSize")}</label>
                       <input
                         required
                         type="text"
-                        placeholder="e.g. 2400 sqft (1 Ground)"
+                        placeholder={language === "en" ? "e.g. 2400 sqft (1 Ground)" : "எ.கா. 2400 சதுர அடி"}
                         value={sellFormData.size}
                         onChange={(e) => setSellFormData({ ...sellFormData, size: e.target.value })}
                         className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
@@ -691,11 +697,11 @@ function ListingsPage() {
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">Property Address & Locality</label>
+                    <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("sell.address")}</label>
                     <input
                       required
                       type="text"
-                      placeholder="e.g. No 14 Gandhi Street, Tambaram West, Chennai"
+                      placeholder={language === "en" ? "e.g. No 14 Gandhi Street, Tambaram West, Chennai" : "எ.கா. எண் 14 காந்தி தெரு, தாம்பரம் மேற்கு, சென்னை"}
                       value={sellFormData.address}
                       onChange={(e) => setSellFormData({ ...sellFormData, address: e.target.value })}
                       className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
@@ -703,10 +709,10 @@ function ListingsPage() {
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">Key Highlights & Description</label>
+                    <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("sell.highlights")}</label>
                     <textarea
                       rows={4}
-                      placeholder="e.g. East facing corner plot inside gated layouts, clear title deeds, nearby schools..."
+                      placeholder={language === "en" ? "e.g. East facing corner plot inside gated layouts, clear title deeds..." : "எ.கா. கிழக்கு நோக்கிய மனை, தெளிவான பத்திரம்..."}
                       value={sellFormData.message}
                       onChange={(e) => setSellFormData({ ...sellFormData, message: e.target.value })}
                       className="w-full rounded-xl border border-border bg-background px-4 py-3 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
@@ -717,10 +723,10 @@ function ListingsPage() {
                 {/* Section 3: Media Upload */}
                 <div className="space-y-4 pt-4">
                   <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-accent border-b border-border pb-1.5">
-                    3. Media Upload
+                    {t("sell.mediaTitle")}
                   </h4>
                   <div className="flex flex-col gap-2.5">
-                    <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">Upload Photos (Optional)</label>
+                    <label className="font-bold tracking-wider uppercase text-foreground/80 text-[10px]">{t("sell.uploadPhotos")}</label>
                     
                     <label className="flex flex-col items-center justify-center border-2 border-dashed border-border/80 hover:border-accent/40 bg-background/30 hover:bg-background/70 transition rounded-xl p-8 cursor-pointer select-none text-center gap-2 group">
                       <input
@@ -732,8 +738,8 @@ function ListingsPage() {
                       />
                       <UploadCloud className="h-9 w-9 text-muted-foreground/60 group-hover:text-accent transition duration-200" />
                       <div className="space-y-1 mt-1">
-                        <p className="font-bold text-foreground/90 text-xs">Click to upload photos</p>
-                        <p className="text-muted-foreground text-[10px]">Support PNG, JPG, JPEG up to 5 photos (Max 5MB each)</p>
+                        <p className="font-bold text-foreground/90 text-xs">{t("sell.uploadHint")}</p>
+                        <p className="text-muted-foreground text-[10px]">{t("sell.uploadLimit")}</p>
                       </div>
                     </label>
 
@@ -765,7 +771,7 @@ function ListingsPage() {
                   type="submit"
                   className="w-full inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-accent text-accent-foreground text-xs font-bold tracking-widest uppercase hover:bg-accent/90 hover:scale-[1.01] transition-all duration-200 cursor-pointer shadow-md"
                 >
-                  Submit Property Details <ChevronRight className="h-4.5 w-4.5" />
+                  {t("sell.submit")} <ChevronRight className="h-4.5 w-4.5" />
                 </button>
               </div>
             </form>
@@ -777,7 +783,9 @@ function ListingsPage() {
           {filtered.length > 0 && (
             <div className="flex items-center justify-between border-b border-border/40 pb-4">
               <h3 className="font-sans text-xs font-bold uppercase tracking-widest text-muted-foreground select-none">
-                Showing {filtered.length} Lawyer-Vetted {filtered.length === 1 ? "Listing" : "Listings"} in Chennai
+                {t("catalog.showing")
+                  .replace("{count}", String(filtered.length))
+                  .replace("{listingLabel}", filtered.length === 1 ? t("catalog.listingsLabelSingular") : t("catalog.listingsLabelPlural"))}
               </h3>
             </div>
           )}
@@ -785,9 +793,11 @@ function ListingsPage() {
           {filtered.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-border/80 p-12 text-center text-muted-foreground select-none max-w-lg mx-auto mt-12 bg-card shadow-sm">
               <MapIcon className="mx-auto h-12 w-12 text-muted-foreground/45 mb-3" />
-              <p className="text-lg font-medium text-foreground">No Properties Found</p>
+              <p className="text-lg font-medium text-foreground">{t("catalog.noProperties")}</p>
               <p className="text-xs mt-1 leading-normal max-w-sm mx-auto">
-                We currently listed no {category === "All" ? "" : category} matching these precise price margins in your selected locality. Try clearing filters.
+                {language === "en"
+                  ? `We currently listed no ${category === "All" ? "" : category} matching these precise price margins in your selected locality. Try clearing filters.`
+                  : `நீங்கள் தேர்ந்தெடுத்த பகுதியில் இந்த விலைக்குள் ${category === "All" ? "சொத்துக்கள்" : category} எதுவும் தற்போதைக்கு பட்டியலிடப்படவில்லை. வடிகட்டிகளை நீக்கிவிட்டு மீண்டும் தேடவும்.`}
               </p>
               <button
                 onClick={() => {
@@ -805,15 +815,15 @@ function ListingsPage() {
                 }}
                 className="mt-6 inline-flex rounded-xl bg-accent px-6 py-2.5 text-[10px] font-bold uppercase tracking-wider text-accent-foreground hover:bg-accent/95 shadow cursor-pointer transition active:scale-95"
               >
-                Reset All Filters
+                {t("catalog.reset")}
               </button>
             </div>
           ) : (
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 self-start animate-fade-in">
-              {filtered.map((l) => (
+              {filtered.map((lItem) => (
                 <ListingCard
-                  key={l.id}
-                  l={l}
+                  key={lItem.id}
+                  l={lItem}
                   rentMode={purpose === "rent"}
                 />
               ))}

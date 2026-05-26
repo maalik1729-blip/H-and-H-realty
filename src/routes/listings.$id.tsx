@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
+import { useLanguage } from "@/context/language-context";
 import {
   MapPin,
   BadgeCheck,
@@ -75,6 +76,7 @@ export const Route = createFileRoute("/listings/$id")({
 
 function Detail() {
   const l = Route.useLoaderData() as Listing;
+  const { language, t } = useLanguage();
   const [sent, setSent] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -91,31 +93,61 @@ function Detail() {
 
   // Build specs
   const specs = [
-    { icon: Maximize2, label: "Area", value: l.areaLabel.split(" (")[0] },
+    { icon: Maximize2, label: language === "en" ? "Area" : "பரப்பளவு", value: l.areaLabel.split(" (")[0] },
     {
       icon: RouteIcon,
-      label: isBuiltProperty(l.category) ? "Furnishing" : "Road Access",
-      value: isBuiltProperty(l.category) ? l.furnishing || "Semi-Furnished" : l.roadAccess,
+      label: isBuiltProperty(l.category)
+        ? (language === "en" ? "Furnishing" : "உட்புற வசதிகள்")
+        : (language === "en" ? "Road Access" : "சாலை அணுகல்"),
+      value: isBuiltProperty(l.category)
+        ? (l.furnishing
+            ? (l.furnishing === "Fully-Furnished"
+                ? (language === "en" ? "Fully-Furnished" : "முழுமையாக அலங்கரிக்கப்பட்டது")
+                : l.furnishing === "Semi-Furnished"
+                  ? (language === "en" ? "Semi-Furnished" : "பாதி அலங்கரிக்கப்பட்டது")
+                  : (language === "en" ? "Unfurnished" : "அலங்கரிக்கப்படாதது"))
+            : (language === "en" ? "Semi-Furnished" : "பாதி அலங்கரிக்கப்பட்டது"))
+        : l.roadAccess,
     },
-    { icon: Building2, label: "Ownership", value: l.ownership },
-    { icon: FileCheck2, label: "Status", value: l.status },
-    { icon: Landmark, label: "Type", value: l.type },
-    { icon: ShieldCheck, label: "Title", value: l.verified ? "Verified ✓" : "Under Review" },
+    {
+      icon: Building2,
+      label: language === "en" ? "Ownership" : "உரிமை",
+      value: l.ownership === "Freehold"
+        ? (language === "en" ? "Freehold" : "முழு உரிமை")
+        : (language === "en" ? "Leasehold" : "குத்தகை"),
+    },
+    {
+      icon: FileCheck2,
+      label: language === "en" ? "Status" : "நிலை",
+      value: l.status === "Available"
+        ? (language === "en" ? "Available" : "கிடைக்கக்கூடியது")
+        : l.status === "Sold"
+          ? (language === "en" ? "Sold" : "விற்கப்பட்டது")
+          : (language === "en" ? "Reserved" : "முன்பதிவு செய்யப்பட்டது"),
+    },
+    { icon: Landmark, label: language === "en" ? "Type" : "வகை", value: l.type },
+    {
+      icon: ShieldCheck,
+      label: language === "en" ? "Title" : "பத்திரம்",
+      value: l.verified
+        ? (language === "en" ? "Verified ✓" : "சரிபார்க்கப்பட்டது ✓")
+        : (language === "en" ? "Under Review" : "சரிபார்ப்பில் உள்ளது"),
+    },
   ];
 
   if (isBuiltProperty(l.category)) {
-    if (l.bedrooms) specs.push({ icon: HomeIcon, label: "Bedrooms", value: `${l.bedrooms} BHK` });
-    if (l.bathrooms) specs.push({ icon: Armchair, label: "Bathrooms", value: `${l.bathrooms} Bath` });
-    if (l.floors) specs.push({ icon: Building2, label: "Floors", value: `${l.floors} Floors` });
+    if (l.bedrooms) specs.push({ icon: HomeIcon, label: language === "en" ? "Bedrooms" : "படுக்கையறைகள்", value: `${l.bedrooms} BHK` });
+    if (l.bathrooms) specs.push({ icon: Armchair, label: language === "en" ? "Bathrooms" : "குளியலறைகள்", value: `${l.bathrooms} Bath` });
+    if (l.floors) specs.push({ icon: Building2, label: language === "en" ? "Floors" : "மாடிகள்", value: `${l.floors} Floors` });
   }
 
   const amenities = [
-    { icon: Zap, label: "24/7 Electricity" },
-    { icon: Droplets, label: "Water Supply" },
-    { icon: TreePine, label: "Green Cover" },
-    { icon: ShieldCheck, label: "Gated Security" },
-    { icon: RouteIcon, label: "Road Access" },
-    { icon: Landmark, label: "Bank Loan Ready" },
+    { icon: Zap, label: language === "en" ? "24/7 Electricity" : "24/7 மின்சாரம்" },
+    { icon: Droplets, label: language === "en" ? "Water Supply" : "குடிநீர் வசதி" },
+    { icon: TreePine, label: language === "en" ? "Green Cover" : "பசுமையான சூழல்" },
+    { icon: ShieldCheck, label: language === "en" ? "Gated Security" : "பாதுகாக்கப்பட்ட பகுதி" },
+    { icon: RouteIcon, label: language === "en" ? "Road Access" : "சாலை வசதி" },
+    { icon: Landmark, label: language === "en" ? "Bank Loan Ready" : "வங்கி கடன் உதவி" },
   ];
 
   return (
@@ -124,9 +156,9 @@ function Detail() {
       <div className="mx-auto max-w-7xl px-4 pt-24 md:pt-28 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-primary transition">Home</Link>
+            <Link to="/" className="hover:text-primary transition">{t("nav.home")}</Link>
             <span>/</span>
-            <Link to="/listings" className="hover:text-primary transition">Properties</Link>
+            <Link to="/listings" className="hover:text-primary transition">{t("nav.properties")}</Link>
             <span>/</span>
             <span className="text-foreground font-medium truncate max-w-[200px]">{l.title}</span>
           </nav>
@@ -134,7 +166,7 @@ function Detail() {
             to="/listings"
             className="hidden sm:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition font-medium"
           >
-            <ChevronLeft className="h-4 w-4" /> Back to Properties
+            <ChevronLeft className="h-4 w-4" /> {t("detail.back")}
           </Link>
         </div>
       </div>
@@ -153,18 +185,18 @@ function Detail() {
             {l.status === "Sold" && (
               <div className="absolute inset-0 grid place-items-center bg-foreground/50">
                 <span className="rounded-full bg-destructive px-6 py-2 text-sm font-bold tracking-widest text-white uppercase shadow-lg">
-                  SOLD
+                  {language === "en" ? "SOLD" : "விற்கப்பட்டது"}
                 </span>
               </div>
             )}
             {/* Badges */}
             <div className="absolute top-4 left-4 flex flex-wrap gap-2">
               <span className="rounded-full bg-background/95 border border-border/40 px-3 py-1 text-[10px] font-bold tracking-wider uppercase shadow-sm">
-                New Listing
+                {language === "en" ? "New Listing" : "புதிய சொத்து"}
               </span>
               {l.verified && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-accent px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-accent-foreground shadow-sm">
-                  <BadgeCheck className="h-3 w-3" /> Lawyer Vetted
+                  <BadgeCheck className="h-3 w-3" /> {language === "en" ? "Lawyer Vetted" : "வழக்கறிஞர் சரிபார்க்கப்பட்டது"}
                 </span>
               )}
             </div>
@@ -208,7 +240,7 @@ function Detail() {
                     <Play className="h-6 w-6 fill-current" />
                   </span>
                   <span className="rounded-full bg-foreground/80 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-background">
-                    Drone Tour
+                    {language === "en" ? "Drone Tour" : "ட்ரோன் காட்சி"}
                   </span>
                 </div>
               </div>
@@ -224,7 +256,7 @@ function Detail() {
             href="tel:+919876543210"
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground hover:opacity-90 transition shadow-sm"
           >
-            <Phone className="h-4 w-4" /> Call Agent
+            <Phone className="h-4 w-4" /> {language === "en" ? "Call Agent" : "அழைக்க"}
           </a>
           <a
             href={whatsapp}
@@ -232,7 +264,7 @@ function Detail() {
             rel="noreferrer"
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-whatsapp px-4 py-3 text-sm font-bold text-whatsapp-foreground hover:opacity-90 transition shadow-sm"
           >
-            <MessageCircle className="h-4 w-4" /> WhatsApp
+            <MessageCircle className="h-4 w-4" /> {language === "en" ? "WhatsApp" : "வாட்ஸ்அப்"}
           </a>
         </div>
       </div>
@@ -258,7 +290,7 @@ function Detail() {
                   )}
                   {l.verified && (
                     <span className="inline-flex items-center gap-1 rounded-full bg-accent/15 border border-accent/30 px-3 py-1 text-xs font-semibold text-accent">
-                      <ShieldCheck className="h-3.5 w-3.5" /> Title Verified
+                      <ShieldCheck className="h-3.5 w-3.5" /> {language === "en" ? "Title Verified" : "பத்திரம் சரிபார்க்கப்பட்டது"}
                     </span>
                   )}
                 </div>
@@ -286,7 +318,7 @@ function Detail() {
             <div className="rounded-3xl border border-slate-100 bg-card overflow-hidden shadow-card">
               <div className="bg-slate-50/75 border-b border-slate-100 px-6 py-4">
                 <h2 className="font-sans text-[11px] font-extrabold text-foreground uppercase tracking-widest">
-                  Property Specifications
+                  {t("detail.specsTitle")}
                 </h2>
               </div>
               <div className="divide-y divide-slate-100">
@@ -309,10 +341,29 @@ function Detail() {
               <div className="rounded-xl border border-accent/20 bg-accent/5 px-4 py-3 mb-5 flex items-start gap-3">
                 <BadgeCheck className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                 <p className="text-sm text-foreground font-medium leading-relaxed">
-                  {PROPERTY_TYPE_DESCRIPTIONS[l.type]}
+                  {(() => {
+                    const typeDescTamil: Record<string, string> = {
+                      "Residential Plot": "குடியிருப்பு கட்டுமானத்திற்கு தயாராக உள்ள மனைப் பிரிவு.",
+                      "Commercial Land": "வணிக பயன்பாட்டிற்கு ஏற்ற அங்கீகரிக்கப்பட்ட நிலம்.",
+                      "Agricultural Farmland": "மின்சாரம் மற்றும் நீர் வசதியுடன் கூடிய விவசாய நிலம்.",
+                      "Investment Parcel": "அதிவேகமாக வளர்ந்து வரும் பகுதியில் முதலீட்டிற்கான நிலம்.",
+                      House: "தனி இல்லம்.",
+                      Villa: "தனியார் தோட்டம் மற்றும் ஆடம்பர வசதிகளுடன் கூடிய பிரீமியம் வில்லா.",
+                      "Apartment / Flat": "அனைத்து நவீன வசதிகளுடன் கூடிய அடுக்குமாடி குடியிருப்பு.",
+                      Farmhouse: "இயற்கையான சூழலில் அமைந்துள்ள வார இறுதி பண்ணை வீடு.",
+                      Bungalow: "விசாலமான மற்றும் வசதிகள் நிறைந்த பங்களா இல்லம்.",
+                      "Duplex House": "இரு தளங்கள் கொண்ட நவீன டூப்ளெக்ஸ் வீடு.",
+                      "Row House": "பாதுகாக்கப்பட்ட சமூகத்தில் அமைந்துள்ள வரிசை வீடு.",
+                      Cottage: "சுற்றுலா அல்லது வார இறுதி ஓய்வுக்கான சிறிய இல்லம்.",
+                      Penthouse: "மாடியில் அமைந்துள்ள அதிநவீன ஆடம்பர பென்ட்ஹவுஸ்.",
+                    };
+                    return language === "en" 
+                      ? PROPERTY_TYPE_DESCRIPTIONS[l.type] 
+                      : (typeDescTamil[l.type] || PROPERTY_TYPE_DESCRIPTIONS[l.type]);
+                  })()}
                 </p>
               </div>
-              <h2 className="font-display text-2xl font-bold text-foreground">About This Property</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground">{t("detail.aboutTitle")}</h2>
               <p className="mt-3 text-muted-foreground leading-relaxed">{l.description}</p>
               <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
                 {l.highlights.map((h) => (
@@ -325,7 +376,7 @@ function Detail() {
 
             {/* Amenities */}
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-4">Amenities</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-4">{t("detail.amenitiesTitle")}</h2>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {amenities.map((a, i) => (
                   <div
@@ -342,16 +393,16 @@ function Detail() {
             {/* Legal Documents */}
             <section>
               <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-                Legal &amp; Documents
+                {t("detail.legalTitle")}
               </h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 {[
-                  "Mother deed — 30-year verified",
-                  "Encumbrance certificate (EC) clear",
-                  "Patta & mutation completed",
-                  "DTCP / TNRERA approved layout",
-                  "Property tax paid up to date",
-                  "Bank loan eligibility certificate",
+                  language === "en" ? "Mother deed — 30-year verified" : "தாய் பத்திரம் — 30 ஆண்டுகள் சரிபார்க்கப்பட்டது",
+                  language === "en" ? "Encumbrance certificate (EC) clear" : "வில்லங்கச் சான்றிதழ் (EC) தெளிவானது",
+                  language === "en" ? "Patta & mutation completed" : "பட்டா & பெயர் மாற்றம் செய்யப்பட்டுள்ளது",
+                  language === "en" ? "DTCP / TNRERA approved layout" : "DTCP / TNRERA அங்கீகரிக்கப்பட்ட மனை",
+                  language === "en" ? "Property tax paid up to date" : "சொத்து வரி இன்று வரை செலுத்தப்பட்டது",
+                  language === "en" ? "Bank loan eligibility certificate" : "வங்கி கடன் தகுதி சான்றிதழ்",
                 ].map((d) => (
                   <div
                     key={d}
@@ -366,7 +417,7 @@ function Detail() {
             {/* Nearby Landmarks */}
             <section>
               <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-                Nearby Landmarks
+                {t("detail.landmarksTitle")}
               </h2>
               <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-card">
                 {l.nearby.map((n, i) => (
@@ -389,7 +440,7 @@ function Detail() {
             {/* Location Map */}
             <section>
               <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-                Location &amp; Connectivity
+                {language === "en" ? "Location & Connectivity" : "இருப்பிடம் மற்றும் இணைப்பு"}
               </h2>
               <LocationConnectivityMap
                 lat={l.lat}
@@ -399,6 +450,7 @@ function Detail() {
                 city={l.city}
                 image={l.image}
                 category={l.category}
+                showHeading={false}
               />
             </section>
 
@@ -406,26 +458,26 @@ function Detail() {
             {testimonials.length > 0 && (
               <section>
                 <h2 className="font-display text-2xl font-bold text-foreground mb-5">
-                  What Our Buyers Say
+                  {t("detail.testimonialsTitle")}
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  {testimonials.slice(0, 2).map((t, i) => (
-                    <div key={i} className="rounded-2xl border border-border bg-card p-5 shadow-card">
+                  {testimonials.slice(0, 2).map((tItem, idx) => (
+                    <div key={idx} className="rounded-2xl border border-border bg-card p-5 shadow-card">
                       <div className="flex items-center gap-1 mb-3">
                         {[...Array(5)].map((_, j) => (
                           <Star key={j} className="h-3.5 w-3.5 fill-accent text-accent" />
                         ))}
                       </div>
                       <p className="text-sm text-muted-foreground leading-relaxed italic">
-                        "{t.quote}"
+                        "{t(`testimonials.quote.${idx}`)}"
                       </p>
                       <div className="mt-4 flex items-center gap-2.5">
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-                          {t.name.charAt(0)}
+                          {tItem.name.charAt(0)}
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                          <p className="text-xs text-muted-foreground">{t.role}</p>
+                          <p className="text-sm font-semibold text-foreground">{tItem.name}</p>
+                          <p className="text-xs text-muted-foreground">{t(`testimonials.role.${idx}`)}</p>
                         </div>
                       </div>
                     </div>
@@ -443,7 +495,7 @@ function Detail() {
               <div className="flex items-start justify-between mb-1">
                 <div>
                   <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
-                    Asking Price
+                    {t("detail.askingPrice")}
                   </p>
                   <p className="font-display text-3xl font-bold text-foreground mt-1">
                     {formatPrice(l.priceLakh)}
@@ -457,7 +509,7 @@ function Detail() {
                 {l.status !== "Sold" && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-success/10 border border-success/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-success">
                     <span className="h-1.5 w-1.5 rounded-full bg-success" />
-                    Available
+                    {language === "en" ? "Available" : "கிடைக்கக்கூடியது"}
                   </span>
                 )}
               </div>
@@ -467,7 +519,7 @@ function Detail() {
                   href="tel:+919876543210"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 text-sm font-bold text-primary-foreground hover:opacity-90 transition shadow-sm"
                 >
-                  <Phone className="h-4 w-4" /> Call Agent Now
+                  <Phone className="h-4 w-4" /> {t("detail.callAgent")}
                 </a>
                 <a
                   href={whatsapp}
@@ -475,7 +527,7 @@ function Detail() {
                   rel="noreferrer"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-whatsapp px-4 py-3.5 text-sm font-bold text-whatsapp-foreground hover:opacity-90 transition shadow-sm"
                 >
-                  <MessageCircle className="h-4 w-4" /> WhatsApp Now
+                  <MessageCircle className="h-4 w-4" /> {t("detail.whatsappNow")}
                 </a>
                 <button
                   type="button"
@@ -488,7 +540,7 @@ function Detail() {
                   }}
                   className="w-full inline-flex items-center justify-center gap-2 btn-notched-filled text-xs py-3.5"
                 >
-                  <Calendar className="h-4 w-4 shrink-0 relative z-10" /> <span>Request Details</span>
+                  <Calendar className="h-4 w-4 shrink-0 relative z-10" /> <span>{t("detail.requestDetails")}</span>
                 </button>
                 <button
                   type="button"
@@ -501,7 +553,7 @@ function Detail() {
                   }}
                   className="w-full inline-flex items-center justify-center gap-2 btn-notched text-xs py-3.5"
                 >
-                  <span>Book Free Site Visit</span>
+                  <span>{t("detail.bookVisit")}</span>
                 </button>
               </div>
 
@@ -511,8 +563,10 @@ function Detail() {
                   RK
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">Rajiv Krishnan</p>
-                  <p className="text-xs text-muted-foreground">Senior Land Advisor · 12 yrs</p>
+                  <p className="font-semibold text-foreground text-sm">{language === "en" ? "Rajiv Krishnan" : "ராஜீவ் கிருஷ்ணன்"}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {language === "en" ? "Senior Land Advisor · 12 yrs" : "முதுநிலை நில ஆலோசகர் · 12 ஆண்டுகள்"}
+                  </p>
                   <div className="flex items-center gap-0.5 mt-1">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-3 w-3 fill-accent text-accent" />
@@ -525,16 +579,18 @@ function Detail() {
 
             {/* Quick Inquiry form */}
             <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
-              <h3 className="font-display text-lg font-bold text-foreground">Quick Inquiry</h3>
+              <h3 className="font-display text-lg font-bold text-foreground">{t("detail.quickInquiry")}</h3>
               <p className="text-xs text-muted-foreground mt-1">
-                Our advisor will call back within 30 minutes.
+                {t("detail.callBackHint")}
               </p>
               {sent ? (
                 <div className="mt-4 rounded-xl bg-success/10 border border-success/20 px-4 py-4 text-center">
                   <CheckCircle2 className="h-8 w-8 text-success mx-auto mb-2" />
-                  <p className="text-sm font-bold text-foreground">Request Sent!</p>
+                  <p className="text-sm font-bold text-foreground">
+                    {language === "en" ? "Request Sent!" : "கோரிக்கை அனுப்பப்பட்டது!"}
+                  </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Rajiv Krishnan will call you shortly.
+                    {language === "en" ? "Rajiv Krishnan will call you shortly." : "ராஜீவ் கிருஷ்ணன் விரைவில் உங்களை அழைப்பார்."}
                   </p>
                 </div>
               ) : (
@@ -549,7 +605,7 @@ function Detail() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Your full name"
+                    placeholder={language === "en" ? "Your full name" : "உங்கள் முழு பெயர்"}
                     className="h-11 w-full rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
                   />
                   <input
@@ -557,24 +613,24 @@ function Detail() {
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Phone number"
+                    placeholder={language === "en" ? "Phone number" : "தொலைபேசி எண்"}
                     className="h-11 w-full rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
                   />
                   <textarea
                     rows={3}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="When would you like to visit?"
+                    placeholder={language === "en" ? "When would you like to visit?" : "நீங்கள் எப்பொழுது பார்வையிட விரும்புகிறீர்கள்?"}
                     className="w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 resize-none"
                   />
                   <button
                     type="submit"
                     className="h-11 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground hover:bg-accent hover:text-accent-foreground transition cursor-pointer"
                   >
-                    Request Callback
+                    {t("detail.requestCallback")}
                   </button>
                   <p className="text-[10px] text-muted-foreground text-center">
-                    By submitting you agree to be contacted by H and H Realty.
+                    {t("detail.agreeConsent")}
                   </p>
                 </form>
               )}
@@ -584,9 +640,9 @@ function Detail() {
             <div className="rounded-2xl border border-border bg-secondary/30 p-4">
               <div className="grid grid-cols-3 gap-3 text-center">
                 {[
-                  { label: "Title Verified", icon: ShieldCheck },
-                  { label: "Legal Ready", icon: FileCheck2 },
-                  { label: "Bank Loan OK", icon: Landmark },
+                  { label: language === "en" ? "Title Verified" : "பத்திரம் சரிபார்க்கப்பட்டது", icon: ShieldCheck },
+                  { label: language === "en" ? "Legal Ready" : "சட்டப்படி தயார்", icon: FileCheck2 },
+                  { label: language === "en" ? "Bank Loan OK" : "வங்கி கடன் தயார்", icon: Landmark },
                 ].map((b, i) => (
                   <div key={i} className="flex flex-col items-center gap-1.5">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 border border-accent/20">
@@ -607,13 +663,13 @@ function Detail() {
           <section className="mt-20 pt-10 border-t border-border">
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-3xl font-bold text-foreground">
-                Similar Properties in {l.city}
+                {language === "en" ? `Similar Properties in ${l.city}` : `${l.city} இல் உள்ள ஒத்த சொத்துக்கள்`}
               </h2>
               <Link
                 to="/listings"
                 className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:opacity-80 transition"
               >
-                View All <ArrowRight className="h-4 w-4" />
+                {language === "en" ? "View All" : "அனைத்தையும் காண்க"} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -633,7 +689,7 @@ function Detail() {
                     />
                     {r.verified && (
                       <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded bg-accent/95 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-accent-foreground">
-                        <BadgeCheck className="h-3 w-3" /> Lawyer Vetted
+                        <BadgeCheck className="h-3 w-3" /> {language === "en" ? "Lawyer Vetted" : "வழக்கறிஞர் சரிபார்க்கப்பட்டது"}
                       </span>
                     )}
                   </div>
@@ -648,7 +704,7 @@ function Detail() {
                       <MapPin className="h-3 w-3 text-accent shrink-0" /> {r.location}, {r.city}
                     </p>
                     <span className="mt-3 block w-full rounded-xl bg-accent py-2 text-center text-[11px] font-bold uppercase tracking-wider text-accent-foreground group-hover:bg-accent/90 transition">
-                      View Details
+                      {t("detail.viewDetails") || (language === "en" ? "View Details" : "விவரங்களைக் காண்க")}
                     </span>
                   </div>
                 </Link>
@@ -659,7 +715,7 @@ function Detail() {
                 to="/listings"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-secondary transition"
               >
-                View All Properties <ArrowRight className="h-4 w-4" />
+                {language === "en" ? "View All Properties" : "அனைத்து சொத்துக்களையும் காண்க"} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </section>
