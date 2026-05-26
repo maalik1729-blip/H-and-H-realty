@@ -165,7 +165,7 @@ function TermsConditions() {
                 {section.title}
               </h2>
             </div>
-            <ul className="pl-12 space-y-2.5">
+            <ul className="pl-4 sm:pl-12 space-y-2.5">
               {section.content.map((point, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />

@@ -188,7 +188,7 @@ function PrivacyPolicy() {
               </div>
               <h2 className="font-display text-xl font-bold text-foreground">{section.title}</h2>
             </div>
-            <div className="pl-12 text-muted-foreground">{section.content}</div>
+            <div className="pl-4 sm:pl-12 text-muted-foreground">{section.content}</div>
           </section>
         ))}
 
