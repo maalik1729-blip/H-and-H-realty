@@ -323,14 +323,14 @@ function Detail() {
               </div>
               <div className="divide-y divide-slate-100">
                 {specs.map((s, i) => (
-                  <div key={i} className={`flex items-center justify-between px-6 py-3.5 text-xs ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
-                    <div className="flex items-center gap-2">
+                  <div key={i} className={`flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-4 px-6 py-3.5 text-xs ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
+                    <div className="flex items-center gap-2 min-w-0">
                       <s.icon className="h-4 w-4 text-accent shrink-0" />
-                      <span className="font-bold uppercase tracking-wider text-muted-foreground text-[10px]">
+                      <span className="font-bold uppercase tracking-wider text-muted-foreground text-[10px] truncate">
                         {s.label}
                       </span>
                     </div>
-                    <span className="font-semibold text-foreground">{s.value}</span>
+                    <span className="font-semibold text-foreground text-left sm:text-right sm:ml-auto break-words">{s.value}</span>
                   </div>
                 ))}
               </div>
