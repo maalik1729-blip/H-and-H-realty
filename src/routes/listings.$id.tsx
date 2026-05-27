@@ -154,12 +154,12 @@ function Detail() {
       {/* ── Breadcrumb ── */}
       <div className="mx-auto max-w-7xl px-4 pt-16 md:pt-28 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground">
+          <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-muted-foreground">
             <Link to="/" className="hover:text-primary transition">{t("nav.home")}</Link>
             <span>/</span>
             <Link to="/listings" className="hover:text-primary transition">{t("nav.properties")}</Link>
             <span>/</span>
-            <span className="text-foreground font-medium truncate max-w-[200px]">{l.title}</span>
+            <span className="text-foreground font-medium truncate max-w-[150px] sm:max-w-[200px]">{l.title}</span>
           </nav>
           <Link
             to="/listings"
@@ -190,13 +190,13 @@ function Detail() {
               </div>
             )}
             {/* Badges */}
-            <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-              <span className="rounded-full bg-background/95 border border-border/40 px-3 py-1 text-[10px] font-bold tracking-wider uppercase shadow-sm">
+            <div className="absolute top-4 left-4 right-24 flex flex-wrap gap-1.5 sm:gap-2">
+              <span className="rounded-full bg-background/95 border border-border/40 px-3 py-1 text-[9px] sm:text-[10px] font-bold tracking-wider uppercase shadow-sm whitespace-nowrap">
                 {language === "en" ? "New Listing" : "புதிய சொத்து"}
               </span>
               {l.verified && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-accent px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-accent-foreground shadow-sm">
-                  <BadgeCheck className="h-3 w-3" /> {language === "en" ? "Lawyer Vetted" : "வழக்கறிஞர் சரிபார்க்கப்பட்டது"}
+                <span className="inline-flex items-center gap-1 rounded-full bg-accent px-3 py-1 text-[9px] sm:text-[10px] font-bold tracking-wider uppercase text-accent-foreground shadow-sm">
+                  <BadgeCheck className="h-3 w-3 shrink-0" /> {language === "en" ? "Lawyer Vetted" : "வழக்கறிஞர் சரிபார்க்கப்பட்டது"}
                 </span>
               )}
             </div>
