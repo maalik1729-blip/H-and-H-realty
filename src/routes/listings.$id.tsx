@@ -302,7 +302,7 @@ function Detail() {
                   {l.location}, {l.city}
                 </p>
               </div>
-              <div className="shrink-0 text-right sm:text-left">
+              <div className="shrink-0 text-left sm:text-right">
                 <p className="font-display text-3xl font-bold text-foreground">
                   {formatPrice(l.priceLakh)}
                 </p>
