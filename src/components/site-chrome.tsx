@@ -48,8 +48,8 @@ export function SiteHeader() {
     <>
       <div className={`fixed top-0 left-0 right-0 z-40 w-full border-b transition-all duration-300 ${
         scrolled 
-          ? "bg-[oklch(0.96_0.012_240)]/90 backdrop-blur-md shadow-sm border-slate-200/40 py-3" 
-          : "bg-transparent border-transparent py-5"
+          ? "bg-[oklch(0.96_0.012_240)]/90 backdrop-blur-md shadow-sm border-slate-200/40 py-2" 
+          : "bg-transparent border-transparent py-2"
       }`}>
         <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
@@ -57,7 +57,7 @@ export function SiteHeader() {
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className={`w-auto h-[100px] sm:h-[120px] md:h-[220px] -my-[30px] sm:-my-[40px] md:-my-[90px] transition-all duration-300 ${
+              className={`w-auto h-[140px] sm:h-[120px] md:h-[220px] -my-[50px] sm:-my-[40px] md:-my-[90px] transition-all duration-300 ${
                 isDarkBackground ? "brightness-0 invert" : ""
               }`}
               style={{
@@ -145,7 +145,7 @@ export function SiteHeader() {
           {/* Backdrop */}
           <div className="absolute inset-0 bg-foreground/20 backdrop-blur-sm" />
           {/* Panel - positioned right under the transparent header */}
-          <div className="absolute top-20 left-0 right-0 px-4">
+          <div className="absolute top-16 left-0 right-0 px-4">
             <nav
               className="w-full bg-background border border-border/80 shadow-elevated rounded-3xl px-6 py-6 flex flex-col gap-4 animate-scale-up"
               onClick={(e) => e.stopPropagation()}
