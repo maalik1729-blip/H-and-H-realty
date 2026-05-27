@@ -306,7 +306,7 @@ function ListingsPage() {
               updateSearch({ q: e.target.value });
             }}
             placeholder={language === "en" ? "e.g. ECR Beach, Villa..." : "எ.கா. ஈசிஆர் கடற்கரை, வில்லா..."}
-            className="h-11 w-full rounded-xl border border-border bg-background/50 pl-10 pr-4 text-xs focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/60"
+            className="h-11 w-full rounded-xl border border-border bg-background/50 pl-10 pr-4 text-base md:text-xs focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/60"
           />
           <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground/50" />
         </div>
@@ -646,7 +646,7 @@ function ListingsPage() {
                         placeholder={language === "en" ? "Rajiv" : "ராஜீவ்"}
                         value={sellFormData.firstName}
                         onChange={(e) => setSellFormData({ ...sellFormData, firstName: e.target.value })}
-                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
+                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-base md:text-xs"
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -657,7 +657,7 @@ function ListingsPage() {
                         placeholder={language === "en" ? "Krishnan" : "கிருஷ்ணன்"}
                         value={sellFormData.lastName}
                         onChange={(e) => setSellFormData({ ...sellFormData, lastName: e.target.value })}
-                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
+                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-base md:text-xs"
                       />
                     </div>
                   </div>
@@ -671,7 +671,7 @@ function ListingsPage() {
                         placeholder="rajiv@email.com"
                         value={sellFormData.email}
                         onChange={(e) => setSellFormData({ ...sellFormData, email: e.target.value })}
-                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
+                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-base md:text-xs"
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -682,7 +682,7 @@ function ListingsPage() {
                         placeholder="+91 XXXXX XXXXX"
                         value={sellFormData.phone}
                         onChange={(e) => setSellFormData({ ...sellFormData, phone: e.target.value })}
-                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
+                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-base md:text-xs"
                       />
                     </div>
                   </div>
@@ -700,7 +700,7 @@ function ListingsPage() {
                         <select
                           value={sellFormData.propertyType}
                           onChange={(e) => setSellFormData({ ...sellFormData, propertyType: e.target.value })}
-                          className="h-11 w-full appearance-none rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground cursor-pointer text-xs"
+                          className="h-11 w-full appearance-none rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground cursor-pointer text-base md:text-xs"
                         >
                           <option value="Plot / Land">{language === "en" ? "Plot / Land" : "நிலம் / பிளாட்"}</option>
                           <option value="Villa / House">{language === "en" ? "Villa / House" : "வில்லா / தனி வீடு"}</option>
@@ -718,7 +718,7 @@ function ListingsPage() {
                         placeholder={language === "en" ? "e.g. 2400 sqft (1 Ground)" : "எ.கா. 2400 சதுர அடி"}
                         value={sellFormData.size}
                         onChange={(e) => setSellFormData({ ...sellFormData, size: e.target.value })}
-                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
+                        className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-base md:text-xs"
                       />
                     </div>
                   </div>
@@ -731,7 +731,7 @@ function ListingsPage() {
                       placeholder={language === "en" ? "e.g. No 14 Gandhi Street, Tambaram West, Chennai" : "எ.கா. எண் 14 காந்தி தெரு, தாம்பரம் மேற்கு, சென்னை"}
                       value={sellFormData.address}
                       onChange={(e) => setSellFormData({ ...sellFormData, address: e.target.value })}
-                      className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
+                      className="h-11 w-full rounded-xl border border-border bg-background px-4 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-base md:text-xs"
                     />
                   </div>
 
@@ -742,7 +742,7 @@ function ListingsPage() {
                       placeholder={language === "en" ? "e.g. East facing corner plot inside gated layouts, clear title deeds..." : "எ.கா. கிழக்கு நோக்கிய மனை, தெளிவான பத்திரம்..."}
                       value={sellFormData.message}
                       onChange={(e) => setSellFormData({ ...sellFormData, message: e.target.value })}
-                      className="w-full rounded-xl border border-border bg-background px-4 py-3 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-xs"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition text-foreground placeholder:text-muted-foreground/40 text-base md:text-xs"
                     />
                   </div>
                 </div>

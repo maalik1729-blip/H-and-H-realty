@@ -205,14 +205,14 @@ function Detail() {
               <button
                 type="button"
                 onClick={() => setSaved((v) => !v)}
-                className={`flex h-9 w-9 items-center justify-center rounded-full border shadow-sm transition ${saved ? "bg-destructive border-destructive text-white" : "bg-background/90 border-border/40 text-foreground hover:bg-background"}`}
+                className={`flex h-11 w-11 sm:h-9 sm:w-9 items-center justify-center rounded-full border shadow-sm transition ${saved ? "bg-destructive border-destructive text-white" : "bg-background/90 border-border/40 text-foreground hover:bg-background"}`}
               >
                 <Heart className={`h-4 w-4 ${saved ? "fill-current" : ""}`} />
               </button>
               <button
                 type="button"
                 onClick={() => navigator.share?.({ title: l.title, url: window.location.href })}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-background/90 border border-border/40 text-foreground hover:bg-background shadow-sm transition"
+                className="flex h-11 w-11 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-background/90 border border-border/40 text-foreground hover:bg-background shadow-sm transition"
               >
                 <Share2 className="h-4 w-4" />
               </button>
@@ -635,7 +635,7 @@ function Detail() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={language === "en" ? "Your full name" : "உங்கள் முழு பெயர்"}
-                    className="h-11 w-full rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
+                    className="field"
                   />
                   <input
                     required
@@ -644,7 +644,7 @@ function Detail() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder={language === "en" ? "Phone number" : "தொலைபேசி எண்"}
-                    className="h-11 w-full rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
+                    className="field"
                   />
                   <textarea
                     name="message"
@@ -652,7 +652,7 @@ function Detail() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={language === "en" ? "When would you like to visit?" : "நீங்கள் எப்பொழுது பார்வையிட விரும்புகிறீர்கள்?"}
-                    className="w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 resize-none"
+                    className="field"
                   />
                   <button
                     type="submit"

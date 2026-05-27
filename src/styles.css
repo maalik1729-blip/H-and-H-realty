@@ -51,6 +51,17 @@
 
 :root {
   --radius: 0.75rem;
+  /* Spacing Scale (4px base unit) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
   /* Background = clean, cool slate-tinted off-white */
   --background: oklch(0.99 0.003 240);
   --foreground: oklch(0.22 0.02 240);
@@ -107,6 +118,27 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    font-size: clamp(1rem, 1.2vw, 1.125rem); /* min 16px body font size */
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    line-height: 1.2;
+  }
+  h2 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.25;
+  }
+  h3 {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.3;
+  }
+  .text-fluid-display {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.1;
+  }
+  .text-fluid-small {
+    font-size: clamp(0.8rem, 1vw, 0.9rem);
   }
   h1,
   h2,
@@ -229,6 +261,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 44px;
     padding: 10px 24px;
     color: var(--color-accent);
     font-weight: 700;
@@ -255,6 +288,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 44px;
     padding: 11px 26px;
     color: var(--color-accent-foreground);
     font-weight: 700;
@@ -286,6 +320,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 44px;
     padding: 9px 20px;
     color: var(--color-foreground);
     font-weight: 600;
@@ -308,10 +343,18 @@
     transform: translateY(-1px);
   }
 
+  @media (min-width: 640px) {
+    .btn-notched,
+    .btn-notched-filled,
+    .btn-ghost {
+      min-height: 0;
+    }
+  }
+
   /* Shared form input style */
   .field {
     @apply h-11 w-full rounded-xl border border-border bg-background/50 px-4
-           text-sm text-foreground placeholder:text-muted-foreground/60
+           text-base md:text-sm text-foreground placeholder:text-muted-foreground/60
            focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent
            transition-all duration-200;
   }

@@ -127,7 +127,7 @@ export function SiteHeader() {
               type="button"
               aria-label="Toggle mobile menu"
               onClick={() => setMobileOpen((v) => !v)}
-              className={`md:hidden flex h-9 w-9 items-center justify-center rounded-full border transition-colors shadow-sm ${
+              className={`md:hidden flex h-11 w-11 items-center justify-center rounded-full border transition-colors shadow-sm ${
                 isDarkBackground 
                   ? "bg-white/10 text-white border-white/20 hover:bg-white/20" 
                   : "bg-white/80 text-slate-800 border-slate-200 hover:bg-slate-100 hover:text-accent"
@@ -156,7 +156,7 @@ export function SiteHeader() {
                 <button
                   type="button"
                   onClick={toggleLanguage}
-                  className="flex items-center rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold tracking-wide shadow-sm"
+                  className="flex items-center rounded-xl border border-border bg-card px-3 py-2.5 text-xs font-bold tracking-wide shadow-sm"
                 >
                   <span className={language === "ta" ? "text-primary font-extrabold" : "text-slate-400 font-medium"}>
                     TA
@@ -173,8 +173,8 @@ export function SiteHeader() {
                   key={link.to}
                   to={link.to}
                   activeOptions={link.exact ? { exact: true } : undefined}
-                  activeProps={{ className: "text-accent font-bold bg-accent/5 pl-3 py-2 rounded-xl" }}
-                  className="text-base font-bold uppercase tracking-widest text-foreground hover:text-accent transition-colors pl-1 py-1.5"
+                  activeProps={{ className: "text-accent font-bold bg-accent/5 pl-3 py-3 rounded-xl" }}
+                  className="text-base font-bold uppercase tracking-widest text-foreground hover:text-accent transition-colors pl-1 py-3"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label === "Home" ? t("nav.home") : 
@@ -249,7 +249,7 @@ export function SiteFooter() {
                 href={s.l}
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-background border border-border/80 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200"
+                className="flex h-11 w-11 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-background border border-border/80 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200"
               >
                 <s.i className="h-4 w-4" />
               </a>
@@ -337,7 +337,7 @@ export function SiteFooter() {
                 type="email"
                 placeholder={t("footer.emailPlaceholder")}
                 required
-                className="w-full bg-transparent text-xs text-foreground placeholder:text-muted-foreground/60 focus:outline-none"
+                className="w-full bg-transparent text-base md:text-xs text-foreground placeholder:text-muted-foreground/60 focus:outline-none"
               />
               <button type="submit" className="text-muted-foreground hover:text-accent transition ml-2 cursor-pointer">
                 <ArrowRight className="h-4 w-4" />

@@ -146,7 +146,7 @@ export default function GlobalEnquiry() {
             {/* Close Button */}
             <button
               onClick={handleClose}
-              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground hover:bg-secondary p-1.5 rounded-full transition cursor-pointer"
+              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground hover:bg-secondary h-11 w-11 flex items-center justify-center rounded-full transition cursor-pointer"
             >
               <X className="h-4.5 w-4.5" />
             </button>
@@ -196,7 +196,7 @@ export default function GlobalEnquiry() {
                       placeholder={language === "en" ? "Your Name" : "உங்கள் பெயர்"}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-xs text-foreground placeholder:text-muted-foreground/60"
+                      className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-base md:text-xs text-foreground placeholder:text-muted-foreground/60"
                     />
                   </div>
 
@@ -213,7 +213,7 @@ export default function GlobalEnquiry() {
                         placeholder={language === "en" ? "Phone Number" : "தொலைபேசி எண்"}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-xs text-foreground placeholder:text-muted-foreground/60"
+                        className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-base md:text-xs text-foreground placeholder:text-muted-foreground/60"
                       />
                     </div>
                   </div>
@@ -226,7 +226,7 @@ export default function GlobalEnquiry() {
                       placeholder={language === "en" ? "Email Address" : "மின்னஞ்சல் முகவரி"}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-xs text-foreground placeholder:text-muted-foreground/60"
+                      className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-base md:text-xs text-foreground placeholder:text-muted-foreground/60"
                     />
                   </div>
 
@@ -235,7 +235,7 @@ export default function GlobalEnquiry() {
                     <select
                       value={formData.propertyType}
                       onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
-                      className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-xs text-foreground/90 appearance-none cursor-pointer"
+                      className="h-11 w-full rounded-xl border border-border bg-background/50 px-4 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition text-base md:text-xs text-foreground/90 appearance-none cursor-pointer"
                     >
                       <option disabled value="Type">{language === "en" ? "Select Property Category" : "சொத்து வகையைத் தேர்ந்தெடுக்கவும்"}</option>
                       <option>{language === "en" ? "Plots / Land" : "நிலங்கள் / மனைகள்"}</option>
