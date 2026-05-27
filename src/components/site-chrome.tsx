@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowRight, Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
@@ -44,6 +44,8 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -52,6 +54,20 @@ export function SiteHeader() {
     }
     return () => {
       document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    const menuEl = mobileMenuRef.current;
+    if (!menuEl) return;
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+
+    menuEl.addEventListener("touchmove", handleTouchMove, { passive: false });
+    return () => {
+      menuEl.removeEventListener("touchmove", handleTouchMove);
     };
   }, [mobileOpen]);
 
@@ -152,7 +168,12 @@ export function SiteHeader() {
 
       {/* Mobile Slide-Down Nav Drawer */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-30 md:hidden" onClick={() => setMobileOpen(false)}>
+        <div
+          ref={mobileMenuRef}
+          className="fixed inset-0 z-30 md:hidden touch-none"
+          style={{ touchAction: "none" }}
+          onClick={() => setMobileOpen(false)}
+        >
           {/* Backdrop */}
           <div className="absolute inset-0 bg-foreground/20 backdrop-blur-sm" />
           {/* Panel - positioned right under the transparent header */}
