@@ -48,16 +48,16 @@ export function SiteHeader() {
     <>
       <div className={`fixed top-0 left-0 right-0 z-40 w-full border-b transition-all duration-300 ${
         scrolled 
-          ? "bg-[oklch(0.96_0.012_240)]/90 backdrop-blur-md shadow-sm border-slate-200/40 py-2" 
-          : "bg-transparent border-transparent py-2"
+          ? "bg-[oklch(0.96_0.012_240)]/90 backdrop-blur-md shadow-sm border-slate-200/40 py-1.5 sm:py-2" 
+          : "bg-transparent border-transparent py-1.5 sm:py-2"
       }`}>
-        <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14 sm:h-auto">
           {/* Logo */}
           <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200" onClick={() => setMobileOpen(false)}>
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className={`w-auto h-[140px] sm:h-[120px] md:h-[220px] -my-[50px] sm:-my-[40px] md:-my-[90px] transition-all duration-300 ${
+              className={`w-auto h-[56px] sm:h-[100px] md:h-[180px] sm:-my-[32px] md:-my-[72px] transition-all duration-300 ${
                 isDarkBackground ? "brightness-0 invert" : ""
               }`}
               style={{
