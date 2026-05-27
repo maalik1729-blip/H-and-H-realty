@@ -271,7 +271,7 @@ function Detail() {
 
       {/* ── Main Content Grid ── */}
       <div className="mx-auto max-w-7xl px-4 pt-8 pb-20 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px]">
 
           {/* ── LEFT COLUMN ── */}
           <div className="space-y-10">
@@ -381,10 +381,10 @@ function Detail() {
                 {amenities.map((a, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground"
+                    className="flex items-center gap-2.5 rounded-xl border border-border bg-card px-3 py-2.5 sm:px-4 sm:py-3 text-foreground min-w-0"
                   >
                     <a.icon className="h-4 w-4 text-accent shrink-0" />
-                    {a.label}
+                    <span className="text-xs sm:text-sm font-semibold break-words leading-tight">{a.label}</span>
                   </div>
                 ))}
               </div>
