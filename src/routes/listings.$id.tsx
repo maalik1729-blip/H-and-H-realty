@@ -219,32 +219,13 @@ function Detail() {
             </div>
           </div>
 
-          {/* Side thumbnails */}
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-1">
-            <div className="overflow-hidden rounded-2xl">
-              <img
-                src={l.image}
-                alt={`${l.title} view 2`}
-                className="h-[130px] w-full object-cover md:h-[233px] hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-            <div className="relative overflow-hidden rounded-2xl bg-foreground cursor-pointer group">
-              <img
-                src={l.image}
-                alt={`${l.title} drone view`}
-                className="h-[130px] w-full object-cover md:h-[233px] opacity-60 group-hover:opacity-50 transition"
-              />
-              <div className="absolute inset-0 grid place-items-center">
-                <div className="flex flex-col items-center gap-2">
-                  <span className="grid h-14 w-14 place-items-center rounded-full bg-background/90 text-primary shadow-lg">
-                    <Play className="h-6 w-6 fill-current" />
-                  </span>
-                  <span className="rounded-full bg-foreground/80 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-background">
-                    {language === "en" ? "Drone Tour" : "ட்ரோன் காட்சி"}
-                  </span>
-                </div>
-              </div>
-            </div>
+          {/* Side thumbnail */}
+          <div className="overflow-hidden rounded-2xl">
+            <img
+              src={l.image}
+              alt={`${l.title} view 2`}
+              className="h-[130px] w-full object-cover md:h-[480px] hover:scale-105 transition-transform duration-500"
+            />
           </div>
         </div>
       </div>
