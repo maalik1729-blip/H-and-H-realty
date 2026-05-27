@@ -120,7 +120,7 @@ function TermsConditions() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Banner */}
-      <div className="relative overflow-hidden bg-primary pt-20 sm:pt-28 pb-12 md:pt-36 md:pb-16 text-primary-foreground border-b border-border/10">
+      <div className="relative overflow-hidden bg-primary pt-20 sm:pt-28 pb-10 md:pt-36 md:pb-16 text-primary-foreground border-b border-border/10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/25 via-primary to-primary-dark opacity-95" />
         
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-left space-y-3">
@@ -137,7 +137,7 @@ function TermsConditions() {
               Legal Terms
             </span>
           </div>
-          <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-white leading-none">
+          <h1 className="font-display text-[clamp(2rem,5vw+0.5rem,3.25rem)] font-bold tracking-tight text-white leading-tight">
             Terms &amp; Conditions
           </h1>
           <p className="text-sm text-white/70 max-w-xl leading-relaxed font-sans">
@@ -147,9 +147,9 @@ function TermsConditions() {
       </div>
 
       {/* Content */}
-      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
+      <div className="mx-auto max-w-4xl px-4 py-10 sm:py-12 sm:px-6 lg:px-8 space-y-10">
         {/* Intro */}
-        <div className="rounded-2xl bg-accent/8 border border-accent/20 p-6 text-sm leading-relaxed text-foreground/80">
+        <div className="rounded-2xl bg-accent/8 border border-accent/20 p-5 sm:p-6 text-sm leading-relaxed text-foreground/80">
           Welcome to <strong className="text-foreground">H and H Realty</strong>. By accessing our website, booking a site visit, submitting an enquiry, or engaging with our real estate advisory services, you agree to comply with and be bound by the following Terms &amp; Conditions. These terms govern all property searches, enquiries, visits, and transactions facilitated by H and H Realty Chennai. If you do not agree with these terms, we request you to discontinue using our services.
         </div>
 
@@ -160,12 +160,12 @@ function TermsConditions() {
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 border border-primary/20 shrink-0">
                 <section.icon className="h-4.5 w-4.5 text-primary" />
               </div>
-              <h2 className="font-display text-xl font-bold text-foreground">
+              <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
                 <span className="text-muted-foreground font-sans text-sm mr-2">{section.num}.</span>
                 {section.title}
               </h2>
             </div>
-            <ul className="pl-4 sm:pl-12 space-y-2.5">
+            <ul className="pl-0 sm:pl-12 space-y-2.5">
               {section.content.map((point, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />

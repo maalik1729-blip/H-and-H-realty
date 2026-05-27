@@ -42,7 +42,7 @@ function Blog() {
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Banner Section */}
-      <div className="relative overflow-hidden bg-primary pt-20 sm:pt-28 pb-12 md:pt-36 md:pb-16 text-primary-foreground border-b border-border/10">
+      <div className="relative overflow-hidden bg-primary pt-20 sm:pt-28 pb-10 md:pt-36 md:pb-16 text-primary-foreground border-b border-border/10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/25 via-primary to-primary-dark opacity-95" />
         
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-left space-y-3">
@@ -50,7 +50,7 @@ function Blog() {
             <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
             {t("blog.badge")}
           </span>
-          <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-white leading-none">
+          <h1 className="font-display text-[clamp(2rem,5vw+0.5rem,3.25rem)] font-bold tracking-tight text-white leading-tight">
             {t("blog.title")}
           </h1>
           <p className="text-sm text-white/70 max-w-xl leading-relaxed font-sans">
@@ -59,15 +59,15 @@ function Blog() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl px-4 py-10 sm:py-12 sm:px-6 lg:px-8">
 
-      <div className="mt-12 grid gap-8 md:grid-cols-2">
+      <div className="mt-8 grid gap-6 sm:grid-cols-2">
         {blogPosts.map((p, idx) => {
           const item = language === "en" ? p : blogTranslationsTamil[idx];
           return (
             <article
               key={p.slug}
-              className="group rounded-2xl border border-border bg-card p-7 shadow-card transition hover:shadow-elevated"
+              className="group rounded-2xl border border-border bg-card p-5 sm:p-7 shadow-card transition hover:shadow-elevated"
             >
               <span className="text-xs font-semibold uppercase tracking-wider text-accent">
                 {item.tag}

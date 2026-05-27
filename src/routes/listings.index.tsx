@@ -490,13 +490,13 @@ function ListingsPage() {
       <div className="relative overflow-hidden bg-primary pt-20 sm:pt-28 pb-12 md:pt-36 md:pb-16 text-primary-foreground border-b border-border/10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/25 via-primary to-primary-dark opacity-95" />
         
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="space-y-3 text-left">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 border border-accent/30 px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-accent">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
               {language === "en" ? "Verified Catalog" : "சரிபார்க்கப்பட்ட சொத்துக்கள்"}
             </span>
-            <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-white leading-none">
+            <h1 className="font-display text-[clamp(2rem,5vw+0.5rem,3.25rem)] font-bold tracking-tight text-white leading-tight">
               {language === "en" ? "Explore Premium Properties" : "பிரீமியம் சொத்துக்களை ஆராய்க"}
             </h1>
             <p className="text-sm text-white/70 max-w-xl leading-relaxed font-sans">
@@ -507,7 +507,7 @@ function ListingsPage() {
           </div>
           
           {/* Purpose Tabs (Buy / Rent / Sell) */}
-          <div className="flex rounded-full bg-white/5 backdrop-blur-md p-1 border border-white/10 shrink-0 self-center md:self-end">
+          <div className="flex rounded-full bg-white/5 backdrop-blur-md p-1 border border-white/10 shrink-0 self-start md:self-end w-fit">
             {[
               { value: "buy", label: language === "en" ? "Buy" : "வாங்க" },
               { value: "rent", label: language === "en" ? "Rent" : "வாடகைக்கு" },
@@ -521,7 +521,7 @@ function ListingsPage() {
                     setPurpose(tItem.value as "buy" | "rent" | "sell");
                     updateSearch({ purpose: tItem.value as any });
                   }}
-                  className={`rounded-full px-6 py-2.5 text-[11px] font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
+                  className={`rounded-full px-4 sm:px-6 py-2.5 text-[11px] font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
                     isActive
                       ? "bg-accent text-accent-foreground shadow-lg scale-105"
                       : "text-white/70 hover:text-white"
@@ -577,12 +577,12 @@ function ListingsPage() {
       {purpose === "sell" ? (
         /* SELL VIEW (Elegant Agency Form layout) */
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:py-24">
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-4">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 border border-accent/25 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-accent">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               {t("sell.badge")}
             </span>
-            <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+            <h2 className="font-display text-[clamp(1.75rem,5vw+0.5rem,3.25rem)] font-bold tracking-tight text-foreground leading-tight">
               {t("sell.title")}
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed font-sans">

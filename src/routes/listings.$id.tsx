@@ -294,9 +294,9 @@ function Detail() {
                     </span>
                   )}
                 </div>
-                <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl text-foreground">
-                  {l.title}
-                </h1>
+                <h1 className="font-display text-[clamp(1.625rem,4vw+0.25rem,2.5rem)] font-bold leading-tight text-foreground">
+                {l.title}
+              </h1>
                 <p className="mt-2 flex items-center gap-1.5 text-muted-foreground text-sm">
                   <MapPin className="h-4 w-4 text-accent shrink-0" />
                   {l.location}, {l.city}

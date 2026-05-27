@@ -155,7 +155,7 @@ function Home() {
 
       {/* TRUST STRIP */}
       <section className="border-y border-border bg-card">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-8 text-sm sm:grid-cols-4 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-6 text-sm sm:grid-cols-4 sm:gap-6 sm:px-6 sm:py-8 lg:px-8">
           {[
             { i: ShieldCheck, t: t("trust.registered") },
             { i: FileCheck2, t: t("trust.verified") },
@@ -247,12 +247,12 @@ function Home() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 grid-cols-1 md:grid-cols-12">
+        <div className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-12">
           {/* Bento Card 1: Plots & Land */}
           <Link
             to="/listings"
             search={{ category: "Plots / Land", type: "All" }}
-            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 shadow-card hover:shadow-elevated hover:border-primary/50 transition-all duration-300 md:col-span-8 md:h-[380px] cursor-pointer"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-5 md:p-8 shadow-card hover:shadow-elevated hover:border-primary/50 transition-all duration-300 md:col-span-8 md:h-[380px] cursor-pointer"
           >
             <div className="flex flex-col md:flex-row gap-6 h-full justify-between">
               <div className="flex flex-col justify-between md:w-1/2">
@@ -290,7 +290,7 @@ function Home() {
           <Link
             to="/listings"
             search={{ category: "Villas & Homes", type: "Villa" }}
-            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 shadow-card hover:shadow-elevated hover:border-primary/50 transition-all duration-300 md:col-span-4 md:row-span-2 md:h-full cursor-pointer"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-5 md:p-8 shadow-card hover:shadow-elevated hover:border-primary/50 transition-all duration-300 md:col-span-4 md:row-span-2 md:h-full cursor-pointer"
           >
             <div className="flex flex-col justify-between h-full">
               <div>
@@ -326,7 +326,7 @@ function Home() {
           <Link
             to="/listings"
             search={{ category: "Apartments", type: "Apartment / Flat" }}
-            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 shadow-card hover:shadow-elevated hover:border-primary/50 transition-all duration-300 md:col-span-5 md:h-[380px] cursor-pointer"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-5 md:p-8 shadow-card hover:shadow-elevated hover:border-primary/50 transition-all duration-300 md:col-span-5 md:h-[380px] cursor-pointer"
           >
             <div className="flex flex-col justify-between h-full">
               <div>
@@ -362,7 +362,7 @@ function Home() {
           <Link
             to="/listings"
             search={{ category: "Farmhouses", type: "Farmhouse" }}
-            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 shadow-card hover:shadow-elevated hover:border-primary/50 transition-all duration-300 md:col-span-3 md:h-[380px] cursor-pointer"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-5 md:p-8 shadow-card hover:shadow-elevated hover:border-primary/50 transition-all duration-300 md:col-span-3 md:h-[380px] cursor-pointer"
           >
             <div className="flex flex-col justify-between h-full">
               <div>
@@ -668,14 +668,14 @@ function Home() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-3xl bg-secondary p-6 sm:p-10 md:p-16">
-          <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:py-20 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-3xl bg-secondary p-5 sm:p-10 md:p-16">
+          <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-[1.4fr_1fr]">
             <div>
-              <h2 className="font-display text-3xl font-semibold sm:text-4xl">
+              <h2 className="font-display text-2xl sm:text-3xl font-semibold sm:text-4xl">
                 {language === "en" ? "Find your dream home or plot this weekend." : "இந்த வார இறுதியில் உங்கள் கனவு இல்லம் அல்லது நிலத்தைக் கண்டறியுங்கள்."}
               </h2>
-              <p className="mt-3 max-w-xl text-muted-foreground">
+              <p className="mt-3 max-w-xl text-muted-foreground text-sm sm:text-base">
                 {language === "en" 
                   ? "Book a free site visit and we'll arrange transport, property walk-through, and legal Q&A with our local advisors."
                   : "இலவச தளம் பார்வையிட முன்பதிவு செய்யுங்கள். போக்குவரத்து மற்றும் சட்ட தணிக்கை ஆலோசனைகளை நாங்கள் ஏற்பாடு செய்வோம்."}
@@ -721,7 +721,7 @@ function HeroSection() {
     <section className="relative isolate overflow-hidden bg-[oklch(0.96_0.012_240)] pt-14 sm:pt-24 pb-16 px-0">
       
       {/* Main Slider Container - Full Bleed Viewport Width */}
-      <div className="w-full relative overflow-hidden flex flex-col items-center justify-center min-h-[580px] md:min-h-[680px] shadow-elevated bg-slate-950">
+      <div className="w-full relative overflow-hidden flex flex-col items-center justify-center min-h-[480px] sm:min-h-[580px] md:min-h-[680px] shadow-elevated bg-slate-950">
         
         {/* Cinematic Sliding Background Images Layer */}
         <div className="absolute inset-0 z-0">
@@ -750,12 +750,12 @@ function HeroSection() {
         <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 relative z-20 flex flex-col lg:flex-row items-stretch justify-between gap-12 py-16 md:py-24">
           
           {/* Left Column: Wording & Direct Conversion anchors */}
-          <div className="w-full lg:w-[48%] flex flex-col justify-between gap-8 z-20 relative">
+          <div className="w-full lg:w-[48%] flex flex-col justify-between gap-6 sm:gap-8 z-20 relative">
             <div className="flex flex-col gap-3">
               <span className="text-[11px] uppercase tracking-widest text-accent font-extrabold font-sans">
                 {t("hero.subtitle")}
               </span>
-              <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.15] text-white tracking-tight">
+              <h2 className="font-sans text-[clamp(1.75rem,5vw+0.5rem,3.75rem)] font-bold leading-[1.15] text-white tracking-tight">
                 {t("hero.title")}
               </h2>
               <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans max-w-lg mt-2">
@@ -854,8 +854,8 @@ function HeroSection() {
       </div>
 
       {/* Quick categories navigation columns (constrained to standard page container limits) */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-8 sm:mt-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {[
             {
               title: t("categories.metro.title"),
@@ -882,7 +882,7 @@ function HeroSection() {
               key={idx}
               to="/listings"
               search={cat.link}
-              className="group p-6 rounded-3xl bg-white border border-slate-200/80 hover:border-accent shadow-card hover:shadow-elevated transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[140px]"
+              className="group p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/80 hover:border-accent shadow-card hover:shadow-elevated transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[120px] sm:min-h-[140px]"
             >
               <div>
                 <h3 className="font-display text-lg font-bold text-primary group-hover:text-accent transition-colors duration-300">
