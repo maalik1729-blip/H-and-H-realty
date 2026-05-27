@@ -53,11 +53,15 @@ export function SiteHeader() {
       }`}>
         <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-12 sm:h-auto sm:py-2 overflow-visible">
           {/* Logo */}
-          <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200" onClick={() => setMobileOpen(false)}>
+          <Link 
+            to="/" 
+            className="relative flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200 h-10 sm:h-auto overflow-visible" 
+            onClick={() => setMobileOpen(false)}
+          >
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className={`w-auto h-[140px] sm:h-[120px] md:h-[220px] -my-[52px] sm:-my-[40px] md:-my-[90px] transition-all duration-300 ${
+              className={`w-auto h-[140px] sm:h-[120px] md:h-[220px] absolute left-0 top-1/2 -translate-y-1/2 sm:relative sm:top-auto sm:left-auto sm:translate-y-0 sm:-my-[40px] md:-my-[90px] transition-all duration-300 ${
                 isDarkBackground ? "brightness-0 invert" : ""
               }`}
               style={{
@@ -65,6 +69,8 @@ export function SiteHeader() {
                 maxHeight: "none",
               }}
             />
+            {/* Invisible horizontal spacer to reserve layout space on mobile */}
+            <div className="w-[140px] h-px sm:hidden" />
           </Link>
 
           {/* Desktop Nav in Sentence-Case with Dynamic Readability */}

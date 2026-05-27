@@ -21,7 +21,7 @@ function MapView() {
   const bbox = `${Math.min(...lngs) - 0.3}%2C${Math.min(...lats) - 0.3}%2C${Math.max(...lngs) + 0.3}%2C${Math.max(...lats) + 0.3}`;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 pt-24 md:pt-28 pb-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 pt-16 md:pt-28 pb-8 sm:px-6 lg:px-8">
       <h1 className="font-display text-3xl font-semibold">{t("map.title")}</h1>
       <p className="mt-1 text-muted-foreground">
         {t("map.desc")}

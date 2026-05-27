@@ -16,7 +16,7 @@ function Admin() {
   const remove = (id: string) => setRows((r) => r.filter((x) => x.id !== id));
 
   return (
-    <div className="mx-auto max-w-7xl px-4 pt-24 md:pt-28 pb-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 pt-16 md:pt-28 pb-10 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm font-medium uppercase tracking-wider text-accent">Admin</p>

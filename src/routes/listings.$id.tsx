@@ -152,7 +152,7 @@ function Detail() {
   return (
     <div className="bg-background min-h-screen">
       {/* ── Breadcrumb ── */}
-      <div className="mx-auto max-w-7xl px-4 pt-24 md:pt-28 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-16 md:pt-28 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <nav className="flex items-center gap-2 text-sm text-muted-foreground">
             <Link to="/" className="hover:text-primary transition">{t("nav.home")}</Link>

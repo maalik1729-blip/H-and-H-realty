@@ -717,7 +717,7 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="relative isolate overflow-hidden bg-[oklch(0.96_0.012_240)] pt-24 pb-16 px-0">
+    <section className="relative isolate overflow-hidden bg-[oklch(0.96_0.012_240)] pt-14 sm:pt-24 pb-16 px-0">
       
       {/* Main Slider Container - Full Bleed Viewport Width */}
       <div className="w-full relative overflow-hidden flex flex-col items-center justify-center min-h-[580px] md:min-h-[680px] shadow-elevated bg-slate-950">
