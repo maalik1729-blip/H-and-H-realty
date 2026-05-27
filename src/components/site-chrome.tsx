@@ -44,30 +44,30 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [mobileOpen]);
 
   useEffect(() => {
-    const menuEl = mobileMenuRef.current;
-    if (!menuEl) return;
+    if (!mobileOpen) return;
 
     const handleTouchMove = (e: TouchEvent) => {
       e.preventDefault();
     };
 
-    menuEl.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
     return () => {
-      menuEl.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchmove", handleTouchMove);
     };
   }, [mobileOpen]);
 
@@ -169,7 +169,6 @@ export function SiteHeader() {
       {/* Mobile Slide-Down Nav Drawer */}
       {mobileOpen && (
         <div
-          ref={mobileMenuRef}
           className="fixed inset-0 z-30 md:hidden touch-none"
           style={{ touchAction: "none" }}
           onClick={() => setMobileOpen(false)}
