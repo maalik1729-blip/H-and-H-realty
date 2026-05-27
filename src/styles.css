@@ -378,23 +378,6 @@
   select.field {
     @apply appearance-none cursor-pointer;
   }
-
-  /* Floating CTA offsets for mobile and safe area support */
-  .floating-enquire-btn {
-    bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-  .floating-whatsapp-btn {
-    bottom: calc(136px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-
-  @media (min-width: 768px) {
-    .floating-enquire-btn {
-      bottom: 6rem !important; /* 96px */
-    }
-    .floating-whatsapp-btn {
-      bottom: 1.5rem !important; /* 24px */
-    }
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

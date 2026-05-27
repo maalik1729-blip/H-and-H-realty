@@ -116,8 +116,8 @@ export default function GlobalEnquiry() {
         onClick={() => setIsOpen(true)}
         aria-label={language === "en" ? "Open property enquiry form" : "சொத்து விசாரணை படிவத்தை திறக்க"}
         className="flex fixed z-40 items-center justify-center gap-2 bg-accent text-accent-foreground hover:bg-accent/90 cursor-pointer shadow-elevated rounded-full transition-all duration-300 hover:scale-105 group select-none border border-white/10
-          floating-enquire-btn right-4 h-12 w-12
-          md:right-6 md:h-auto md:w-auto md:px-5 md:py-3.5"
+          bottom-[calc(80px+env(safe-area-inset-bottom,0px))] right-4 h-12 w-12
+          md:bottom-24 md:right-6 md:h-auto md:w-auto md:px-5 md:py-3.5"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -326,8 +326,8 @@ export default function GlobalEnquiry() {
         rel="noreferrer"
         aria-label="Chat on WhatsApp"
         className="flex fixed z-40 items-center justify-center rounded-full bg-whatsapp text-white shadow-elevated hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer
-          floating-whatsapp-btn right-4 h-11 w-11
-          md:right-6 md:h-14 md:w-14"
+          bottom-[calc(136px+env(safe-area-inset-bottom,0px))] right-4 h-11 w-11
+          md:bottom-6 md:right-6 md:h-14 md:w-14"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

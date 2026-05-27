@@ -53,16 +53,15 @@ export function SiteHeader() {
       }`}>
         <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14 sm:h-16 md:h-20 overflow-visible">
           {/* Logo */}
-          <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200 h-14 sm:h-16 md:h-20 overflow-visible" onClick={() => setMobileOpen(false)}>
+          <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200" onClick={() => setMobileOpen(false)}>
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className={`w-auto h-[180px] sm:h-[120px] md:h-[220px] -my-[70px] sm:-my-[40px] md:-my-[90px] translate-y-[6px] sm:translate-y-[4px] md:translate-y-[8px] transition-all duration-300 ${
+              className={`h-10 md:h-12 w-auto object-contain transition-all duration-300 ${
                 isDarkBackground ? "brightness-0 invert" : ""
               }`}
               style={{
                 mixBlendMode: isDarkBackground ? "normal" : "multiply",
-                maxHeight: "none",
               }}
             />
           </Link>
@@ -221,10 +220,9 @@ export function SiteFooter() {
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className="w-auto h-[130px] md:h-[240px] -my-[45px] md:-my-[100px]"
+              className="h-12 md:h-16 w-auto object-contain"
               style={{
                 mixBlendMode: "multiply",
-                maxHeight: "none",
               }}
             />
           </Link>
