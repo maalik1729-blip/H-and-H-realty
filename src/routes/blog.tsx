@@ -42,7 +42,7 @@ function Blog() {
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Banner Section */}
-      <div className="relative overflow-hidden bg-primary pt-28 pb-12 md:pt-36 md:pb-16 text-primary-foreground border-b border-border/10">
+      <div className="relative overflow-hidden bg-primary pt-20 sm:pt-28 pb-12 md:pt-36 md:pb-16 text-primary-foreground border-b border-border/10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/25 via-primary to-primary-dark opacity-95" />
         
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-left space-y-3">
