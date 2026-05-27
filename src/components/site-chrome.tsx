@@ -57,7 +57,7 @@ export function SiteHeader() {
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className={`w-auto h-[180px] sm:h-[120px] md:h-[220px] -my-[70px] sm:-my-[40px] md:-my-[90px] transition-all duration-300 ${
+              className={`w-auto h-[180px] sm:h-[120px] md:h-[220px] -my-[70px] sm:-my-[40px] md:-my-[90px] translate-y-[6px] sm:translate-y-0 transition-all duration-300 ${
                 isDarkBackground ? "brightness-0 invert" : ""
               }`}
               style={{
