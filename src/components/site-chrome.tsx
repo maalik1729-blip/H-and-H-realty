@@ -53,7 +53,7 @@ export function SiteHeader() {
       }`}>
         <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-10 sm:h-11 md:h-12 overflow-visible">
           {/* Logo */}
-          <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200" onClick={() => setMobileOpen(false)}>
+          <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200 h-10 sm:h-11 md:h-12 overflow-visible" onClick={() => setMobileOpen(false)}>
             <img
               src={logo}
               alt="H&H Realty Logo"
