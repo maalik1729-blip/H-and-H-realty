@@ -51,13 +51,13 @@ export function SiteHeader() {
           ? "bg-[oklch(0.96_0.012_240)]/90 backdrop-blur-md shadow-sm border-slate-200/40" 
           : "bg-transparent border-transparent"
       }`}>
-        <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-10 sm:h-11 md:h-12 overflow-visible">
+        <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14 sm:h-16 md:h-20 overflow-visible">
           {/* Logo */}
-          <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200 h-10 sm:h-11 md:h-12 overflow-visible" onClick={() => setMobileOpen(false)}>
+          <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200 h-14 sm:h-16 md:h-20 overflow-visible" onClick={() => setMobileOpen(false)}>
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className={`w-auto h-[180px] sm:h-[120px] md:h-[220px] -my-[70px] sm:-my-[40px] md:-my-[90px] translate-y-[4px] sm:translate-y-[3px] md:translate-y-[6px] transition-all duration-300 ${
+              className={`w-auto h-[180px] sm:h-[120px] md:h-[220px] -my-[70px] sm:-my-[40px] md:-my-[90px] translate-y-[6px] sm:translate-y-[4px] md:translate-y-[8px] transition-all duration-300 ${
                 isDarkBackground ? "brightness-0 invert" : ""
               }`}
               style={{
