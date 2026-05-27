@@ -51,7 +51,7 @@ export function SiteHeader() {
           ? "bg-[oklch(0.96_0.012_240)]/90 backdrop-blur-md shadow-sm border-slate-200/40" 
           : "bg-transparent border-transparent"
       }`}>
-        <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-12 sm:h-auto sm:py-2 overflow-visible">
+        <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-12 sm:h-14 md:h-16 overflow-visible">
           {/* Logo */}
           <Link to="/" className="flex items-center group shrink-0 select-none hover:opacity-90 transition duration-200" onClick={() => setMobileOpen(false)}>
             <img
