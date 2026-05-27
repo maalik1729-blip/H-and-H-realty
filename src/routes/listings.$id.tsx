@@ -271,10 +271,10 @@ function Detail() {
 
       {/* ── Main Content Grid ── */}
       <div className="mx-auto max-w-7xl px-4 pt-8 pb-20 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-10 w-full min-w-0">
 
           {/* ── LEFT COLUMN ── */}
-          <div className="space-y-10">
+          <div className="space-y-10 w-full min-w-0">
 
             {/* Title + Price block */}
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
@@ -488,7 +488,7 @@ function Detail() {
           </div>
 
           {/* ── RIGHT COLUMN — Sticky CTA Rail ── */}
-          <aside className="lg:sticky lg:top-24 lg:self-start space-y-4">
+          <aside className="lg:sticky lg:top-24 lg:self-start space-y-4 w-full min-w-0">
 
             {/* Price card */}
             <div className="rounded-2xl border border-border bg-card p-6 shadow-elevated">
