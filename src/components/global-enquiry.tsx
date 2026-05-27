@@ -63,13 +63,34 @@ export default function GlobalEnquiry() {
     }, 1200);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!captchaChecked) {
       alert(language === "en" ? "Please verify that you are not a robot." : "நீங்கள் ரோபோ அல்ல என்பதை சரிபார்க்கவும்.");
       return;
     }
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError("");
+    try {
+      const formId = import.meta.env.VITE_FORMSPREE_ENQUIRY as string | undefined;
+      if (formId) {
+        const res = await fetch(`https://formspree.io/f/${formId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        if (!res.ok) throw new Error("Submission failed");
+      }
+      setSubmitted(true);
+    } catch {
+      setSubmitError(
+        language === "en"
+          ? "Submission failed. Please try again or call us directly."
+          : "சமர்ப்பிப்பு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும் அல்லது நேரடியாக அழைக்கவும்."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleClose = () => {

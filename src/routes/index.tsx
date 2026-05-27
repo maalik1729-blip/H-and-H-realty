@@ -38,6 +38,7 @@ import farm from "@/assets/farm.png";
 import plot from "@/assets/plot.png";
 
 import { listings, popularLocations, testimonials } from "@/lib/listings";
+import { CONTACT } from "@/lib/contact-info";
 import { ListingCard } from "@/components/listing-card";
 import { PlotLayoutVisualizer } from "@/components/plot-layout-visualizer";
 import { FinancialRoiCalculator } from "@/components/financial-roi-calculator";
@@ -688,10 +689,10 @@ function Home() {
                 <span>{language === "en" ? "Book site visit" : "தளத்தை பார்வையிட"}</span>
               </Link>
               <a
-                href="tel:+919876543210"
+                href={`tel:${CONTACT.phoneRaw}`}
                 className="inline-flex items-center justify-center gap-2 btn-notched text-xs py-3 px-6"
               >
-                <Phone className="h-4 w-4 shrink-0 relative z-10" /> <span>+91 98765 43210</span>
+                <Phone className="h-4 w-4 shrink-0 relative z-10" /> <span>{CONTACT.phone}</span>
               </a>
             </div>
           </div>

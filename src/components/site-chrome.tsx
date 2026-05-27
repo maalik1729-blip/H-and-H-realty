@@ -210,7 +210,7 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   return (
     <footer className="mt-24 border-t border-border bg-secondary/35">
       {/* Upper Main Footer Grid */}
@@ -286,26 +286,26 @@ export function SiteFooter() {
 
         {/* Column 3: Resources & Tools */}
         <div>
-          <h4 className="text-xs font-bold tracking-widest uppercase text-foreground mb-4">Resources</h4>
+          <h4 className="text-xs font-bold tracking-widest uppercase text-foreground mb-4">{language === "en" ? "Resources" : "ஆதாரங்கள்"}</h4>
           <ul className="space-y-2.5 text-sm">
             <li>
               <Link to="/listings" className="text-muted-foreground hover:text-accent transition">
-                Browse Properties
+                {language === "en" ? "Browse Properties" : "சொத்துக்களை காண்க"}
               </Link>
             </li>
             <li>
               <Link to="/map" className="text-muted-foreground hover:text-accent transition">
-                Interactive Plot Map
+                {language === "en" ? "Interactive Plot Map" : "ஊடாடும் நிலவரைபடம்"}
               </Link>
             </li>
             <li>
               <Link to="/blog" className="text-muted-foreground hover:text-accent transition">
-                Buyer Guides &amp; Safety Help
+                {language === "en" ? "Buyer Guides & Safety Help" : "வாங்குபவர் வழிகாட்டிகள்"}
               </Link>
             </li>
             <li>
               <Link to="/contact" className="text-muted-foreground hover:text-accent transition">
-                Book a Free Site Visit
+                {language === "en" ? "Book a Free Site Visit" : "இலவச தளப் பார்வை"}
               </Link>
             </li>
           </ul>

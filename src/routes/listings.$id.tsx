@@ -631,6 +631,7 @@ function Detail() {
                 >
                   <input
                     required
+                    name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={language === "en" ? "Your full name" : "உங்கள் முழு பெயர்"}
@@ -638,6 +639,7 @@ function Detail() {
                   />
                   <input
                     required
+                    name="phone"
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -645,6 +647,7 @@ function Detail() {
                     className="h-11 w-full rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
                   />
                   <textarea
+                    name="message"
                     rows={3}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
