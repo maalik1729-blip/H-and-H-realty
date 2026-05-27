@@ -11,6 +11,7 @@ export default function GlobalEnquiry() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
   
   // Form states
@@ -39,6 +40,15 @@ export default function GlobalEnquiry() {
     return () => {
       window.removeEventListener("open-global-enquiry", handleOpenEvent);
     };
+  }, []);
+
+  // Detect mobile viewport for safe area inline styles
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Body scroll lock when modal is open
@@ -115,8 +125,9 @@ export default function GlobalEnquiry() {
       <button
         onClick={() => setIsOpen(true)}
         aria-label={language === "en" ? "Open property enquiry form" : "சொத்து விசாரணை படிவத்தை திறக்க"}
+        style={isMobile ? { bottom: "calc(80px + env(safe-area-inset-bottom, 0px))" } : undefined}
         className="flex fixed z-40 items-center justify-center gap-2 bg-accent text-accent-foreground hover:bg-accent/90 cursor-pointer shadow-elevated rounded-full transition-all duration-300 hover:scale-105 group select-none border border-white/10
-          bottom-[calc(80px+env(safe-area-inset-bottom,0px))] right-4 h-12 w-12
+          right-4 h-12 w-12
           md:bottom-24 md:right-6 md:h-auto md:w-auto md:px-5 md:py-3.5"
       >
         <svg
@@ -325,8 +336,9 @@ export default function GlobalEnquiry() {
         target="_blank"
         rel="noreferrer"
         aria-label="Chat on WhatsApp"
+        style={isMobile ? { bottom: "calc(136px + env(safe-area-inset-bottom, 0px))" } : undefined}
         className="flex fixed z-40 items-center justify-center rounded-full bg-whatsapp text-white shadow-elevated hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer
-          bottom-[calc(136px+env(safe-area-inset-bottom,0px))] right-4 h-11 w-11
+          right-4 h-11 w-11
           md:bottom-6 md:right-6 md:h-14 md:w-14"
       >
         <svg

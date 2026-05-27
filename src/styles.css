@@ -380,6 +380,14 @@
   }
 }
 
+.bottom-floating-enquire {
+  bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.bottom-floating-whatsapp {
+  bottom: calc(136px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-spin-slow {
