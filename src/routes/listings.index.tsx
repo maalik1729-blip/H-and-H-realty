@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLanguage } from "@/context/language-context";
 import { useMemo, useState, useEffect } from "react";
-import { SlidersHorizontal, Map as MapIcon, Grid as GridIcon, Search, BadgeCheck, CheckCircle2, ChevronRight, UploadCloud, X, Home, Building2, TreePine, LayoutGrid, ChevronDown } from "lucide-react";
+import { SlidersHorizontal, Map as MapIcon, Grid as GridIcon, Search, BadgeCheck, CheckCircle2, ChevronRight, UploadCloud, X, Home, Building2, TreePine, LayoutGrid, ChevronDown, Loader2 } from "lucide-react";
 import {
   listings,
   type PropertyCategory,
@@ -172,6 +172,8 @@ function ListingsPage() {
 
   // Sell Form States
   const [sellFormSubmitted, setSellFormSubmitted] = useState(false);
+  const [isSellSubmitting, setIsSellSubmitting] = useState(false);
+  const [sellSubmitError, setSellSubmitError] = useState("");
   const [sellFormData, setSellFormData] = useState({
     firstName: "",
     lastName: "",
@@ -264,9 +266,30 @@ function ListingsPage() {
     }
   };
 
-  const handleSellSubmit = (e: React.FormEvent) => {
+  const handleSellSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSellFormSubmitted(true);
+    setIsSellSubmitting(true);
+    setSellSubmitError("");
+    try {
+      const formId = import.meta.env.VITE_FORMSPREE_SELL as string | undefined;
+      if (formId) {
+        const res = await fetch(`https://formspree.io/f/${formId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(sellFormData),
+        });
+        if (!res.ok) throw new Error("Submission failed");
+      }
+      setSellFormSubmitted(true);
+    } catch {
+      setSellSubmitError(
+        language === "en"
+          ? "Submission failed. Please try again or call us directly."
+          : "சமர்ப்பிப்பு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்."
+      );
+    } finally {
+      setIsSellSubmitting(false);
+    }
   };
 
   const renderFilterContent = () => (
@@ -420,6 +443,10 @@ function ListingsPage() {
             step={20}
             value={maxPrice}
             onChange={(e) => updateSearch({ price: Number(e.target.value) })}
+            aria-label={language === "en" ? "Maximum budget in Lakhs" : "அதிகபட்ச பட்ஜெட் லட்சத்தில்"}
+            aria-valuemin={20}
+            aria-valuemax={dynamicMaxCeiling}
+            aria-valuenow={maxPrice}
             className="w-full accent-accent h-1.5 rounded-full bg-border/60 cursor-pointer"
           />
         </div>
@@ -766,12 +793,17 @@ function ListingsPage() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-border/50">
+              <div className="pt-4 border-t border-border/50 space-y-3">
+                {sellSubmitError && (
+                  <p className="text-xs text-destructive font-medium text-center">{sellSubmitError}</p>
+                )}
                 <button
                   type="submit"
-                  className="w-full inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-accent text-accent-foreground text-xs font-bold tracking-widest uppercase hover:bg-accent/90 hover:scale-[1.01] transition-all duration-200 cursor-pointer shadow-md"
+                  disabled={isSellSubmitting}
+                  className="w-full inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-accent text-accent-foreground text-xs font-bold tracking-widest uppercase hover:bg-accent/90 hover:scale-[1.01] transition-all duration-200 cursor-pointer shadow-md disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
                 >
-                  {t("sell.submit")} <ChevronRight className="h-4.5 w-4.5" />
+                  {isSellSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                  {isSellSubmitting ? (language === "en" ? "Submitting..." : "அனுப்புகிறோம்...") : <>{t("sell.submit")} <ChevronRight className="h-4.5 w-4.5" /></>}
                 </button>
               </div>
             </form>

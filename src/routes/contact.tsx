@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { MapPin, Phone, Mail, MessageCircle, Calendar } from "lucide-react";
+import { MapPin, Phone, Mail, MessageCircle, Calendar, Loader2 } from "lucide-react";
 import LocationConnectivityMap from "@/components/location-connectivity-map";
 import { useLanguage } from "@/context/language-context";
+import { CONTACT, whatsappUrl } from "@/lib/contact-info";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -19,6 +20,8 @@ export const Route = createFileRoute("/contact")({
 
 function Contact() {
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const { language, t } = useLanguage();
   return (
     <div className="bg-background min-h-screen">
@@ -45,9 +48,29 @@ function Contact() {
       <div className="mt-10 grid gap-8 md:grid-cols-[1.1fr_1fr]">
         {/* Form */}
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            setSent(true);
+            setIsSubmitting(true);
+            setSubmitError("");
+            try {
+              const formId = import.meta.env.VITE_FORMSPREE_CONTACT as string | undefined;
+              if (formId) {
+                const res = await fetch(`https://formspree.io/f/${formId}`, {
+                  method: "POST",
+                  body: new FormData(e.currentTarget),
+                });
+                if (!res.ok) throw new Error("Submission failed");
+              }
+              setSent(true);
+            } catch {
+              setSubmitError(
+                language === "en"
+                  ? "Submission failed. Please call us directly."
+                  : "சமர்ப்பிப்பு தோல்வியடைந்தது. நேரடியாக அழைக்கவும்."
+              );
+            } finally {
+              setIsSubmitting(false);
+            }
           }}
           className="rounded-2xl border border-border bg-card p-6 shadow-card md:p-8"
         >
@@ -62,16 +85,16 @@ function Contact() {
           ) : (
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <Field label={t("contact.fullName")}>
-                <input required className="field" placeholder={language === "en" ? "e.g. Ananya Rao" : "எ.கா. அனன்யா ராவ்"} />
+                <input name="fullName" required className="field" placeholder={language === "en" ? "e.g. Ananya Rao" : "எ.கா. அனன்யா ராவ்"} />
               </Field>
               <Field label={t("contact.phone")}>
-                <input required type="tel" className="field" placeholder="+91 9xxxxxxxxx" />
+                <input name="phone" required type="tel" className="field" placeholder="+91 9xxxxxxxxx" />
               </Field>
               <Field label={t("contact.email")}>
-                <input type="email" className="field" placeholder="you@email.com" />
+                <input name="email" type="email" className="field" placeholder="you@email.com" />
               </Field>
               <Field label={t("contact.interestedIn")}>
-                <select className="field">
+                <select name="interestedIn" className="field">
                   <option>{language === "en" ? "Residential Plot" : "குடியிருப்பு மனை"}</option>
                   <option>{language === "en" ? "Commercial Land" : "வணிக நிலம்"}</option>
                   <option>{language === "en" ? "Villa / Bungalow" : "வில்லா / பங்களா"}</option>
@@ -81,10 +104,10 @@ function Contact() {
                 </select>
               </Field>
               <Field label={t("contact.preferredDate")}>
-                <input type="date" className="field" />
+                <input name="preferredDate" type="date" className="field" min={new Date().toISOString().split("T")[0]} />
               </Field>
               <Field label={t("contact.timeSlot")}>
-                <select className="field">
+                <select name="timeSlot" className="field">
                   <option>{language === "en" ? "Morning (9 – 12)" : "காலை (9 - 12)"}</option>
                   <option>{language === "en" ? "Afternoon (12 – 4)" : "மதியம் (12 - 4)"}</option>
                   <option>{language === "en" ? "Evening (4 – 7)" : "மாலை (4 - 7)"}</option>
@@ -93,14 +116,23 @@ function Contact() {
               <div className="sm:col-span-2">
                 <Field label={t("contact.message")}>
                   <textarea
+                    name="message"
                     rows={4}
                     className="field"
                     placeholder={language === "en" ? "Any specific plot or area in mind?" : "குறிப்பிட்ட மனை அல்லது பகுதி ஏதேனும் உள்ளதா?"}
                   />
                 </Field>
               </div>
-              <button className="sm:col-span-2 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary text-sm font-medium text-primary-foreground hover:opacity-90">
-                <Calendar className="h-4 w-4" /> {t("contact.confirm")}
+              {submitError && (
+                <p className="sm:col-span-2 text-xs text-destructive font-medium">{submitError}</p>
+              )}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="sm:col-span-2 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed transition"
+              >
+                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Calendar className="h-4 w-4" />}
+                {isSubmitting ? (language === "en" ? "Booking..." : "பதிவு செய்யப்படுகிறது...") : t("contact.confirm")}
               </button>
             </div>
           )}
@@ -120,19 +152,19 @@ function Contact() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary" />
-                <a href="tel:+919876543210" className="hover:underline">
-                  +91 98765 43210
+                <a href={`tel:${CONTACT.phoneRaw}`} className="hover:underline">
+                  {CONTACT.phone}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary" />
-                <a href="mailto:hello@hnhrealty.in" className="hover:underline">
-                  hello@hnhrealty.in
+                <a href={`mailto:${CONTACT.email}`} className="hover:underline">
+                  {CONTACT.email}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <MessageCircle className="h-5 w-5 text-whatsapp" />
-                <a href="https://wa.me/919876543210" className="hover:underline">
+                <a href={whatsappUrl(language === "en" ? "Hi H&H Realty, I'd like to enquire about your properties." : "வணக்கம், H&H Realty சொத்துகள் பற்றி தகவல் வேண்டும்.")} className="hover:underline">
                   {language === "en" ? "WhatsApp chat" : "வாட்ஸ்அப் அரட்டை"}
                 </a>
               </li>
@@ -162,7 +194,6 @@ function Contact() {
         </div>
       </div>
 
-      <style>{`.field{height:44px;width:100%;border-radius:0.5rem;border:1px solid var(--input);background:var(--background);padding:0 0.75rem;font-size:0.875rem;color:var(--foreground)} textarea.field{height:auto;padding:0.5rem 0.75rem}`}</style>
       </div>
     </div>
   );

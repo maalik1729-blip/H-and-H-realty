@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, Check, Loader2, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
+import { CONTACT } from "@/lib/contact-info";
 
 export default function GlobalEnquiry() {
   const { language } = useLanguage();
@@ -8,6 +9,9 @@ export default function GlobalEnquiry() {
   const [captchaChecked, setCaptchaChecked] = useState(false);
   const [captchaLoading, setCaptchaLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const firstInputRef = useRef<HTMLInputElement>(null);
   
   // Form states
   const [formData, setFormData] = useState({
@@ -36,6 +40,19 @@ export default function GlobalEnquiry() {
       window.removeEventListener("open-global-enquiry", handleOpenEvent);
     };
   }, []);
+
+  // Body scroll lock when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      setTimeout(() => firstInputRef.current?.focus(), 50);
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const handleCaptchaClick = () => {
     if (captchaChecked || captchaLoading) return;
@@ -73,10 +90,13 @@ export default function GlobalEnquiry() {
 
   return (
     <>
-      {/* 1. Modern Floating "Enquire Now" Pill Button */}
+      {/* 1. Floating "Enquire Now" Pill Button — visible on all screen sizes */}
       <button
         onClick={() => setIsOpen(true)}
-        className="hidden md:flex fixed bottom-36 right-6 md:bottom-24 z-40 items-center gap-2 bg-accent text-accent-foreground hover:bg-accent/90 cursor-pointer shadow-elevated rounded-full px-5 py-3.5 transition-all duration-300 hover:scale-105 group select-none border border-white/10"
+        aria-label={language === "en" ? "Open property enquiry form" : "சொத்து விசாரணை படிவத்தை திறக்க"}
+        className="flex fixed z-40 items-center justify-center gap-2 bg-accent text-accent-foreground hover:bg-accent/90 cursor-pointer shadow-elevated rounded-full transition-all duration-300 hover:scale-105 group select-none border border-white/10
+          bottom-20 right-4 h-12 w-12
+          md:bottom-24 md:right-6 md:h-auto md:w-auto md:px-5 md:py-3.5"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -86,11 +106,11 @@ export default function GlobalEnquiry() {
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="h-4.5 w-4.5"
+          className="h-5 w-5 shrink-0"
         >
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
-        <span className="text-[11px] font-bold tracking-wider uppercase">
+        <span className="hidden md:inline text-[11px] font-bold tracking-wider uppercase">
           {language === "en" ? "Enquire now" : "விசாரிக்க"}
         </span>
       </button>
@@ -149,6 +169,7 @@ export default function GlobalEnquiry() {
                   {/* Name Input */}
                   <div className="relative">
                     <input
+                      ref={firstInputRef}
                       required
                       type="text"
                       placeholder={language === "en" ? "Your Name" : "உங்கள் பெயர்"}
@@ -214,7 +235,7 @@ export default function GlobalEnquiry() {
                     required
                     className="mt-0.5 h-4 w-4 rounded border-border bg-background focus:ring-accent shrink-0 accent-accent"
                   />
-                  <span className="text-[9px] leading-relaxed text-muted-foreground/80 font-medium">
+                  <span className="text-[11px] leading-relaxed text-muted-foreground/80 font-medium">
                     {language === "en"
                       ? "I authorize H and H Realty representatives to contact me via email, SMS, WhatsApp, and calls. This consent overrides any DND/NDNC registration.*"
                       : "மின்னஞ்சல், குறுஞ்செய்தி, வாட்ஸ்அப் மற்றும் தொலைபேசி அழைப்புகள் மூலம் என்னைத் தொடர்பு கொள்ள H and H Realty பிரதிநிதிகளுக்கு நான் அங்கீகாரம் வழங்குகிறேன்.*"}
@@ -256,13 +277,19 @@ export default function GlobalEnquiry() {
                   </div>
                 </div>
 
+                {submitError && (
+                  <p className="text-xs text-destructive font-medium text-center">{submitError}</p>
+                )}
+
                 {/* Submit button */}
                 <div className="flex justify-center pt-2">
                   <button
                     type="submit"
-                    className="w-full inline-flex h-11 items-center justify-center btn-notched-filled text-xs font-bold tracking-widest uppercase transition-all duration-200 cursor-pointer"
+                    disabled={isSubmitting}
+                    className="w-full inline-flex h-11 items-center justify-center gap-2 btn-notched-filled text-xs font-bold tracking-widest uppercase transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    <span>{language === "en" ? "Submit Inquiry" : "விசாரணையை சமர்ப்பிக்கவும்"}</span>
+                    {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+                    <span>{isSubmitting ? (language === "en" ? "Sending..." : "அனுப்புகிறோம்...") : (language === "en" ? "Submit Inquiry" : "விசாரணையை சமர்ப்பிக்கவும்")}</span>
                   </button>
                 </div>
               </form>
@@ -271,13 +298,15 @@ export default function GlobalEnquiry() {
         </div>
       )}
 
-      {/* 3. FLOATING WHATSAPP BUTTON (Bottom-Right) */}
+      {/* 3. FLOATING WHATSAPP BUTTON — visible on all screen sizes */}
       <a
-        href="https://wa.me/919876543210"
+        href={`https://wa.me/${CONTACT.phoneRaw}`}
         target="_blank"
         rel="noreferrer"
         aria-label="Chat on WhatsApp"
-        className="hidden md:flex fixed bottom-20 right-6 md:bottom-6 z-40 h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-elevated hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer group"
+        className="flex fixed z-40 items-center justify-center rounded-full bg-whatsapp text-white shadow-elevated hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer
+          bottom-[88px] right-4 h-11 w-11
+          md:bottom-6 md:right-6 md:h-14 md:w-14"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -3,6 +3,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowRight, Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useLanguage } from "@/context/language-context";
+import { CONTACT } from "@/lib/contact-info";
 
 const NAV_LINKS = [
   { to: "/", label: "Home", exact: true },
@@ -56,7 +57,7 @@ export function SiteHeader() {
             <img
               src={logo}
               alt="H&H Realty Logo"
-              className={`w-auto h-[120px] md:h-[220px] -my-[40px] md:-my-[90px] transition-all duration-300 ${
+              className={`w-auto h-[100px] sm:h-[120px] md:h-[220px] -my-[30px] sm:-my-[40px] md:-my-[90px] transition-all duration-300 ${
                 isDarkBackground ? "brightness-0 invert" : ""
               }`}
               style={{
@@ -320,11 +321,11 @@ export function SiteFooter() {
             </li>
             <li className="flex items-center gap-2">
               <Phone className="h-4 w-4 text-accent shrink-0" />
-              <a href="tel:+919876543210" className="hover:text-accent transition">+91 98765 43210</a>
+              <a href={`tel:${CONTACT.phoneRaw}`} className="hover:text-accent transition">{CONTACT.phone}</a>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="h-4 w-4 text-accent shrink-0" />
-              <a href="mailto:hello@hnhrealty.in" className="hover:text-accent transition">hello@hnhrealty.in</a>
+              <a href={`mailto:${CONTACT.email}`} className="hover:text-accent transition">{CONTACT.email}</a>
             </li>
           </ul>
 

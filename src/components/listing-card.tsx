@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, Maximize2, BadgeCheck, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Maximize2, BadgeCheck } from "lucide-react";
 import { type Listing, formatPrice, isBuiltProperty } from "@/lib/listings";
 import { useLanguage } from "@/context/language-context";
 
@@ -30,42 +30,27 @@ export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardPr
       to="/listings/$id"
       params={{ id: l.id }}
       onMouseEnter={onMouseEnter}
-      className="group block overflow-hidden rounded-3xl border border-slate-100 bg-card shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-300 ease-out hover:border-accent/60"
+      aria-label={`${l.title} in ${l.location}, ${l.city} — ${rentMode ? getMonthlyRent(l.priceLakh, language === "ta") : formatPrice(l.priceLakh, true)}`}
+      className="group block overflow-hidden rounded-3xl border border-slate-100 bg-card shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-300 ease-out hover:border-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
     >
       {/* Photo Frame Container */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
         <img
           src={l.image}
-          alt={l.title}
+          alt={`${l.title} in ${l.location}, ${l.city}`}
           loading="lazy"
+          width={360}
+          height={270}
+          onError={(e) => {
+            e.currentTarget.src = "/placeholder-property.jpg";
+            e.currentTarget.onerror = null;
+          }}
           className={`h-full w-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-105 ${
             sold ? "grayscale" : ""
           }`}
         />
-        
-        {/* Photo Navigation Overlay Arrows (Minimalist Agency Style) */}
-        <div className="absolute inset-x-3 top-1/2 z-10 flex -translate-y-1/2 justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-background/90 text-foreground border border-border/40 hover:bg-background transition shadow-sm"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-background/90 text-foreground border border-border/40 hover:bg-background transition shadow-sm"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-        </div>
+        {/* Gradient overlay for badge legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
 
         {/* Absolute Tags */}
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5 z-10">
@@ -123,11 +108,11 @@ export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardPr
           <div className="text-right font-semibold text-foreground/90">
             {isBuiltProperty(l.category) && l.bedrooms ? (
               <span>
-                {l.bedrooms} BHK · {l.bathrooms} {language === "en" ? "Bath" : "குளியலறை"} · {language === "en" ? "Active" : "செயலில்"}
+                {l.bedrooms} BHK · {l.bathrooms} {language === "en" ? "Bath" : "குளியலறை"} · {language === "en" ? "Available" : "கிடைக்கிறது"}
               </span>
             ) : (
               <span>
-                {l.roadAccess.split(" road")[0]} · {language === "en" ? "Active" : "செயலில்"}
+                {l.roadAccess.split(" road")[0]} {language === "en" ? "Road" : "சாலை"} · {language === "en" ? "Available" : "கிடைக்கிறது"}
               </span>
             )}
           </div>
@@ -136,7 +121,7 @@ export function ListingCard({ l, rentMode = false, onMouseEnter }: ListingCardPr
         {/* Enquire Now CTA — always visible, navigates to detail page */}
         {!sold && (
           <div className="pt-1 select-none">
-            <span className="w-full inline-flex items-center justify-center btn-notched-filled text-[10px] py-2">
+            <span className="w-full inline-flex items-center justify-center btn-notched-filled text-xs py-2.5">
               <span>{language === "en" ? "View Details" : "விவரங்களைக் காண்க"} &rarr;</span>
             </span>
           </div>

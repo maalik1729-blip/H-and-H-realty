@@ -110,10 +110,16 @@
   }
   h1,
   h2,
-  h3,
   .font-display {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+  }
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
   }
 }
 
@@ -163,10 +169,20 @@
   override display and other properties set here.
 */
 @layer components {
-  .sticky-stack-card {
-    position: sticky;
-    top: calc(4rem + var(--index) * 16px);
-    z-index: calc(10 + var(--index));
+  @media (max-width: 639px) {
+    .sticky-stack-card {
+      position: relative;
+      top: auto;
+      z-index: auto;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .sticky-stack-card {
+      position: sticky;
+      top: calc(4rem + var(--index) * 16px);
+      z-index: calc(10 + var(--index));
+    }
   }
 
   @media (min-width: 768px) {
@@ -254,11 +270,74 @@
 
   .btn-notched-filled:hover,
   .btn-notched-filled:focus-visible {
-    background: var(--color-primary);
-    color: var(--color-primary-foreground);
+    background: oklch(0.45 0.22 262);
+    color: var(--color-accent-foreground);
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px oklch(0.23 0.065 250 / 0.2);
+    box-shadow: 0 6px 18px oklch(0.52 0.22 262 / 0.3);
+  }
+
+  .btn-notched,
+  .btn-notched-filled {
+    font-size: 0.75rem;
+  }
+
+  /* Ghost / outline button variant */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 20px;
+    color: var(--color-foreground);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: transparent;
+    border: 1.5px solid var(--color-border);
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .btn-ghost:hover,
+  .btn-ghost:focus-visible {
+    background: var(--color-secondary);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: translateY(-1px);
+  }
+
+  /* Shared form input style */
+  .field {
+    @apply h-11 w-full rounded-xl border border-border bg-background/50 px-4
+           text-sm text-foreground placeholder:text-muted-foreground/60
+           focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent
+           transition-all duration-200;
+  }
+
+  textarea.field {
+    @apply h-auto py-3 resize-none leading-relaxed;
+  }
+
+  select.field {
+    @apply appearance-none cursor-pointer;
   }
 }
 
-
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-spin-slow {
+    animation: none !important;
+  }
+  .animate-scale-up,
+  .animate-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

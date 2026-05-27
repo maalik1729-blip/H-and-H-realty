@@ -1,5 +1,6 @@
 import { MessageCircle, Phone } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
+import { CONTACT, whatsappUrl } from "@/lib/contact-info";
 
 export function StickyContact() {
   const { language } = useLanguage();
@@ -12,13 +13,13 @@ export function StickyContact() {
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
         <a
-          href="tel:+919876543210"
+          href={`tel:${CONTACT.phoneRaw}`}
           className="min-h-11 flex flex-col items-center justify-center gap-0.5 py-3 text-xs font-medium text-foreground"
         >
           <Phone className="h-4 w-4" /> {language === "en" ? "Call" : "அழைக்க"}
         </a>
         <a
-          href="https://wa.me/919876543210"
+          href={whatsappUrl("Hi H&H Realty!")}
           target="_blank"
           rel="noreferrer"
           className="min-h-11 flex flex-col items-center justify-center gap-0.5 bg-whatsapp py-3 text-xs font-medium text-whatsapp-foreground"

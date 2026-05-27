@@ -170,7 +170,7 @@ function Home() {
       </section>
 
       {/* LIVE VERIFICATION TICKER MARQUEE */}
-      <section className="bg-transparent text-foreground py-3.5 overflow-hidden border-y border-border/70 select-none">
+      <section aria-label="Recent property verifications" className="bg-transparent text-foreground py-3.5 overflow-hidden border-y border-border/70 select-none">
         <div className="flex w-full overflow-hidden">
           <div className="animate-marquee whitespace-nowrap flex items-center gap-12 text-[10px] font-bold tracking-widest uppercase">
             {(language === "en" ? [
@@ -220,7 +220,7 @@ function Home() {
               "நீலாங்கரை: ஓஷன் பிரீஸ் வில்லா RERA பதிவு சான்றளிக்கப்பட்டது",
               "பெருங்குடி: WTC அடுக்குமாடி வழக்கறிஞரால் சரிபார்க்கப்பட்ட ஆவணங்கள் வழங்கப்பட்டன",
             ]).map((text, idx) => (
-              <span key={`dup-${idx}`} className="flex items-center gap-3">
+              <span key={`dup-${idx}`} aria-hidden="true" className="flex items-center gap-3">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
                 <span className="text-foreground/80 font-bold tracking-wide">{text}</span>
                 <span className="rounded bg-accent/15 px-2 py-0.5 text-[9px] font-extrabold text-accent border border-accent/25">

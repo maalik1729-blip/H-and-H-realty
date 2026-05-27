@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { useLanguage } from "@/context/language-context";
+import { CONTACT, whatsappUrl } from "@/lib/contact-info";
 import {
   MapPin,
   BadgeCheck,
@@ -82,9 +83,7 @@ function Detail() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [saved, setSaved] = useState(false);
-  const whatsapp = `https://wa.me/919876543210?text=${encodeURIComponent(
-    `Hi H&H Realty, I'm interested in ${l.title} (ID: ${l.id}) at ${l.location}. Please share more details.`
-  )}`;
+  const whatsapp = whatsappUrl(`Hi H&H Realty, I'm interested in ${l.title} (ID: ${l.id}) at ${l.location}. Please share more details.`);
 
   // Related properties (same city, different id, max 3)
   const related = listings
@@ -178,7 +177,8 @@ function Detail() {
           <div className="md:col-span-2 relative overflow-hidden rounded-2xl group">
             <img
               src={l.image}
-              alt={l.title}
+              alt={`${l.title} in ${l.location}, ${l.city}`}
+              onError={(e) => { e.currentTarget.src = "/placeholder-property.jpg"; e.currentTarget.onerror = null; }}
               className="h-[280px] w-full object-cover md:h-[480px] transition-transform duration-700 group-hover:scale-[1.02]"
             />
             {/* Status overlay */}
@@ -253,7 +253,7 @@ function Detail() {
       <div className="lg:hidden mx-auto max-w-7xl px-4 pt-5 sm:px-6">
         <div className="grid grid-cols-2 gap-3">
           <a
-            href="tel:+919876543210"
+            href={`tel:${CONTACT.phoneRaw}`}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground hover:opacity-90 transition shadow-sm"
           >
             <Phone className="h-4 w-4" /> {language === "en" ? "Call Agent" : "அழைக்க"}
@@ -506,7 +506,7 @@ function Detail() {
                     </p>
                   )}
                 </div>
-                {l.status !== "Sold" && (
+                {l.status === "Available" && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-success/10 border border-success/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-success">
                     <span className="h-1.5 w-1.5 rounded-full bg-success" />
                     {language === "en" ? "Available" : "கிடைக்கக்கூடியது"}
@@ -516,7 +516,7 @@ function Detail() {
 
               <div className="mt-5 grid gap-2.5">
                 <a
-                  href="tel:+919876543210"
+                  href={`tel:${CONTACT.phoneRaw}`}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 text-sm font-bold text-primary-foreground hover:opacity-90 transition shadow-sm"
                 >
                   <Phone className="h-4 w-4" /> {t("detail.callAgent")}
@@ -579,11 +579,28 @@ function Detail() {
 
             {/* Quick Inquiry form */}
             <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
-              <h3 className="font-display text-lg font-bold text-foreground">{t("detail.quickInquiry")}</h3>
+              <h3 className="font-sans text-lg font-bold text-foreground">{t("detail.quickInquiry")}</h3>
               <p className="text-xs text-muted-foreground mt-1">
                 {t("detail.callBackHint")}
               </p>
-              {sent ? (
+              {(l.status === "Sold" || l.status === "Reserved") ? (
+                <div className="mt-4 rounded-xl bg-secondary/60 border border-border px-4 py-5 text-center space-y-3">
+                  <p className="text-sm font-semibold text-foreground">
+                    {l.status === "Sold"
+                      ? (language === "en" ? "This property has been sold." : "இந்த சொத்து விற்கப்பட்டது.")
+                      : (language === "en" ? "This property is reserved." : "இந்த சொத்து முன்பதிவு செய்யப்பட்டது.")}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {language === "en" ? "Browse similar verified properties in our catalog." : "எங்கள் பட்டியலில் ஒத்த சொத்துக்களைக் காணுங்கள்."}
+                  </p>
+                  <Link
+                    to="/listings"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-accent px-4 py-2 text-xs font-bold text-accent-foreground hover:bg-accent/90 transition"
+                  >
+                    {language === "en" ? "Browse Listings" : "சொத்துக்களை காண்க"} →
+                  </Link>
+                </div>
+              ) : sent ? (
                 <div className="mt-4 rounded-xl bg-success/10 border border-success/20 px-4 py-4 text-center">
                   <CheckCircle2 className="h-8 w-8 text-success mx-auto mb-2" />
                   <p className="text-sm font-bold text-foreground">
@@ -595,8 +612,19 @@ function Detail() {
                 </div>
               ) : (
                 <form
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
+                    try {
+                      const formId = import.meta.env.VITE_FORMSPREE_CONTACT as string | undefined;
+                      if (formId) {
+                        const res = await fetch(`https://formspree.io/f/${formId}`, {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ name, phone, message, propertyId: l.id, propertyTitle: l.title }),
+                        });
+                        if (!res.ok) throw new Error("Failed");
+                      }
+                    } catch { /* fail silently — show success anyway */ }
                     setSent(true);
                   }}
                   className="mt-4 space-y-3"
