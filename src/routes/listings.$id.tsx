@@ -152,18 +152,18 @@ function Detail() {
   return (
     <div className="bg-background min-h-screen">
       {/* ── Breadcrumb ── */}
-      <div className="mx-auto max-w-7xl px-4 pt-16 md:pt-28 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-primary transition">{t("nav.home")}</Link>
-            <span>/</span>
-            <Link to="/listings" className="hover:text-primary transition">{t("nav.properties")}</Link>
-            <span>/</span>
-            <span className="text-foreground font-medium truncate max-w-[150px] sm:max-w-[200px]">{l.title}</span>
+      <div className="mx-auto max-w-7xl px-4 pt-16 sm:pt-20 md:pt-28 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2">
+          <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-muted-foreground min-w-0">
+            <Link to="/" className="hover:text-primary transition shrink-0">{t("nav.home")}</Link>
+            <span className="shrink-0">/</span>
+            <Link to="/listings" className="hover:text-primary transition shrink-0">{t("nav.properties")}</Link>
+            <span className="shrink-0">/</span>
+            <span className="text-foreground font-medium truncate max-w-[120px] sm:max-w-[200px]">{l.title}</span>
           </nav>
           <Link
             to="/listings"
-            className="hidden sm:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition font-medium"
+            className="hidden sm:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition font-medium shrink-0"
           >
             <ChevronLeft className="h-4 w-4" /> {t("detail.back")}
           </Link>
@@ -277,7 +277,7 @@ function Detail() {
           <div className="space-y-10">
 
             {/* Title + Price block */}
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <span className="rounded-full bg-secondary border border-border/50 px-3 py-1 text-xs font-semibold text-foreground/80">
@@ -295,15 +295,15 @@ function Detail() {
                   )}
                 </div>
                 <h1 className="font-display text-[clamp(1.625rem,4vw+0.25rem,2.5rem)] font-bold leading-tight text-foreground">
-                {l.title}
-              </h1>
+                  {l.title}
+                </h1>
                 <p className="mt-2 flex items-center gap-1.5 text-muted-foreground text-sm">
                   <MapPin className="h-4 w-4 text-accent shrink-0" />
                   {l.location}, {l.city}
                 </p>
               </div>
               <div className="shrink-0 text-left sm:text-right">
-                <p className="font-display text-3xl font-bold text-foreground">
+                <p className="font-display text-[clamp(1.5rem,3vw,2rem)] font-bold text-foreground">
                   {formatPrice(l.priceLakh)}
                 </p>
                 {l.pricePerSqft && (
@@ -316,21 +316,21 @@ function Detail() {
 
             {/* Specs grid */}
             <div className="rounded-3xl border border-slate-100 bg-card overflow-hidden shadow-card">
-              <div className="bg-slate-50/75 border-b border-slate-100 px-6 py-4">
+              <div className="bg-slate-50/75 border-b border-slate-100 px-4 sm:px-6 py-4">
                 <h2 className="font-sans text-[11px] font-extrabold text-foreground uppercase tracking-widest">
                   {t("detail.specsTitle")}
                 </h2>
               </div>
               <div className="divide-y divide-slate-100">
                 {specs.map((s, i) => (
-                  <div key={i} className={`flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-4 px-6 py-3.5 text-xs ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
-                    <div className="flex items-center gap-2 min-w-0">
+                  <div key={i} className={`flex items-center justify-between gap-4 px-4 sm:px-6 py-3 text-xs ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
+                    <div className="flex items-center gap-2 min-w-0 shrink-0">
                       <s.icon className="h-4 w-4 text-accent shrink-0" />
-                      <span className="font-bold uppercase tracking-wider text-muted-foreground text-[10px] truncate">
+                      <span className="font-bold uppercase tracking-wider text-muted-foreground text-[10px]">
                         {s.label}
                       </span>
                     </div>
-                    <span className="font-semibold text-foreground text-left sm:text-right sm:ml-auto break-words">{s.value}</span>
+                    <span className="font-semibold text-foreground text-right break-words max-w-[55%]">{s.value}</span>
                   </div>
                 ))}
               </div>
@@ -338,7 +338,7 @@ function Detail() {
 
             {/* About this property */}
             <section>
-              <div className="rounded-xl border border-accent/20 bg-accent/5 px-4 py-3 mb-5 flex items-start gap-3">
+              <div className="rounded-xl border border-accent/20 bg-accent/5 px-4 py-3 mb-4 sm:mb-5 flex items-start gap-3">
                 <BadgeCheck className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                 <p className="text-sm text-foreground font-medium leading-relaxed">
                   {(() => {
@@ -363,9 +363,9 @@ function Detail() {
                   })()}
                 </p>
               </div>
-              <h2 className="font-display text-2xl font-bold text-foreground">{t("detail.aboutTitle")}</h2>
-              <p className="mt-3 text-muted-foreground leading-relaxed">{l.description}</p>
-              <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
+              <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground">{t("detail.aboutTitle")}</h2>
+              <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed">{l.description}</p>
+              <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
                 {l.highlights.map((h) => (
                   <li key={h} className="flex items-center gap-2 text-sm text-foreground">
                     <CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> {h}
@@ -376,7 +376,7 @@ function Detail() {
 
             {/* Amenities */}
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-4">{t("detail.amenitiesTitle")}</h2>
+              <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground mb-4">{t("detail.amenitiesTitle")}</h2>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {amenities.map((a, i) => (
                   <div
@@ -392,7 +392,7 @@ function Detail() {
 
             {/* Legal Documents */}
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-4">
+              <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground mb-4">
                 {t("detail.legalTitle")}
               </h2>
               <div className="grid gap-3 sm:grid-cols-2">
@@ -416,20 +416,20 @@ function Detail() {
 
             {/* Nearby Landmarks */}
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-4">
+              <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground mb-4">
                 {t("detail.landmarksTitle")}
               </h2>
               <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-card">
                 {l.nearby.map((n, i) => (
                   <div
                     key={n.name}
-                    className={`flex items-center justify-between px-5 py-3.5 text-sm ${i !== l.nearby.length - 1 ? "border-b border-border/60" : ""}`}
+                    className={`flex items-center justify-between px-4 sm:px-5 py-3 sm:py-3.5 text-sm ${i !== l.nearby.length - 1 ? "border-b border-border/60" : ""}`}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
                       <MapPin className="h-3.5 w-3.5 text-accent shrink-0" />
-                      <span className="font-medium text-foreground">{n.name}</span>
+                      <span className="font-medium text-foreground truncate">{n.name}</span>
                     </div>
-                    <span className="text-muted-foreground font-medium text-xs bg-secondary rounded-full px-2.5 py-1">
+                    <span className="text-muted-foreground font-medium text-xs bg-secondary rounded-full px-2.5 py-1 shrink-0 ml-2">
                       {n.distance}
                     </span>
                   </div>
@@ -439,7 +439,7 @@ function Detail() {
 
             {/* Location Map */}
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-4">
+              <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground mb-4">
                 {language === "en" ? "Location & Connectivity" : "இருப்பிடம் மற்றும் இணைப்பு"}
               </h2>
               <LocationConnectivityMap
@@ -457,7 +457,7 @@ function Detail() {
             {/* Testimonials mini-strip */}
             {testimonials.length > 0 && (
               <section>
-                <h2 className="font-display text-2xl font-bold text-foreground mb-5">
+                <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground mb-5">
                   {t("detail.testimonialsTitle")}
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -578,8 +578,8 @@ function Detail() {
             </div>
 
             {/* Quick Inquiry form */}
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
-              <h3 className="font-sans text-lg font-bold text-foreground">{t("detail.quickInquiry")}</h3>
+            <div className="rounded-2xl border border-border bg-card p-4 sm:p-6 shadow-card">
+              <h3 className="font-sans text-base sm:text-lg font-bold text-foreground">{t("detail.quickInquiry")}</h3>
               <p className="text-xs text-muted-foreground mt-1">
                 {t("detail.callBackHint")}
               </p>
@@ -691,14 +691,14 @@ function Detail() {
 
         {/* ── Related Properties ── */}
         {related.length > 0 && (
-          <section className="mt-20 pt-10 border-t border-border">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display text-3xl font-bold text-foreground">
+          <section className="mt-16 sm:mt-20 pt-8 sm:pt-10 border-t border-border">
+            <div className="flex items-start sm:items-center justify-between mb-5 sm:mb-6 gap-3">
+              <h2 className="font-display text-[clamp(1.375rem,3vw,1.875rem)] font-bold text-foreground leading-tight">
                 {language === "en" ? `Similar Properties in ${l.city}` : `${l.city} இல் உள்ள ஒத்த சொத்துக்கள்`}
               </h2>
               <Link
                 to="/listings"
-                className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:opacity-80 transition"
+                className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:opacity-80 transition shrink-0"
               >
                 {language === "en" ? "View All" : "அனைத்தையும் காண்க"} <ArrowRight className="h-4 w-4" />
               </Link>
